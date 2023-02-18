@@ -12,12 +12,11 @@ export const Login = (props) => {
             <h2>Login</h2>
             <form className="login-form" onSubmit={handleSubmit}>
                 <label htmlFor="email">Email</label>
-                <input size="45" value={email} onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Alex Smith" id="email" name="email" />
+                <input size="45" value={email} onChange={(e) => setEmail(e.target.value)} type="email" placeholder="alexsmith@gmail.com" id="email" name="email" />
                 <label htmlFor="password">Password</label>
-                <input size="45" value={pass} onChange={(e) => setPass(e.target.value)} type="password" placeholder="alexsmith@gmail.com" id="password" name="password" />
+                <input size="45" value={pass} onChange={(e) => setPass(e.target.value)} type="password" placeholder="***********" id="password" name="password" />
                 <button type="submit">Log In</button>
             </form>
-            
             <button className="reg-btn" onClick={() => props.onFormSwitch('register')}>Create an account</button>
         </div>
     )
