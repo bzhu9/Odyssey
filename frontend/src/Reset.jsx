@@ -19,7 +19,7 @@ export const Reset = (props) => {
             <input size="90" value={seq} onChange={(e) => setSeq(e.target.value)} type="seq" placeholder="Main Street" id="seq" name="seq" />
             <label htmlFor="password">New Password</label>
             <input size="45" value={pass} onChange={(e) => setPass(e.target.value)} type="password" placeholder="********" id="password" name="password" />
-            <button type="submit" onClick={() => props.onFormSwitch('login')}>Log In</button>
+            <button type="submit" onClick={() => props.onFormSwitch('login')}>Reset Password</button>
         </form>
         <button className="link-btn" onClick={() => props.onFormSwitch('login')}>Go back to login screen</button>
     </div>
