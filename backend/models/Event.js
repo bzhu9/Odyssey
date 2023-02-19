@@ -2,20 +2,51 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
-const recordSchema = new Schema({
-  username: {
-    type: String,
-    required: true,
-    minlength: 3
+const eventSchema = new Schema({
+  startTime: {
+    //mongo will format it in its own way
+    type: Date,
+    require: true
+  },
+  endTime: {
+    type: Date,
+    require: true
+  },
+  location: {
+    //have to create a schema for building
+    require: true
+  },
+  users: {
+    // list of _ids
+    type: Schema.types.ObjectId,
+    require: true,
   },
   note: {
     type: String,
+    default: ""
+  },
+  repeating: {
+    type: String,
+    enum: ['weekly', 'monthly', 'none'],
     require: true
   },
+  type: {
+    type: String,
+    enum: ['meal', 'study', 'class', 'misc'],
+    require: true
+
+  },
+  days: {
+    type: String,
+    enum: ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'],
+    require: true
+
+  },
+  
 }
-  // timestamps: true,
+  
 );
 
-const Record = mongoose.model('Record', recordSchema);
+const Event = mongoose.model('Event', eventSchema);
 
-module.exports = Record;
+module.exports = Event;
