@@ -14,12 +14,13 @@ const eventSchema = new Schema({
   },
   location: {
     //have to create a schema for building
+    type: String,
     require: true
   },
   users: {
     // list of _ids
-    type: Schema.types.ObjectId,
-    require: true,
+    type: Schema.Types.ObjectId,
+    //require: true,
   },
   note: {
     type: String,

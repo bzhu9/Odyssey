@@ -18,7 +18,7 @@ const connectDB = require("./db/conn.js")
 
 connectDB()
 
-app.use("/record", require("./routes/record"));
+app.use("/record", require("./routes/eventRoute"));
 app.use("/user", require("./routes/userRoute"));
 
 
