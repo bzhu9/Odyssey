@@ -40,7 +40,7 @@ const userSchema = new Schema({
     },
     friends: [{
         // list of _id's
-        type: ObjectId
+        type: Schema.Types.ObjectId
     }],
     publicity: {
         type: String,

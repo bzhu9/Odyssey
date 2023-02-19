@@ -1,5 +1,6 @@
 const router = require("express").Router();
 let User = require("../models/User");
+const bcrypt = require("bcrypt");
 
 // GET
 router.route("/").get((req, res) => {
@@ -28,7 +29,7 @@ router.route("/add").post(async (req, res) => {
     }
 
     // hash password, 10 salt rounds
-    const hashedPassword  = bcrypt.hash(password, 10)
+    const hashedPassword  = await bcrypt.hash(password, 10)
 
     // const status = req.body.status;
 
@@ -41,7 +42,7 @@ router.route("/add").post(async (req, res) => {
     const newUser = new User({
         "name": name,
         "email": email,
-        "password": password,
+        "password": hashedPassword,
         "securityQ": securityQ,
         "securityA": securityA,
     });
