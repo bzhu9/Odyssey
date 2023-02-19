@@ -27,7 +27,7 @@ export const Register = (props) => {
             id="seq" name="seq" />
             <label htmlFor="password">Security Question: What is your best friend's first name?</label>
             <input size="90" value={seq} onChange={(e) => setSeq(e.target.value)} type="password" placeholder="Jackie" id="seq" name="seq" />
-            <button type="submit" onClick={() => props.onFormSwitch('login')}>Log In</button>
+            <button type="submit" onClick={() => props.onFormSwitch('login')}>Register Account</button>
         </form>
         <button className="link-btn" onClick={() => props.onFormSwitch('login')}>Go back to login screen</button>
     </div>
