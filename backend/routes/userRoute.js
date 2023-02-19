@@ -1,5 +1,5 @@
 const router = require("express").Router();
-let User = require("../models/user.model");
+let User = require("../models/User");
 
 // GET
 router.route("/").get((req, res) => {
@@ -25,23 +25,21 @@ router.route("/add").post(async (req, res) => {
         return res.status(409).json({ message: "Duplicate email"});
     }
 
-    // clean/hash passwords?
+    // hash password, 10 salt rounds
+    const hashedPassword  = bcrypt.hash(password, 10)
 
-    const status = req.body.status;
+    // const status = req.body.status;
 
-    // optional chaining if they exist
-    const calendar = req.body?.calendar;
-    const friends = req.body?.friends;
+    // // optional chaining if they exist
+    // const calendar = req.body?.calendar;
+    // const friends = req.body?.friends;
     
-    const publicity = req.body.publicity;
+    // const publicity = req.body.publicity;
 
     const newUser = new User({
-        name,
-        email,
-        status,
-        calendar,
-        friends,
-        publicity
+        "name": name,
+        "email": email,
+        "password": password,
     });
 
     newUser.save()

@@ -19,7 +19,7 @@ const userSchema = new Schema({
     },
     status: {
         type: String,
-        default: ""
+        default: "Offline"
     },
     calendar: {
         type: String
@@ -32,11 +32,15 @@ const userSchema = new Schema({
         type: String,
         default: "Public"
     },
-    // add nutritional preferences
-    // add work time
-    // add meal time
-    // add course list
-    // add socials
+    // add nutritional preferences: list of enums
+        // vegetarian
+        // vegan
+        // gluten free
+        // none
+    // add work time: tuple(string start, string end)
+    // add meal time: event
+    // add course list 
+    // add socials (instagram, facebook, linkedin...)
     // add friendsRequests
 });
 
