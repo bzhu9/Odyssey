@@ -25,16 +25,20 @@ const buildingSchema = new Schema({
         type: Date,
         required: true,
     },
-    longitude: {
-        type: Double,
-        required: true,
-    },
     latitude: {
-        type: Double,
-        default: "Offline"
-    }
+        type: Number,
+        required: true,
+        min: -90,
+        max: 90
+      },
+      longitude: {
+        type: Number,
+        required: true,
+        min: -180,
+        max: 180
+      }
 });
 
-const User = mongoose.model("Building", buildingSchema);
+const Building = mongoose.model("Building", buildingSchema);
 
 module.exports = Building;

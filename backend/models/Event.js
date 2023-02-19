@@ -13,9 +13,9 @@ const eventSchema = new Schema({
     require: true
   },
   location: {
-    //have to create a schema for building
-    type: String,
-    require: true
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: 'Building'
   },
   users: {
     // list of _ids
