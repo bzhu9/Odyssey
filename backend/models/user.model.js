@@ -13,6 +13,10 @@ const userSchema = new Schema({
         type: String,
         required: true,
     },
+    password: {
+        type: String,
+        required: true,
+    },
     status: {
         type: String,
         default: ""
@@ -20,10 +24,10 @@ const userSchema = new Schema({
     calendar: {
         type: String
     },
-    friends: {
+    friends: [{
         // list of _id's
-        type: [ObjectId]
-    },
+        type: ObjectId
+    }],
     publicity: {
         type: String,
         default: "Public"

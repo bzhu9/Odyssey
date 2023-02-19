@@ -9,9 +9,23 @@ router.route("/").get((req, res) => {
 });
 
 // POST
-router.route("/add").post((req, res) => {
+router.route("/add").post(async (req, res) => {
     const name = req.body.name;
     const email = req.body.email;
+    const password = req.body.password;
+
+    // check if fields are populated
+    if (!name || !email || !password) {
+        return res.status(400).json({ message: "All fields are required" });
+    }
+
+    // check for duplicate emails
+    const duplicate = await User.findOne({ email }).lean().exec()
+    if (duplicate) {
+        return res.status(409).json({ message: "Duplicate email"});
+    }
+
+    // clean/hash passwords?
 
     const status = req.body.status;
 
@@ -31,7 +45,7 @@ router.route("/add").post((req, res) => {
     });
 
     newUser.save()
-        .then(() => res.json("User added!"))
+        .then(() => res.status(201).json("User added!"))
         .catch(err => res.status(400).json("Error: " + err));
 });
 
