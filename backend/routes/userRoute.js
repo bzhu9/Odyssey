@@ -13,9 +13,11 @@ router.route("/add").post(async (req, res) => {
     const name = req.body.name;
     const email = req.body.email;
     const password = req.body.password;
+    const securityQ = req.body.securityQ;
+    const securityA = req.body.securityA;
 
     // check if fields are populated
-    if (!name || !email || !password) {
+    if (!name || !email || !password || !securityQ || !securityA) {
         return res.status(400).json({ message: "All fields are required" });
     }
 
@@ -40,6 +42,8 @@ router.route("/add").post(async (req, res) => {
         "name": name,
         "email": email,
         "password": password,
+        "securityQ": securityQ,
+        "securityA": securityA,
     });
 
     newUser.save()
