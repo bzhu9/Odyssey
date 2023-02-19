@@ -5,7 +5,7 @@ import './App.css';
 import { Login } from "./Login";
 import { Register } from "./Register";
 import { Reset } from './Reset';
-import { Calender } from "./Calender"
+import FullCalendarApp, { Calender } from "./Calender"
 
 function App() {
   const [currentForm, setCurrentForm] = useState('login');
@@ -19,7 +19,7 @@ function App() {
       {
         currentForm === "login" ? <Login onFormSwitch={toggleForm} /> 
         : currentForm === "register"  ? <Register onFormSwitch={toggleForm} />
-        : currentForm === "calender"  ? <Calender onFormSwitch={toggleForm} />
+        : currentForm === "calender"  ? <FullCalendarApp onFormSwitch={toggleForm} />
         : <Reset onFormSwitch={toggleForm} /> 
         
       }

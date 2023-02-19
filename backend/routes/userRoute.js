@@ -1,5 +1,6 @@
 const router = require("express").Router();
 let User = require("../models/User");
+const bcrypt = require("bcrypt");
 
 // GET
 router.route("/").get((req, res) => {
@@ -13,9 +14,13 @@ router.route("/add").post(async (req, res) => {
     const name = req.body.name;
     const email = req.body.email;
     const password = req.body.password;
+    const seq1 = req.body.seq1;
+    const seq2 = req.body.seq2;
+    const seq3 = req.body.seq3;
+    const securityA = req.body.securityA;
 
     // check if fields are populated
-    if (!name || !email || !password) {
+    if (!name || !email || !password || !seq1 || !seq2 || !seq3) {
         return res.status(400).json({ message: "All fields are required" });
     }
 
@@ -26,7 +31,7 @@ router.route("/add").post(async (req, res) => {
     }
 
     // hash password, 10 salt rounds
-    const hashedPassword  = bcrypt.hash(password, 10)
+    const hashedPassword  = await bcrypt.hash(password, 10)
 
     // const status = req.body.status;
 
@@ -39,7 +44,10 @@ router.route("/add").post(async (req, res) => {
     const newUser = new User({
         "name": name,
         "email": email,
-        "password": password,
+        "password": hashedPassword,
+        "seq1": seq1,
+        "seq2": seq2,
+        "seq3": seq3,
     });
 
     newUser.save()

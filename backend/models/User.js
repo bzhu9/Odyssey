@@ -17,6 +17,18 @@ const userSchema = new Schema({
         type: String,
         required: true,
     },
+    seq1: {
+        type: String,
+        required: true,
+    },
+    seq2: {
+        type: String,
+        required: true,
+    },
+    seq3: {
+        type: String,
+        required: true,
+    },
     status: {
         type: String,
         default: "Offline"
@@ -26,7 +38,7 @@ const userSchema = new Schema({
     },
     friends: [{
         // list of _id's
-        type: ObjectId
+        type: Schema.Types.ObjectId
     }],
     publicity: {
         type: String,
