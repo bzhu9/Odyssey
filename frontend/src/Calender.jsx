@@ -16,15 +16,15 @@ function FullCalendarApp(props) {
         }}
         customButtons={{
           new: {
-            text: 'Add Event',
+            text: 'add event',
             click: () => console.log('new event'),
           },
           map: {
-            text: 'Map View',
+            text: 'map view',
             click: () => console.log('map view'),
           },
           settings: {
-            text: 'Settings',
+            text: 'settings',
             click: () => console.log('settings'),
           },
         }}
