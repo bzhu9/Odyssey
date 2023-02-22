@@ -9,7 +9,7 @@ router.route("/").get((req, res) => {
     .catch(err => res.status(400).json("Error: " + err));
 });
 
-// POST
+// POST to Register User
 router.route("/add").post(async (req, res) => {
     const name = req.body.name;
     const email = req.body.email;
@@ -33,14 +33,6 @@ router.route("/add").post(async (req, res) => {
     // hash password, 10 salt rounds
     const hashedPassword  = await bcrypt.hash(password, 10)
 
-    // const status = req.body.status;
-
-    // // optional chaining if they exist
-    // const calendar = req.body?.calendar;
-    // const friends = req.body?.friends;
-    
-    // const publicity = req.body.publicity;
-
     const newUser = new User({
         "name": name,
         "email": email,
@@ -53,6 +45,27 @@ router.route("/add").post(async (req, res) => {
     newUser.save()
         .then(() => res.status(201).json("User added!"))
         .catch(err => res.status(400).json("Error: " + err));
+});
+
+router.route("/login").post(async (req, res) => {
+    const email = req.body.email;
+    const password = req.body.password;
+    const user = await User.findOne({ email }).lean();
+    if (user) {
+        const match = await bcrypt.compare(password, user.password)
+        if (match) {
+            res.status(200).json({message: "User logged in successfully", user: user});
+        }
+        else {
+            // res.status(401).send({message: "Wrong password"});
+            res.status(401).json({ message: "Wrong password" });
+        }
+    }
+    else {
+        // Email doesn't exist
+        // res.send("Email does not exist");
+        res.status(401).json({ message: "Email does not exist" });
+    }
 });
 
 module.exports = router;
