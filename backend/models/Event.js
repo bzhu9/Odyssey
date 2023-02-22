@@ -13,6 +13,15 @@ const eventSchema = new Schema({
     require: true
   },
   location: {
+<<<<<<< HEAD
+    //have to create a schema for building
+    require: true
+  },
+  users: {
+    // list of _ids
+    type: Schema.types.ObjectId,
+    require: true,
+=======
     type: mongoose.Schema.Types.ObjectId,
     required: true,
     ref: 'Building'
@@ -21,6 +30,7 @@ const eventSchema = new Schema({
     // list of _ids
     type: Schema.Types.ObjectId,
     //require: true,
+>>>>>>> effe48065eae57e59f236cd1b41b4a2778ab31c0
   },
   note: {
     type: String,
