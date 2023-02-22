@@ -4,6 +4,22 @@ import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
+const events = [
+  //add in an events array instead of this constant here
+  {
+    id: 1,
+    title: 'CS 307 Lecture',
+    start: '2023-02-22T10:00:00',
+    end: '2023-02-22T12:00:00',
+  },
+  {
+    id: 2,
+    title: 'CS 307 Meeting',
+    start: '2023-02-23T13:00:00',
+    end: '2023-02-23T18:00:00',
+
+  },
+];
 
 function FullCalendarApp(props) {
   return (
@@ -28,6 +44,11 @@ function FullCalendarApp(props) {
             click: () => console.log('settings'),
           },
         }}
+        events={events}
+        eventColor="red"
+        nowIndicator
+        dateClick={(e) => console.log(e.dateStr)}
+        eventClick={(e) => console.log(e.event.id)}
       />
       <button type="button" onClick={() => props.onFormSwitch('login')}>Go back to login</button>
       <br></br>
