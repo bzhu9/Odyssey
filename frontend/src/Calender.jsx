@@ -11,6 +11,23 @@ function FullCalendarApp(props) {
       <FullCalendar
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         initialView="dayGridWeek"
+        headerToolbar={{
+          center: 'timeGridWeek,dayGridMonth,timeGridDay,new,map,settings',
+        }}
+        customButtons={{
+          new: {
+            text: 'Add Event',
+            click: () => console.log('new event'),
+          },
+          map: {
+            text: 'Map View',
+            click: () => console.log('map view'),
+          },
+          settings: {
+            text: 'Settings',
+            click: () => console.log('settings'),
+          },
+        }}
       />
       <button type="button" onClick={() => props.onFormSwitch('login')}>Go back to login</button>
       <br></br>
