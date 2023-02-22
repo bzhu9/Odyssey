@@ -9,6 +9,13 @@ router.route("/").get((req, res) => {
     .catch(err => res.status(400).json("Error: " + err));
 });
 
+router.route("/").post(async (req, res) => {
+    const email = req.body.email;
+    const user = await User.findOne({ email }).select("-password -seq1 -seq2 -seq3").lean();
+
+    return res.status(200).json({ user: user });
+});
+
 // POST to Register User
 router.route("/add").post(async (req, res) => {
     const name = req.body.name;
@@ -54,7 +61,7 @@ router.route("/login").post(async (req, res) => {
     if (user) {
         const match = await bcrypt.compare(password, user.password)
         if (match) {
-            res.status(200).json({message: "User logged in successfully", user: user});
+            res.status(200).json({ message: "User logged in successfully", user: user.email });
         }
         else {
             // res.status(401).send({message: "Wrong password"});
