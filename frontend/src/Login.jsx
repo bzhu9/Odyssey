@@ -1,10 +1,26 @@
 import React, {useState} from "react"
+import api from "./apis"
 export const Login = (props) => {
     const [email, setEmail] = useState('');
     const [pass, setPass] = useState('');
 
     const handleSubmit = (e) => {
         e.preventDefault();
+    }
+
+    const login = async () => {
+        const payload = {email: email, password: pass};
+        await api.loginUser(payload).then(res => {
+            console.log(res)
+            window.alert("User logged in successfully");
+            setPass("");
+            setEmail("");
+        }).catch(function (error){
+            if (error.response) {
+                console.log(error.response.data);
+                alert(error.response.data.message);
+            }
+        });
     }
 
     return (
@@ -15,7 +31,7 @@ export const Login = (props) => {
                 <input size="45" value={email} onChange={(e) => setEmail(e.target.value)} type="email" placeholder="alexsmith@gmail.com" id="email" name="email" />
                 <label htmlFor="password">Password</label>
                 <input size="45" value={pass} onChange={(e) => setPass(e.target.value)} type="password" placeholder="***********" id="password" name="password" />
-                <button type="submit" >Log In</button>
+                <button type="submit" onClick={login} >Log In</button>
 
             </form>
             <button type="submit" onClick={() => props.onFormSwitch('calender')}>Weekly View</button>
