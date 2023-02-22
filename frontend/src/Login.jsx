@@ -10,11 +10,19 @@ export const Login = (props) => {
 
     const login = async () => {
         const payload = {email: email, password: pass};
-        await api.loginUser(payload).then(res => {
+        await api.loginUser(payload).then( res => {
             console.log(res)
             window.alert("User logged in successfully");
             setPass("");
             setEmail("");
+            // https://www.w3schools.com/html/html5_webstorage.asp
+            // set stringified user object in session storage, access using JSON.parse
+            // can change just to emails
+            sessionStorage.setItem("user", JSON.stringify(res.data.user));
+
+            if (sessionStorage.getItem("user")) {
+                console.log(JSON.parse(sessionStorage.getItem("user"))?.name + " is logged in");
+            }
         }).catch(function (error){
             if (error.response) {
                 console.log(error.response.data);
