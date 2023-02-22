@@ -2,11 +2,6 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
-const securityQuestions = {
-    Street: "What is the name of the street of the first house you lived in?",
-    Mother: "What is your mother's maiden name?",
-    Friend: "What is your best friend's first name?"
-};
 
 // Security question not added yet
 const userSchema = new Schema({
@@ -22,14 +17,17 @@ const userSchema = new Schema({
         type: String,
         required: true,
     },
-    securityQ: {
+    seq1: {
         type: String,
-        enum: securityQuestions,
         required: true,
     },
-    securityA: {
+    seq2: {
         type: String,
-        reqired: true,
+        required: true,
+    },
+    seq3: {
+        type: String,
+        required: true,
     },
     status: {
         type: String,
@@ -40,7 +38,7 @@ const userSchema = new Schema({
     },
     friends: [{
         // list of _id's
-        type: ObjectId
+        type: Schema.Types.ObjectId
     }],
     publicity: {
         type: String,
