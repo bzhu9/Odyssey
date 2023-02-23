@@ -4,6 +4,7 @@ import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
+
 const events = [
   //add in an events array instead of this constant here
   {
@@ -33,15 +34,15 @@ function FullCalendarApp(props) {
         customButtons={{
           new: {
             text: 'add event',
-            click: () => console.log('new event'),
+            click: () => props.onFormSwitch('addEvent'),
           },
           map: {
             text: 'map view',
-            click: () => console.log('map view'),
+            click: () => props.onFormSwitch('map'),
           },
           settings: {
             text: 'settings',
-            click: () => console.log('settings'),
+            click: () => props.onFormSwitch('settings'),
           },
         }}
         events={events}
