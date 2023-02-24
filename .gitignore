@@ -28,7 +28,7 @@ yarn-error.log*
 
 # data
 .csv
-__pycache__/
+/__pycache__/
 .pyc
 
 # jupyter
