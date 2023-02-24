@@ -28,6 +28,9 @@ yarn-error.log*
 
 # data
 .csv
+__pycache__/
+.pyc
 
 # jupyter
 .ipynb
+.ipynb_checkpoints
