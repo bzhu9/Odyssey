@@ -18,7 +18,9 @@ def fetch_from_unitime(day_diff, filename="data.csv", start_hour=8, end_hour=20,
         raise Exception("Class size must be non-negative")
     current_time = dt.datetime.today()
     time_delta = dt.datetime.today() + dt.timedelta(days=day_diff)
-    link = "https://timetable.mypurdue.purdue.edu/Timetabling/export?output=meetings.csv&type=room&term=Spring2023PWL&e:from={0:02d}/{1:02d}/{2}&e:to={3:02d}/{4:02d}/{5}&e:after=800&e:before=2000&r:type=genClassroom&r:size=0..500".format(current_time.month, current_time.day, current_time.year, time_delta.month, time_delta.day, time_delta.year)
+
+
+    link = "https://timetable.mypurdue.purdue.edu/Timetabling/export?output=events.csv&type=room&term=Spring2023PWL&e:from={0:02d}/{1:02d}/{2}&e:to={3:02d}/{4:02d}/{5}&e:after={6}00&e:before={7}00&r:type=genClassroom&r:size={8}..{9}".format(current_time.month, current_time.day, current_time.year, time_delta.month, time_delta.day, time_delta.year, start_hour, end_hour, min_size, max_size)
     urllib.request.urlretrieve(link, '/classdata/%s'%filename)
 
 def clean_file(filename):
