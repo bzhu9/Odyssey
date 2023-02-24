@@ -1,4 +1,8 @@
 import React, { useState } from "react";
+import FullCalendar from '@fullcalendar/react';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid';
+import interactionPlugin from '@fullcalendar/interaction';
 
 export const CreateEvent = (props) => {
     const [email, setEmail] = useState('');
@@ -11,7 +15,13 @@ export const CreateEvent = (props) => {
 
     return (
         <div className="auth-form-container">
-        This is the map page
-        </div>
+        <h2>Add Event</h2>
+    <form className="login-form" onSubmit={handleSubmit}>
+        <label htmlFor="text">Email</label>
+        <input size="45" value={email} onChange={(e) => setEmail(e.target.value)} type="email" placeholder="alexsmith@gmail.com" id="email" name="email" />
+        <button type="submit" onClick={() => props.onFormSwitch('calender')}>Reset Password</button>
+    </form>
+    <button className="link-btn" onClick={() => props.onFormSwitch('login')}>Go back to login screen</button>
+</div>
     )
 }

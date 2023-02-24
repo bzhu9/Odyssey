@@ -9,15 +9,18 @@ const events = [
   //add in an events array instead of this constant here
   {
     id: 1,
-    title: 'CS 307 Lecture',
+    title: 'CS 307 Lecture\nHAAS G040',
     start: '2023-02-22T10:00:00',
     end: '2023-02-22T12:00:00',
+    eventColor: "blue",
   },
   {
     id: 2,
-    title: 'CS 307 Meeting',
+    title: 'CS 307 Lecture\nSmith 108 ',
     start: '2023-02-23T13:00:00',
     end: '2023-02-23T18:00:00',
+    eventColor: "red",
+
 
   },
 ];
@@ -46,7 +49,6 @@ function FullCalendarApp(props) {
           },
         }}
         events={events}
-        eventColor="red"
         nowIndicator
         dateClick={(e) => console.log(e.dateStr)}
         eventClick={(e) => console.log(e.event.id)}
