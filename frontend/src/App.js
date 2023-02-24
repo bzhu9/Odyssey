@@ -26,7 +26,7 @@ function App() {
         : currentForm === "calender"  ? <FullCalendarApp onFormSwitch={toggleForm} />
         : currentForm === "settings"  ? <Settings onFormSwitch={toggleForm} />
         : currentForm === "map"  ? <Map onFormSwitch={toggleForm} />
-        : currentForm === "createEvent"  ? <CreateEvent onFormSwitch={toggleForm} />
+        : currentForm === "addEvent"  ? <CreateEvent onFormSwitch={toggleForm} />
         : <Reset onFormSwitch={toggleForm} /> 
         
       }
