@@ -75,4 +75,31 @@ router.route("/login").post(async (req, res) => {
     }
 });
 
+router.route("/reset").post(async (req, res) => {
+    const email = req.body.email;
+    const security = req.body.seq1;
+    const newPassword = req.body.password;
+    const user = await User.findOne({ email }).lean();
+    if (user) {
+        //compare the security Q
+        //const match = await bcrypt.compare(password, user.password)
+        if (security === user.seq1) {
+            //update the password
+            const hashedPassword  = await bcrypt.hash(newPassword, 10)
+            //not sure if this is correct
+            await User.findOneAndUpdate({ email }, { password: hashedPassword }).lean();
+            //send response
+            res.status(200).json({ message: "Password Successfully Reset", user: user.email });
+        }
+        else {
+            //security answer is incorrect
+            res.status(401).json({ message: "Wrong Security Question Answer" });
+        }
+    }
+    else {
+        // Email doesn't exist
+        res.status(401).json({ message: "Email does not exist" });
+    }
+});
+
 module.exports = router;

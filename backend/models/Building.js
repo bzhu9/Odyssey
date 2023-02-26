@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 
-// Security question not added yet
 const buildingSchema = new Schema({
     virtual: {
         type: Boolean,
