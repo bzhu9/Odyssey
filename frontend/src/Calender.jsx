@@ -32,7 +32,7 @@ function FullCalendarApp(props) {
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         initialView="dayGridWeek"
         headerToolbar={{
-          center: 'timeGridWeek,dayGridMonth,timeGridDay,new,map,classSearch',
+          center: 'timeGridWeek,dayGridMonth,timeGridDay,new,profile,classSearch',
         }}
         customButtons={{
           new: {
@@ -48,7 +48,7 @@ function FullCalendarApp(props) {
             click: () => props.onFormSwitch('settings'),
           },
           classSearch: {
-            text: 'Search',
+            text: 'search',
             click: () => props.onFormSwitch('class'),
           },
         }}
