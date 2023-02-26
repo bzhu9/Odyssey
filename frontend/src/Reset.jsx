@@ -15,7 +15,7 @@ export const Reset = (props) => {
     const reset = async () => {
         try {
           if (pass !== pass2) {
-            window.alert("PASSWORDS DO NOT MATCH")
+            window.alert("Passwords do not match. Please try again");
             return;
           }
           const payload = {email: email, password: pass, seq1: seq, seq2: seq2, seq3: seq3};

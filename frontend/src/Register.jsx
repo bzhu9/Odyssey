@@ -18,7 +18,7 @@ export const Register = (props) => {
             // f to denote field from form
             // const {fName, fEmail, fPass, fSeq1, fSeq2, fSeq3} = this.state;
             if (pass !== pass2) {
-                window.alert("Passwords do not match. Please try again")
+                window.alert("Passwords do not match. Please try again");
                 return;
             }
             const payload = {name: name, email: email, password: pass, seq1: seq1, seq2: seq2, seq3: seq3};
