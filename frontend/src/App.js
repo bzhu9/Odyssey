@@ -8,6 +8,7 @@ import { Reset } from './Reset';
 import { Settings } from './Settings';
 import { Map } from './Map';
 import { CreateEvent } from './CreateEvent';
+import { OpenClass } from './OpenClass';
 
 import FullCalendarApp, { Calender } from "./Calender"
 
@@ -27,6 +28,7 @@ function App() {
         : currentForm === "settings"  ? <Settings onFormSwitch={toggleForm} />
         : currentForm === "map"  ? <Map onFormSwitch={toggleForm} />
         : currentForm === "addEvent"  ? <CreateEvent onFormSwitch={toggleForm} />
+        : currentForm === "class" ? <OpenClass onFormSwitch={toggleForm} />
         : <Reset onFormSwitch={toggleForm} /> 
         
       }
