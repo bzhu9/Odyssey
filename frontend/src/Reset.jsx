@@ -14,6 +14,10 @@ export const Reset = (props) => {
     }
     const reset = async () => {
         try {
+          if (pass !== pass2) {
+            window.alert("PASSWORDS DO NOT MATCH")
+            return;
+          }
           const payload = {email: email, password: pass, seq1: seq, seq2: seq2, seq3: seq3};
           const response = await api.resetUser(payload);
           console.log(response.data);
