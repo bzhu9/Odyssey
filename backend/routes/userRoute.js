@@ -75,4 +75,18 @@ router.route("/login").post(async (req, res) => {
     }
 });
 
+// need frontend delete button only if user is signed in
+
+router.route("/delete").delete(async (req, res) => {
+    const email = req.body.email;
+    const user = await User.findOne({ email }).exec();
+
+    if (!user) {
+        return res.status(400).json({ message: "User not found"});
+    }
+
+    const result = await user.deleteOne();
+
+    res.status(200).json({ message: `User with email ${result.email} was deleted successfully` })
+})
 module.exports = router;
