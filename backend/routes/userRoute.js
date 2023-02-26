@@ -77,13 +77,15 @@ router.route("/login").post(async (req, res) => {
 
 router.route("/reset").post(async (req, res) => {
     const email = req.body.email;
-    const security = req.body.seq1;
+    const seq1 = req.body.seq1;
+    const seq2 = req.body.seq2;
+    const seq3 = req.body.seq3; 
     const newPassword = req.body.password;
     const user = await User.findOne({ email }).lean();
     if (user) {
         //compare the security Q
         //const match = await bcrypt.compare(password, user.password)
-        if (security === user.seq1) {
+        if ((seq1 === user.seq1) && (seq2 === user.seq2) && (seq3 === user.seq3)) {
             //update the password
             const hashedPassword  = await bcrypt.hash(newPassword, 10)
             //not sure if this is correct

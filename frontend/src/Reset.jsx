@@ -9,42 +9,24 @@ export const Reset = (props) => {
     const [seq2, setSeq2] = useState('');
     const [seq3, setSeq3] = useState('');
 
-    
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
     }
-    
-
-/*
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        console.log("hi");
+    const reset = async () => {
         try {
-            console.log("hi hi hi");
-            // f to denote field from form
-            // const {fName, fEmail, fPass, fSeq1, fSeq2, fSeq3} = this.state;
-            const payload = {email: email, password: pass, securityA: seq};
-            await api.resetUser(payload).then(res => {
-                window.alert("User reset successfully");
-            });
-        }
-        catch (error) {
-            console.log(error);
-        }
-    }
-    const reset = async (email, securityA, newPassword) => {
-        try {
-          const response = await api.resetUser(email, securityA, newPassword);
+          const payload = {email: email, password: pass, seq1: seq, seq2: seq2, seq3: seq3};
+          const response = await api.resetUser(payload);
           console.log(response.data);
           // Display a success message to the user
           window.alert("Password reset successful!");
+          props.onFormSwitch('login')
         } catch (error) {
           console.log(error);
           // Display an error message to the user
-          window.alert("Password reset failed. Please try again.");
+          window.alert(error.response.data.message);
+          //window.alert("Password reset failed. Please try again.");
         }
       };
-     */
 
     return (
         <div className="auth-form-container">
@@ -62,7 +44,7 @@ export const Reset = (props) => {
             <input size="45" value={pass} onChange={(e) => setPass(e.target.value)} type="password" placeholder="********" id="password" name="password" />
             <label htmlFor="password">Confirm Password</label>
             <input size="80" value={pass2} onChange={(e) => setPass2(e.target.value)} type="password" placeholder="********" id="password" name="password" />
-            <button type="submit" onClick={() => props.onFormSwitch('login')}>Reset Password</button>
+            <button type="submit" onClick={reset} >Reset Password</button>
         </form>
         <button className="link-btn" onClick={() => props.onFormSwitch('login')}>Go back to login screen</button>
     </div>
