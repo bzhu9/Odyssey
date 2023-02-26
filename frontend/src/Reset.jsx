@@ -1,13 +1,47 @@
 import React, { useState } from "react";
+import api from "./apis"
 
 export const Reset = (props) => {
     const [email, setEmail] = useState('');
     const [pass, setPass] = useState('');
     const [seq, setSeq] = useState('');
 
-    const handleSubmit = (e) => {
+    
+    const handleSubmit = async (e) => {
         e.preventDefault();
     }
+    
+
+/*
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        console.log("hi");
+        try {
+            console.log("hi hi hi");
+            // f to denote field from form
+            // const {fName, fEmail, fPass, fSeq1, fSeq2, fSeq3} = this.state;
+            const payload = {email: email, password: pass, securityA: seq};
+            await api.resetUser(payload).then(res => {
+                window.alert("User reset successfully");
+            });
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
+    const reset = async (email, securityA, newPassword) => {
+        try {
+          const response = await api.resetUser(email, securityA, newPassword);
+          console.log(response.data);
+          // Display a success message to the user
+          window.alert("Password reset successful!");
+        } catch (error) {
+          console.log(error);
+          // Display an error message to the user
+          window.alert("Password reset failed. Please try again.");
+        }
+      };
+     */
 
     return (
         <div className="auth-form-container">
