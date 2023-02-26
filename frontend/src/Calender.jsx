@@ -32,17 +32,17 @@ function FullCalendarApp(props) {
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         initialView="dayGridWeek"
         headerToolbar={{
-          center: 'timeGridWeek,dayGridMonth,timeGridDay,new,map,settings',
+          center: 'timeGridWeek,dayGridMonth,timeGridDay,new,map,classSearch',
         }}
         customButtons={{
           new: {
             text: 'add event',
             click: () => props.onFormSwitch('addEvent'),
           },
-          // map: {
-          //   text: 'map view',
-          //   click: () => props.onFormSwitch('map'),
-          // },
+          map: {
+            text: 'map view',
+            click: () => props.onFormSwitch('map'),
+          },
           settings: {
             text: 'settings',
             click: () => props.onFormSwitch('settings'),
