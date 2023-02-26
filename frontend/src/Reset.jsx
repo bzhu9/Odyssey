@@ -4,6 +4,7 @@ import api from "./apis"
 export const Reset = (props) => {
     const [email, setEmail] = useState('');
     const [pass, setPass] = useState('');
+    const [pass2, setPass2] = useState('');
     const [seq, setSeq] = useState('');
 
     
@@ -54,7 +55,7 @@ export const Reset = (props) => {
             <label htmlFor="password">New Password</label>
             <input size="45" value={pass} onChange={(e) => setPass(e.target.value)} type="password" placeholder="********" id="password" name="password" />
             <label htmlFor="password">Confirm Password</label>
-            <input size="80" value={pass} onChange={(e) => setPass(e.target.value)} type="password" placeholder="********" id="password" name="password" />
+            <input size="80" value={pass2} onChange={(e) => setPass2(e.target.value)} type="password" placeholder="********" id="password" name="password" />
             <button type="submit" onClick={() => props.onFormSwitch('login')}>Reset Password</button>
         </form>
         <button className="link-btn" onClick={() => props.onFormSwitch('login')}>Go back to login screen</button>

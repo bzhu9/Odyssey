@@ -4,6 +4,7 @@ import api from "./apis"
 export const Register = (props) => {
     const [email, setEmail] = useState('');
     const [pass, setPass] = useState('');
+    const [pass2, setPass2] = useState('');
     const [name, setName] = useState('');
     const [seq1, setSeq1] = useState('');
     const [seq2, setSeq2] = useState('');
@@ -43,7 +44,7 @@ export const Register = (props) => {
             <label htmlFor="password">Password</label>
             <input size="80" value={pass} onChange={(e) => setPass(e.target.value)} type="password" placeholder="********" id="password" name="password" />
             <label htmlFor="password">Confirm Password</label>
-            <input size="80" value={pass} onChange={(e) => setPass(e.target.value)} type="password" placeholder="********" id="password" name="password" />
+            <input size="80" value={pass2} onChange={(e) => setPass2(e.target.value)} type="password" placeholder="********" id="password" name="password" />
             <label htmlFor="password">Security Question: What is the name of the street of the first house you lived in?</label>
             <input size="90" value={seq1} onChange={(e) => setSeq1(e.target.value)} type="text" placeholder="Main Street" id="seq" name="seq" />
             <label htmlFor="password">Security Question: What is your mother's maiden name?</label>
