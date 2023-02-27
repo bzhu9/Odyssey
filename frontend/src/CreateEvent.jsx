@@ -21,13 +21,13 @@ export const CreateEvent = (props) => {
         <h2>Add Event</h2>
     <form className="login-form" onSubmit={handleSubmit}>
         <label htmlFor="text">Title</label>
-        <input size="45" value={title} onChange={(e) => setTitle(e.target.value)} type="email" placeholder="previous title" id="email" name="email" />
-        <label htmlFor="text">Date of Event</label>
-        <input size="45" value={date} onChange={(e) => setDate(e.target.value)} type="email" placeholder="previous date" id="email" name="email" />
+        <input size="45" value={title} onChange={(e) => setTitle(e.target.value)} type="text" placeholder="previous title" id="email" name="email" />
+        <label htmlFor="date">Date of Event</label>
+        <input size="45" value={date} onChange={(e) => setDate(e.target.value)} type="date" placeholder="previous date" id="email" name="email" />
         <label htmlFor="time">Start Time of Event</label>
-        <input size="45" value={startTime} onChange={(e) => setStartTime(e.target.value)} type="email" placeholder="previous start time" id="email" name="email" />
+        <input size="45" value={startTime} onChange={(e) => setStartTime(e.target.value)} type="time" placeholder="previous start time" id="email" name="email" />
         <label htmlFor="time">End Time of Event</label>
-        <input size="45" value={endTime} onChange={(e) => setEndTime(e.target.value)} type="email" placeholder="previous start time" id="email" name="email" />
+        <input size="45" value={endTime} onChange={(e) => setEndTime(e.target.value)} type="time" placeholder="previous start time" id="email" name="email" />
         <label htmlFor="text">Location</label>
         <input size="45" value={location} onChange={(e) => setLocation(e.target.value)} type="email" placeholder="previous location" id="email" name="email" />
         <label htmlFor="text">Event Notes</label>

@@ -1,9 +1,11 @@
 import { useState } from "react";
-import React from "react";
+import React, { Component } from 'react'
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
+
+
 
 const events = [
   //add in an events array instead of this constant here
@@ -25,16 +27,24 @@ const events = [
   },
 ];
 
+
+
+
 function FullCalendarApp(props) {
   return (
     <div className="App">
       <FullCalendar
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+        editable
         initialView="dayGridWeek"
         headerToolbar={{
           center: 'timeGridWeek,dayGridMonth,timeGridDay,new,settings,classSearch',
         }}
         customButtons={{
+          edit: {
+            text: 'edit event',
+            click: () => props.onFormSwitch('addEvent'),
+          },
           new: {
             text: 'add event',
             click: () => props.onFormSwitch('addEvent'),
@@ -53,9 +63,15 @@ function FullCalendarApp(props) {
           },
         }}
         events={events}
+        eventDurationEditable
         nowIndicator
         dateClick={(e) => console.log(e.dateStr)}
+        // eventClick= {
+        //   props.onFormSwitch('calender')
+        // }
         eventClick={(e) => console.log(e.event.id)}
+
+        // eventClick={props.onFormSwitch('addEvent')}
       />
       <button type="button" onClick={() => props.onFormSwitch('login')}>Go back to login</button>
       <br></br>
@@ -63,6 +79,7 @@ function FullCalendarApp(props) {
     
   );
 }
+
 
 
 export default FullCalendarApp;
