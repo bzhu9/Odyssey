@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import api from "./apis"
 
 export const Settings = (props) => {
     const [email, setEmail] = useState('');
@@ -8,6 +9,21 @@ export const Settings = (props) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+    }
+
+    const deleteUser = async () => {
+        if (sessionStorage.getItem("user") === null) {
+            window.alert("Please login delete your account!");
+        }
+        else {
+            console.log(sessionStorage.getItem("user"));
+            const email = {email: sessionStorage.getItem("user")};
+            await api.deleteUser(email).then( async res => {
+                console.log(res);
+                sessionStorage.setItem("user", null);
+            })
+
+        }
     }
 
     return (
@@ -22,7 +38,7 @@ export const Settings = (props) => {
             <input size="45" value={pass} onChange={(e) => setPass(e.target.value)} type="password" placeholder="********" id="password" name="password" />
             <label htmlFor="password">Confirm Password</label>
             <input size="80" value={pass2} onChange={(e) => setPass2(e.target.value)} type="password" placeholder="********" id="password" name="password" />
-            <button type="submit">Delete Account</button>
+            <button type="submit" onClick={deleteUser}>Delete Account</button>
         </form>
         <button className="link-btn" onClick={() => props.onFormSwitch('calender')}>Go back to Calender</button>
     </div>

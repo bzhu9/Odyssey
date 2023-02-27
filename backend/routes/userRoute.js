@@ -106,8 +106,10 @@ router.route("/reset").post(async (req, res) => {
 
 // need frontend delete button only if user is signed in
 
-router.route("/delete").delete(async (req, res) => {
+router.route("/delete").post(async (req, res) => {
     const email = req.body.email;
+    console.log(req.body);
+    console.log(email);
     const user = await User.findOne({ email }).exec();
 
     if (!user) {

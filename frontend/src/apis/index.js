@@ -9,12 +9,14 @@ export const loginUser = payload => api.post("user/login", payload);
 export const resetUser = payload => api.post("user/reset", payload);
 export const getAllUsers = () => api.get("/user");
 export const getUser = payload => api.post("/user");
+export const deleteUser = email => api.post("/user/delete", email);
 
 const apis = {
     insertUser,
     loginUser,
     resetUser,
     getAllUsers,
+    deleteUser
 }
 
 export default apis;

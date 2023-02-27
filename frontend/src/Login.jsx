@@ -9,6 +9,10 @@ export const Login = (props) => {
     }
 
     const login = async () => {
+        if (sessionStorage.getItem("user") === null) {
+            console.log("HELLO WORLD");
+        }
+
         const payload = {email: email, password: pass};
         await api.loginUser(payload).then( async res => {
             console.log(res)
