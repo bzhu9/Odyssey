@@ -33,6 +33,8 @@ export const ChangeEvent = (props) => {
         <label htmlFor="text">Event Notes</label>
         <input size="65" value={notes} onChange={(e) => setNotes(e.target.value)} type="email" placeholder="previous notes" id="email" name="email" />
         <button type="submit" onClick={() => props.onFormSwitch('calender')}>Submit Changes</button>
+        <button type="submit" >Delete Event</button>
+
     </form>
     <button className="link-btn" onClick={() => props.onFormSwitch('calender')}>Go back to Calender</button>
 </div>
