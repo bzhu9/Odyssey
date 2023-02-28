@@ -15,6 +15,7 @@ const events = [
     start: '2023-02-22T10:00:00',
     end: '2023-02-22T12:00:00',
     eventColor: "blue",
+    editable:true,
   },
   {
     id: 2,
@@ -22,6 +23,8 @@ const events = [
     start: '2023-02-23T13:00:00',
     end: '2023-02-23T18:00:00',
     eventColor: "red",
+    editable:true,
+
 
 
   },
