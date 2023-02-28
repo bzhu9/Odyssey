@@ -72,7 +72,9 @@ function FullCalendarApp(props) {
         // eventClick= {
         //   props.onFormSwitch('calender')
         // }
-        eventClick={(e) => console.log(e.event.id)}
+        // eventClick={(e) => console.log(e.event.id)}
+        eventClick={(e) => props.onFormSwitch('change event')}
+
 
         
 
