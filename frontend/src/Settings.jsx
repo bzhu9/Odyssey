@@ -41,6 +41,8 @@ export const Settings = (props) => {
             <button type="submit" onClick={deleteUser}>Delete Account</button>
         </form>
         <button className="link-btn" onClick={() => props.onFormSwitch('calender')}>Go back to Calender</button>
+        <button className="link-btn" onClick={() => props.onFormSwitch('reset')}>Change Password</button>
+
     </div>
     )
 }
