@@ -11,7 +11,7 @@ const events = [
   //add in an events array instead of this constant here
   {
     id: 1,
-    title: 'CS 307 Lecture\nHAAS G040',
+    title: 'CS 307 Lecture\nHAAS G040\nnotes',
     start: '2023-02-22T10:00:00',
     end: '2023-02-22T12:00:00',
     eventColor: "blue",
@@ -73,6 +73,8 @@ function FullCalendarApp(props) {
         //   props.onFormSwitch('calender')
         // }
         eventClick={(e) => console.log(e.event.id)}
+
+        
 
         // eventClick={props.onFormSwitch('addEvent')}
       />

@@ -9,8 +9,8 @@ import { Settings } from './Settings';
 import { Map } from './Map';
 import { CreateEvent } from './CreateEvent';
 import { OpenClass } from './OpenClass';
-
 import FullCalendarApp, { Calender } from "./Calender"
+import { ChangeEvent } from './ChangeEvent';
 
 function App() {
   const [currentForm, setCurrentForm] = useState('login');
@@ -29,6 +29,7 @@ function App() {
         : currentForm === "map"  ? <Map onFormSwitch={toggleForm} />
         : currentForm === "addEvent"  ? <CreateEvent onFormSwitch={toggleForm} />
         : currentForm === "class" ? <OpenClass onFormSwitch={toggleForm} />
+        : currentForm === "change event" ? <ChangeEvent onFormSwitch={toggleForm} />
         : <Reset onFormSwitch={toggleForm} /> 
         
       }
