@@ -40,8 +40,8 @@ export const Settings = (props) => {
             <input size="80" value={pass2} onChange={(e) => setPass2(e.target.value)} type="password" placeholder="********" id="password" name="password" />
             <button type="submit" onClick={deleteUser}>Delete Account</button>
         </form>
-        <button className="link-btn" onClick={() => props.onFormSwitch('calender')}>Go back to Calender</button>
         <button className="link-btn" onClick={() => props.onFormSwitch('reset')}>Change Password</button>
+        <button className="link-btn" onClick={() => props.onFormSwitch('calender')}>Go back to Calender</button>
 
     </div>
     )
