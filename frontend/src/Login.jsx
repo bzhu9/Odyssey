@@ -1,5 +1,6 @@
 import React, {useState} from "react"
 import api from "./apis"
+import { Link } from "react-router-dom";
 export const Login = (props) => {
     const [email, setEmail] = useState('');
     const [pass, setPass] = useState('');
@@ -48,9 +49,19 @@ export const Login = (props) => {
                 <button type="submit" onClick={login} >Log In</button>
 
             </form>
-            <button type="submit" onClick={() => props.onFormSwitch('calender')}>Weekly View</button>
+            {/* <button type="submit" onClick={() => props.onFormSwitch('calender')}>Weekly View</button>
             <button className="reg-btn" onClick={() => props.onFormSwitch('register')}>Create an account</button>
-            <button className="reset-btn" onClick={() => props.onFormSwitch('reset')}>Reset Password</button>
+            <button className="reset-btn" onClick={() => props.onFormSwitch('reset')}>Reset Password</button> */}
+            {/* not sure why the buttons are small */}
+            <Link to="/calendar">
+                <button type="submit">Weekly View</button>
+            </Link>
+            <Link to="/register">
+                <button className="reg-btn">Create an account</button>
+            </Link>
+            <Link to="/reset">
+                <button className="reset-btn">Reset Password</button>
+            </Link>
 
         </div>
     )

@@ -22,7 +22,7 @@ export const Settings = (props) => {
                 console.log(res);
                 sessionStorage.setItem("user", null);
             })
-
+            props.onFormSwitch('login');
         }
     }
 
