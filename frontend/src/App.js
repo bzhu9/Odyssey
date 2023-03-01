@@ -43,7 +43,8 @@ function App() {
           <Route index path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
           <Route path="login" element={<FullCalendarApp />} />
-          <Route path="calendar" element={<Settings />} />
+          <Route path="calender" element={<FullCalendarApp />} />
+          <Route path="settings" element={<Settings />} />
           <Route path="map" element={<Map />} />
           <Route path="addEvent" element={<CreateEvent />} />
           <Route path="class" element={<OpenClass />} />

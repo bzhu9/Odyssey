@@ -69,6 +69,7 @@ input {
   padding: 1rem;
   border: none;
   border-radius: 100px;
+ 
 }
 
 button {
@@ -81,6 +82,7 @@ button {
   margin-top: 5px;
   color:  black;
   display: inline-block;
+  width:400px;
 
 }
 
