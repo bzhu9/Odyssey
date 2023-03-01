@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import api from "./apis"
+import { Link } from "react-router-dom";
 
 export const Reset = (props) => {
     const [email, setEmail] = useState('');
@@ -50,7 +51,10 @@ export const Reset = (props) => {
             <input size="80" value={pass2} onChange={(e) => setPass2(e.target.value)} type="password" placeholder="********" id="password" name="password" />
             <button type="submit" onClick={reset} >Reset Password</button>
         </form>
-        <button className="link-btn" onClick={() => props.onFormSwitch('login')}>Go back to login screen</button>
+        {/* <button className="link-btn" onClick={() => props.onFormSwitch('login')}>Go back to login screen</button> */}
+        <Link to="/login">
+            <button className="link-btn">Go back to login screen</button>
+        </Link>
     </div>
     )
 }

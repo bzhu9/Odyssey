@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import api from "./apis"
+import { Link } from "react-router-dom";
 
 export const Register = (props) => {
     const [email, setEmail] = useState('');
@@ -61,7 +62,10 @@ export const Register = (props) => {
             <input size="90" value={seq3} onChange={(e) => setSeq3(e.target.value)} type="text" placeholder="Jackie" id="seq" name="seq" />
             <button type="submit">Register</button>
         </form>
-        <button className="link-btn" onClick={() => props.onFormSwitch('login')}>Go back to login screen</button>
+        {/* <button className="link-btn" onClick={() => props.onFormSwitch('login')}>Go back to login screen</button> */}
+        <Link to="/login">
+            <button className="link-btn">Go back to login screen</button>
+        </Link>
     </div>
     )
 }

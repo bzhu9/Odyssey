@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -36,7 +37,10 @@ export const ChangeEvent = (props) => {
         <button type="submit" >Delete Event</button>
 
     </form>
-    <button className="link-btn" onClick={() => props.onFormSwitch('calender')}>Go back to Calender</button>
+    {/* <button className="link-btn" onClick={() => props.onFormSwitch('calender')}>Go back to Calender</button> */}
+    <Link to="/cal">
+        <button size="45" className="reset-btn" type="submit">Weekly View</button>
+    </Link>
 </div>
     )
 }

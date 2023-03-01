@@ -1,4 +1,5 @@
 import React, {useState} from "react"
+import { Link } from "react-router-dom";
 import api from "./apis"
 export const OpenClass = (props) => {
     const [classroom, setClassroom] = useState('');
@@ -16,7 +17,10 @@ export const OpenClass = (props) => {
                 <button type="submit" >Submit</button>
 
             </form>
-            <button type="submit" onClick={() => props.onFormSwitch('calender')}>Weekly View</button>
+            {/* <button type="submit" onClick={() => props.onFormSwitch('calender')}>Weekly View</button> */}
+            <Link to="/cal">
+                <button size="45" className="reset-btn" type="submit">Weekly View</button>
+            </Link>
 
         </div>
     )

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import React, { Component } from 'react'
+import { Link, useNavigate } from "react-router-dom";
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -34,6 +35,7 @@ const events = [
 
 
 function FullCalendarApp(props) {
+  const navigate = useNavigate();
   return (
     <div className="App">
       <FullCalendar
@@ -46,23 +48,28 @@ function FullCalendarApp(props) {
         customButtons={{
           edit: {
             text: 'edit event',
-            click: () => props.onFormSwitch('addEvent'),
+            // click: () => props.onFormSwitch('addEvent'),
+            click: () => navigate("../addEvent"),
           },
           new: {
             text: 'add event',
-            click: () => props.onFormSwitch('addEvent'),
+            // click: () => props.onFormSwitch('addEvent'),
+            click: () => navigate("../addEvent"),
           },
           map: {
             text: 'map view',
-            click: () => props.onFormSwitch('map'),
+            // click: () => props.onFormSwitch('map'),
+            click: () => navigate("../map"),
           },
           settings: {
             text: 'settings',
-            click: () => props.onFormSwitch('settings'),
+            // click: () => props.onFormSwitch('settings'),
+            click: () => navigate("../settings"),
           },
           classSearch: {
             text: 'search',
-            click: () => props.onFormSwitch('class'),
+            // click: () => props.onFormSwitch('class'),
+            click: () => navigate("../class"),
           },
         }}
         events={events}
@@ -73,14 +80,18 @@ function FullCalendarApp(props) {
         //   props.onFormSwitch('calender')
         // }
         // eventClick={(e) => console.log(e.event.id)}
-        eventClick={(e) => props.onFormSwitch('change event')}
+        // eventClick={(e) => props.onFormSwitch('change event')}
+        eventClick={(e) => navigate("../changeEvent")}
 
 
         
 
         // eventClick={props.onFormSwitch('addEvent')}
       />
-      <button type="button" onClick={() => props.onFormSwitch('login')}>Go back to login</button>
+      {/* <button type="button" onClick={() => props.onFormSwitch('login')}>Go back to login</button> */}
+      <Link to="/login">
+        <button className="link-btn">Go back to login screen</button>
+      </Link>
       <br></br>
     </div>
     

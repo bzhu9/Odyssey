@@ -54,7 +54,7 @@ export const Login = (props) => {
             <button className="reset-btn" onClick={() => props.onFormSwitch('reset')}>Reset Password</button> */}
             {/* not sure why the buttons are small */}
             
-            <Link to="/calendar">
+            <Link to="/cal">
                 <button size="45" className="reset-btn" type="submit">Weekly View</button>
             </Link>
             <Link to="/register">
