@@ -9,9 +9,9 @@ export const Login = (props) => {
     }
 
     const login = async () => {
-        if (sessionStorage.getItem("user") === null) {
-            console.log("HELLO WORLD");
-        }
+        // if (sessionStorage.getItem("user") === null) {
+        //     console.log("HELLO WORLD");
+        // }
 
         const payload = {email: email, password: pass};
         await api.loginUser(payload).then( async res => {
@@ -27,6 +27,8 @@ export const Login = (props) => {
             if (sessionStorage.getItem("user")) {
                 console.log(sessionStorage.getItem("user") + " is logged in");
             }
+            // does not work?
+            props.onFormSwitch('calender');
         }).catch(function (error){
             if (error.response) {
                 console.log(error.response.data);
