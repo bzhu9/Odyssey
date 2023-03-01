@@ -10,7 +10,8 @@ import { Settings } from './Settings';
 import { Map } from './Map';
 import { CreateEvent } from './CreateEvent';
 import { OpenClass } from './OpenClass';
-import FullCalendarApp, { Calender } from "./Calender";
+// import FullCalendarApp, { Calender } from "./Calender";
+import FullCalendarApp from "./Calender";
 import { ChangeEvent } from './ChangeEvent';
 import Layout from './Layout';
 
@@ -42,8 +43,8 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route index path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
-          <Route path="login" element={<FullCalendarApp />} />
-          <Route path="calender" element={<FullCalendarApp />} />
+          {/* <Route path="login" element={<FullCalendarApp />} /> */}
+          <Route path="cal" element={<FullCalendarApp />} />
           <Route path="settings" element={<Settings />} />
           <Route path="map" element={<Map />} />
           <Route path="addEvent" element={<CreateEvent />} />
