@@ -31,10 +31,20 @@ router.route("/add").post(async (req, res) => {
         return res.status(400).json({ message: "All fields are required" });
     }
 
+    // regex to check if only characters
+    if (!(/^[a-zA-Z ,.'-]+$/.test(name))) {
+        return res.status(409).json({ message: "Name must consist of only letters"});
+    }
+
     // check for duplicate emails
     const duplicate = await User.findOne({ email }).lean().exec()
     if (duplicate) {
-        return res.status(409).json({ message: "Duplicate email"});
+        return res.status(409).json({ message: "Duplicate email found"});
+    }
+
+    // check for valid emails
+    if (!(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(name))) {
+        return res.status(409).json({ message: "Please enter a valid email"});
     }
 
     // hash password, 10 salt rounds

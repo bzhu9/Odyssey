@@ -31,9 +31,13 @@ export const Register = (props) => {
                 setSeq2("");
                 setSeq3("");
             });
+            props.onFormSwitch('login');
         }
         catch (error) {
-            console.log(error);
+            if (error.response) {
+                console.log(error.response.data);
+                alert(error.response.data.message);
+            }
         }
     }
 
