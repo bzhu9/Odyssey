@@ -1,9 +1,9 @@
 const router = require("express").Router();
-let User = require("../models/Building");
+let Building = require("../models/Building");
 
 // GET
 router.route("/").get((req, res) => {
-    User.find()
+    Building.find()
     .then(building => res.json(building))
     .catch(err => res.status(400).json("Error: " + err));
 });
