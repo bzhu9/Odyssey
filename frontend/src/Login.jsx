@@ -1,9 +1,10 @@
 import React, {useState} from "react"
 import api from "./apis"
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 export const Login = (props) => {
     const [email, setEmail] = useState('');
     const [pass, setPass] = useState('');
+    const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -13,9 +14,8 @@ export const Login = (props) => {
         // if (sessionStorage.getItem("user") === null) {
         //     console.log("HELLO WORLD");
         // }
-
         const payload = {email: email, password: pass};
-        await api.loginUser(payload).then( async res => {
+        await api.loginUser(payload).then( res => {
             console.log(res)
             window.alert(`${res.data.user} logged in successfully`);
             setPass("");
@@ -29,7 +29,9 @@ export const Login = (props) => {
                 console.log(sessionStorage.getItem("user") + " is logged in");
             }
             // does not work?
-            props.onFormSwitch('calender');
+            // props.onFormSwitch('calender');
+            navigate("../register");
+
         }).catch(function (error){
             if (error.response) {
                 console.log(error.response.data);

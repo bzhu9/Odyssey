@@ -43,7 +43,7 @@ router.route("/add").post(async (req, res) => {
     }
 
     // check for valid emails
-    if (!(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(name))) {
+    if (!(/^[\w-.]+@([\w-]+.)+[\w-]{2,4}$/.test(email))) {
         return res.status(409).json({ message: "Please enter a valid email"});
     }
 
