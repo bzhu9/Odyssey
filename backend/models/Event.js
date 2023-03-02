@@ -3,6 +3,9 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const eventSchema = new Schema({
+  title: {
+    type: String
+  },
   startTime: {
     //mongo will format it in its own way
     type: Date,
@@ -13,9 +16,10 @@ const eventSchema = new Schema({
     require: true
   },
   location: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true,
-    ref: 'Building'
+    // type: mongoose.Schema.Types.ObjectId,
+    // required: true,
+    // ref: 'Building'
+    type: String,
   },
   users: {
     // list of _ids
@@ -29,18 +33,18 @@ const eventSchema = new Schema({
   repeating: {
     type: String,
     enum: ['weekly', 'monthly', 'none'],
-    require: true
+    // require: true
   },
   type: {
     type: String,
     enum: ['meal', 'study', 'class', 'misc'],
-    require: true
+    // require: true
 
   },
   days: {
     type: String,
     enum: ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'],
-    require: true
+    // require: true
 
   },
   

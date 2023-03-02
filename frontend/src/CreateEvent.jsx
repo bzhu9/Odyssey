@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import api from "./apis";
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -11,10 +12,48 @@ export const CreateEvent = (props) => {
     const [startTime, setStartTime] = useState('');
     const [endTime, setEndTime] = useState('');
     const [location, setLocation] = useState('');
-    const [notes, setNotes] = useState('');
+    const [note, setNote] = useState('');
 
     const handleSubmit = (e) => {
         e.preventDefault();
+    }
+
+    const submit = async () => {
+        if (title === "" || date === "" || startTime === "" || endTime === "") {
+            alert("Please fill out all fields");
+        }
+        else {
+            // store dates using ISO 8061 format
+            const startDate = new Date(date);
+            const startTimeSplit = startTime.split(':');
+            startDate.setHours(startTimeSplit[0]);
+            startDate.setMinutes(startTimeSplit[1]);
+
+            const endDate = new Date(date);
+            const endTimeSplit = startTime.split(':');
+            endDate.setHours(endTimeSplit[0]);
+            endDate.setMinutes(endTimeSplit[1]);
+            console.log(endDate.toISOString());
+
+            const payload = {
+                title: title,
+                startTime: startDate,
+                endTime: endDate,
+                location: location,
+                note: note
+            };
+
+            await api.insertEvent(payload).then(res => {
+                window.alert("Event created successfully");
+            }).catch (err => {
+                if (err.response) {
+                    console.log(err.response.data);
+                    alert(err.response.data.message);
+                }
+            });
+        }
+
+
     }
 
     return (
@@ -32,8 +71,9 @@ export const CreateEvent = (props) => {
         <label htmlFor="text">Location</label>
         <input size="45" value={location} onChange={(e) => setLocation(e.target.value)} type="email" placeholder="previous location" id="email" name="email" />
         <label htmlFor="text">Event Notes</label>
-        <input size="40" value={notes} onChange={(e) => setNotes(e.target.value)} type="email" placeholder="previous notes" id="email" name="email" />
-        <button type="submit" onClick={() => props.onFormSwitch('calender')}>Submit Changes</button>
+        <input size="40" value={note} onChange={(e) => setNote(e.target.value)} type="email" placeholder="previous notes" id="email" name="email" />
+        {/* <button type="submit" onClick={() => props.onFormSwitch('calender')}>Submit Changes</button> */}
+        <button type="submit" onClick={submit} >Create Event</button>
     </form>
     {/* <button className="link-btn" onClick={() => props.onFormSwitch('calender')}>Go back to Calender</button> */}
     <Link to="/cal">
