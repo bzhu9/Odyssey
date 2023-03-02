@@ -56,7 +56,7 @@ router.route('/delete').post(async (req, res) => {
   //get the id
   const id = req.body._id;
   //find the object in the database
-  const event = await Event.findOne({ id }).exec();
+  const event = await Event.findOne({ _id: id }).exec();
 
     if (!event) {
         return res.status(400).json({ message: "Event not found"});
