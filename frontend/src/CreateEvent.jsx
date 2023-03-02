@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import api from "./apis";
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -14,6 +14,7 @@ export const CreateEvent = (props) => {
     const [location, setLocation] = useState('');
     const [note, setNote] = useState('');
 
+    const navigate = useNavigate();
     const handleSubmit = (e) => {
         e.preventDefault();
     }
@@ -25,26 +26,29 @@ export const CreateEvent = (props) => {
         else {
             // store dates using ISO 8061 format
             const startDate = new Date(date);
+            startDate.setDate(startDate.getDate() + 1)
             const startTimeSplit = startTime.split(':');
             startDate.setHours(startTimeSplit[0]);
             startDate.setMinutes(startTimeSplit[1]);
 
             const endDate = new Date(date);
-            const endTimeSplit = startTime.split(':');
+            endDate.setDate(endDate.getDate() + 1)
+            const endTimeSplit = endTime.split(':');
             endDate.setHours(endTimeSplit[0]);
             endDate.setMinutes(endTimeSplit[1]);
-            console.log(endDate.toISOString());
 
             const payload = {
                 title: title,
-                startTime: startDate,
-                endTime: endDate,
+                startTime: startDate.toISOString(),
+                endTime: endDate.toISOString(),
                 location: location,
                 note: note
             };
 
             await api.insertEvent(payload).then(res => {
                 window.alert("Event created successfully");
+                navigate("../cal");
+
             }).catch (err => {
                 if (err.response) {
                     console.log(err.response.data);
