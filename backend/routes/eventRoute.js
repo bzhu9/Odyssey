@@ -93,7 +93,10 @@ router.route('/edit').post(async (req, res) => {
   }
   */
 
-  const event = await Event.findOne({ id }).lean();
+  const event = await Event.findOne({ _id: id }).lean();
+  if (!event) {
+    res.status(401).json({ message: "No Event" });
+  }
   if (event) {
     //event.title = req.body.title; // modify the title property of the event object
     //event.startTime = req.body.startTime;
@@ -104,7 +107,7 @@ router.route('/edit').post(async (req, res) => {
     //const repeating = req.body.repeating;
     //const type = req.body.type;
     //const days = req.body.days;
-    const result = await Event.updateOne({ id }, { $set: {
+    const result = await Event.updateOne({ _id: id }, { $set: {
       title: req.body.title,
       startTime: req.body.startTime,
       endTime: req.body.endTime,
@@ -115,7 +118,7 @@ router.route('/edit').post(async (req, res) => {
       //type: req.body.type,
       //days: req.body.days 
     } });
-    res.status(200).json({ message: `Event, ediited`});
+    res.status(200).json({ message: `Event successfully edited!`});
     console.log(result); // output the result of the update operation
   }
   
