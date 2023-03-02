@@ -1,29 +1,50 @@
 import React, { useState } from "react";
 import api from "./apis"
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export const Settings = (props) => {
     const [email, setEmail] = useState('');
     const [pass, setPass] = useState('');
     const [pass2, setPass2] = useState('');
     const [seq, setSeq] = useState('');
+    const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault();
     }
 
     const deleteUser = async () => {
-        if (sessionStorage.getItem("user") === null) {
+        console.log("USER: ");
+        console.log(sessionStorage.getItem("user"));
+        if (sessionStorage.getItem("user") == null) {
+            console.log("wtf?")
             window.alert("Please login delete your account!");
         }
+        else if (email !== sessionStorage.getItem("user")){
+            window.alert("Please provide the email associated to your account");
+        }
+        else if (pass !== pass2) {
+            window.alert("Passwords do not match");
+        }
         else {
-            console.log(sessionStorage.getItem("user"));
-            const email = {email: sessionStorage.getItem("user")};
-            await api.deleteUser(email).then( async res => {
-                console.log(res);
-                sessionStorage.setItem("user", null);
+            // console.log(sessionStorage.getItem("user"));
+            const payload = {
+                email: sessionStorage.getItem("user"),
+                password: pass,
+                seq: seq,
+            };
+            // const formEmail = email;
+            await api.deleteUser(payload).then( async res => {
+                // console.log(res);
+                alert("Account deleted successfully");
+                sessionStorage.removeItem("user");
+                navigate("../login");
+            }).catch (function (error) {
+                if (error.response) {
+                    alert(error.response.data.message);
+                }
             })
-            props.onFormSwitch('login');
+            // props.onFormSwitch('login');
         }
     }
 

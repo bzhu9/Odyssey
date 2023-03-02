@@ -30,7 +30,7 @@ export const Login = (props) => {
             }
             // does not work?
             // props.onFormSwitch('calender');
-            navigate("../register");
+            navigate("../cal");
 
         }).catch(function (error){
             if (error.response) {
