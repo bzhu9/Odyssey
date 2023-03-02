@@ -8,32 +8,34 @@ router.route('/').get((req, res) => {
 });
 
 router.route('/add').post((req, res) => {
+  const title = req.body.title;
   const startTime = req.body.startTime;
   const endTime = req.body.endTime;
   const location = req.body.location;
-  const users = req.body.users;
+  // const users = req.body.users;
   const note = req.body.note;
-  const repeating = req.body.repeating;
-  const type = req.body.type;
-  const days = req.body.days;
+  // const repeating = req.body.repeating;
+  // const type = req.body.type;
+  // const days = req.body.days;
 
   //check if the fields are populated
-  if (!startTime || !endTime || !location || !users || !note || !repeating || !type || !days) {
+  // if (!startTime || !endTime || !location || !users || !note || !repeating || !type || !days) {
+  if (!title || !startTime || !endTime) {
     return res.status(400).json({ message: "All fields are required" });
   }
 
 
-
   //create the new event
   const newEvent = new Event({
+    "title": title,
     "startTime": startTime,
     "endTime": endTime,
     "location": location,
-    "users": users,
+    // "users": users,
     "note": note,
-    "repeating": repeating,
-    "type": type,
-    "days": days
+    // "repeating": repeating,
+    // "type": type,
+    // "days": days
   });
 
   newEvent.save()

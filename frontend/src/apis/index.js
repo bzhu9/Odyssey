@@ -11,12 +11,16 @@ export const getAllUsers = () => api.get("/user");
 export const getUser = payload => api.post("/user");
 export const deleteUser = payload => api.post("/user/delete", payload);
 
+export const insertEvent = payload => api.post("/event/add", payload);
+
 const apis = {
     insertUser,
     loginUser,
     resetUser,
     getAllUsers,
-    deleteUser
+    deleteUser,
+
+    insertEvent
 }
 
 export default apis;
