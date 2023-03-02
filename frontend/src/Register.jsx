@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import api from "./apis"
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export const Register = (props) => {
     const [email, setEmail] = useState('');
@@ -10,6 +10,8 @@ export const Register = (props) => {
     const [seq1, setSeq1] = useState('');
     const [seq2, setSeq2] = useState('');
     const [seq3, setSeq3] = useState('');
+
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -32,7 +34,8 @@ export const Register = (props) => {
                 setSeq2("");
                 setSeq3("");
             });
-            props.onFormSwitch('login');
+            // props.onFormSwitch('login');
+            navigate("../login");
         }
         catch (error) {
             if (error.response) {
