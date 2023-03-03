@@ -11,8 +11,8 @@ router.route("/").get((req, res) => {
     // somehow find all the times that match
     // OpenClass.find()
     OpenClass.find({
-        startTime: { $lt: req.body.startTime},
-        endTime: {$gt: req.body.endTime},
+        // startTime: { $lt: req.body.startTime},
+        // endTime: {$gt: req.body.endTime},
         building: req.body.building
     })
     .then(room => res.json(room))

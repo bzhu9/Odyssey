@@ -34,19 +34,22 @@ export const OpenClass = (props) => {
                 building: building,
                 room: room
             }
-
-            await api.searchOpenClass(payload).then(res => {
-                console.log("hi")
-                console.log(res)
-                return (
-                    res
-                  );
-            }).catch (err => {
-                if (err.response) {
-                    console.log(err.response.data);
-                    alert(err.response.data.message);
-                }
-            })
+            console.log(payload)
+            const openClasses = await api.searchOpenClass(payload);
+            console.log(openClasses);
+            // await api.searchOpenClass(payload).then(res => {
+            //     console.log("hi")
+            //     console.log(res);
+            //     console.log(res.data)
+            //     return (
+            //         res
+            //       );
+            // }).catch (err => {
+            //     if (err.response) {
+            //         console.log(err.response.data);
+            //         alert(err.response.data.message);
+            //     }
+            // })
         }
     }
 
