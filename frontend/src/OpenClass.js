@@ -14,9 +14,14 @@ export const OpenClass = (props) => {
             alert("Invalid classroom")
         }
         else {
-            const startTime = new Date()
-            const endTime = new Date()
-            endTime.setHours(endTime.getHours() + 1)
+            const zeroPad = (num, places) => String(num).padStart(places, '0')
+            const now = new Date()
+            const hour = Number(now.getHours())
+            const nextHour = hour + 1
+            const minute = Number(now.getMinutes())
+            const startTime = `${zeroPad(hour, 2)}:${zeroPad(minute, 2)}`
+            const endTime = `${zeroPad(nextHour, 2)}:${zeroPad(minute, 2)}`
+            
             const building = classroom.split(' ')[0]
             const room = classroom.split(' ')[1]
             
