@@ -65,7 +65,7 @@ export const Settings = (props) => {
         {/* <button className="link-btn" onClick={() => props.onFormSwitch('reset')}>Change Password</button> */}
         {/* <button className="link-btn" onClick={() => props.onFormSwitch('calender')}>Go back to Calender</button> */}
         <Link to="/reset">
-            <button size="45" className="reset-btn">Reset Password</button>
+            <button size="45" className="reset-btn">Change Password</button>
         </Link>
         <Link to="/cal">
             <button size="45" className="reset-btn" type="submit">Weekly View</button>

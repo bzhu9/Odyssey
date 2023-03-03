@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import api from "./apis"
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export const Reset = (props) => {
+    const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [pass, setPass] = useState('');
     const [pass2, setPass2] = useState('');
@@ -24,7 +25,7 @@ export const Reset = (props) => {
           console.log(response.data);
           // Display a success message to the user
           window.alert("Password reset successful!");
-          props.onFormSwitch('login')
+          navigate('../login');
         } catch (error) {
           console.log(error);
           // Display an error message to the user
