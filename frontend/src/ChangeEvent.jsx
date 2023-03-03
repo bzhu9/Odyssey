@@ -40,9 +40,13 @@ export const ChangeEvent = (props) => {
     useEffect(() => {
         //preload the textboxes
         setTitle(eventObj.title);
-        setDate(eventObj.date);
-        setStartTime(eventObj.startTime);
-        setEndTime(eventObj.endTime);
+        let d = new Date(eventObj.startTime);
+        var dateFormat = d.getFullYear() + "-" +((d.getMonth()+1) < 10 ? "0" + (d.getMonth() + 1) : (d.getMonth()+1)) + "-" + (d.getDate() < 10 ? "0" + d.getDate() : d.getDate());        console.log(dateFormat);
+
+        setDate(dateFormat);
+        setStartTime(((d.getHours() < 10) ? "0" : "") + d.getHours() + ":" + ((d.getMinutes() < 10) ? "0" : "") + d.getMinutes());
+        const endDay = new Date(eventObj.endTime);
+        setEndTime(((endDay.getHours() < 10) ? "0" : "") + endDay.getHours() + ":" + ((endDay.getMinutes() < 10) ? "0" : "") + endDay.getMinutes());
         setLocation(eventObj.location);
         setNote(eventObj.note);
       }, [eventObj]);
@@ -68,6 +72,10 @@ export const ChangeEvent = (props) => {
             }
             if (!isValidTime) {
                 window.alert("Start time must be before end time!");
+                return;
+            }
+            else if (note.length > 500) {
+                window.alert("Personal note can not be more than 500 characters");
                 return;
             }
             const startDate = new Date(date);

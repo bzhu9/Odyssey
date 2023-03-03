@@ -42,7 +42,8 @@
   align-items: center;
   justify-content: center;
   color: #CEB888;
-  background: black;
+  /* background: black; */
+  background: #202020;
 }
 
 .auth-form-container, .login-form, .register-form {
