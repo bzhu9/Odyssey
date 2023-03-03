@@ -39,8 +39,13 @@ export const OpenClass = (props) => {
             const openClasses = await api.searchOpenClass(payload);
             var processedClassrooms = [];
             var classes = [];
+            var set = new Set();
+            
             for (let i = 0; i < openClasses.data.length; i++) {
-                classes.push(`${openClasses.data[i].building} ${openClasses.data[i].room}`);
+                if (!set.has(`${openClasses.data[i].building} ${openClasses.data[i].room}`)) {
+                    set.add(`${openClasses.data[i].building} ${openClasses.data[i].room}`);
+                    classes.push(`${openClasses.data[i].building} ${openClasses.data[i].room} ${openClasses.data[i].startTime}-${openClasses.data[i].endTime}`);
+                }
                 // processedClassrooms.push({name: `${openClasses.data[i].building} ${openClasses.data[i].room}`});
             }
             var set = new Set(classes);
