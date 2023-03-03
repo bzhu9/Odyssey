@@ -53,7 +53,7 @@ function FullCalendarApp(props) {
         start: e.startTime,
         end: e.endTime,
         // eventColor: "red",
-        backgroundColor: "red",
+        backgroundColor: e.location.toLowerCase() === "virtual" ? "green" : "blue",
         editable: true
       })
     }
