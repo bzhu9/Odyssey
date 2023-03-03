@@ -137,4 +137,24 @@ router.route("/delete").post(async (req, res) => {
     }
 })
 
+router.route("/email").post(async (req, res) => {
+    const oldEmail = req.body.oldEmail;
+    const newEmail = req.body.newEmail;
+    const duplicate = await User.findOne({ email: oldEmail }).lean().exec()
+    if (duplicate) {
+        return res.status(409).json({ message: "Duplicate email found"});
+    }
+    const user = await User.findOne({ email: oldEmail }).lean();
+
+    if (user) {
+        await User.findOneAndUpdate({ email: oldEmail }, { email: newEmail }).lean();
+        //send response
+        res.status(200).json({ message: "Email Successfully changed", user: user.email });
+    }
+    else {
+        // Email doesn't exist
+        res.status(401).json({ message: "Email does not exist" });
+    }
+});
+
 module.exports = router;
