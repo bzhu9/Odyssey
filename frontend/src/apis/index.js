@@ -17,6 +17,8 @@ export const deleteEvent = payload => api.post("/event/delete", payload);
 export const editEvent = payload => api.post("/event/edit", payload);
 export const getSingleEvent = id => api.get(`/event/single/${id}`);
 
+export const searchOpenClass = payload => api.get("/openclass/", payload);
+
 const apis = {
     insertUser,
     loginUser,
@@ -28,7 +30,9 @@ const apis = {
     getAllEvents,
     deleteEvent,
     editEvent,
-    getSingleEvent
+    getSingleEvent,
+
+    searchOpenClass
 }
 
 export default apis;

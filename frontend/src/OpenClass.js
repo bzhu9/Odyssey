@@ -1,6 +1,7 @@
 import React, {useState} from "react"
 import { Link } from "react-router-dom";
 import api from "./apis"
+
 export const OpenClass = (props) => {
     const [classroom, setClassroom] = useState('');
 
@@ -11,6 +12,29 @@ export const OpenClass = (props) => {
     const submit = async () => {
         if (!classroom.match(/[A-z]+ [0-9]+/)) {
             alert("Invalid classroom")
+        }
+        else {
+            const startTime = new Date()
+            const endTime = new Date()
+            endTime.setHours(endTime.getHours() + 1)
+            const building = classroom.split(' ')[0]
+            const room = classroom.split(' ')[1]
+            
+            const payload = {
+                startTime: startTime.toISOString(),
+                endTime: endTime.toISOString(),
+                building: building,
+                room: room
+            }
+
+            await api.searchOpenClass(payload).then(res => {
+                window.alert("Searching...");
+            }).catch (err => {
+                if (err.response) {
+                    console.log(err.response.data);
+                    alert(err.response.data.message);
+                }
+            })
         }
     }
 

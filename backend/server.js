@@ -21,6 +21,7 @@ connectDB()
 app.use("/event", require("./routes/eventRoute"));
 app.use("/user", require("./routes/userRoute"));
 app.use("/building", require("./routes/buildingRoute"));
+app.use("/openclass", require("./routes/openClassRoute"));
 
 
 mongoose.connection.once("open", () => {
