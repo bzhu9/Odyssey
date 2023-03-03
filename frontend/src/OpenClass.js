@@ -24,7 +24,10 @@ export const OpenClass = (props) => {
             
             const building = classroom.split(' ')[0]
             const room = classroom.split(' ')[1]
-            
+            console.log(startTime)
+            console.log(endTime)
+            console.log(building)
+            console.log(room)
             const payload = {
                 startTime: startTime,
                 endTime: endTime,
@@ -33,7 +36,11 @@ export const OpenClass = (props) => {
             }
 
             await api.searchOpenClass(payload).then(res => {
-                window.alert(res);
+                console.log("hi")
+                console.log(res)
+                return (
+                    res
+                  );
             }).catch (err => {
                 if (err.response) {
                     console.log(err.response.data);

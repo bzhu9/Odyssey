@@ -19,6 +19,10 @@ const openClassSchema = new Schema({
     room: {
         type: String,
         required: true
+    },
+    address: {
+        type: String,
+        required: false,
     }
     // latitude: {
     //     type: Number,
