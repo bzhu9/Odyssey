@@ -53,7 +53,7 @@ function FullCalendarApp(props) {
         start: e.startTime,
         end: e.endTime,
         // eventColor: "red",
-        backgroundColor: "green",
+        backgroundColor: "red",
         editable: true
       })
     }
