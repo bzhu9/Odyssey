@@ -16,25 +16,20 @@ async function getEvent(eventID) {
 }
 
 export const ChangeEvent = (props) => {
-        // const eventID = localStorage.getItem('eventID');
-        // const eventObj = getEvent(eventID);
+    //get the object ID from local storage
+    const eventID = localStorage.getItem('eventID');
 
-        
-        // const [title, setTitle] = useState('');
-        // console.log(eventObj.title);
-        // setTitle(eventObj.title);
-        const eventID = localStorage.getItem('eventID');
-        const [eventObj, setEventObj] = useState({});
-
-        const navigate = useNavigate();
-      
-        useEffect(() => {
-          const fetchEvent = async () => {
-            const response = await getEvent(eventID);
-            setEventObj(response);
-          };
-          fetchEvent();
-        }, [eventID]);
+    const [eventObj, setEventObj] = useState({});
+    const navigate = useNavigate();
+    //get the event object given the object id
+    useEffect(() => {
+      const fetchEvent = async () => {
+        const response = await getEvent(eventID);
+        setEventObj(response);
+      };
+      fetchEvent();
+    }, [eventID]);
+    const [isValidTime, setIsValidTime] = useState(true);
     const [title, setTitle] = useState('');
     const [date, setDate] = useState('');
     const [startTime, setStartTime] = useState('');
@@ -43,6 +38,7 @@ export const ChangeEvent = (props) => {
     const [note, setNote] = useState('');
 
     useEffect(() => {
+        //preload the textboxes
         setTitle(eventObj.title);
         setDate(eventObj.date);
         setStartTime(eventObj.startTime);
@@ -51,36 +47,29 @@ export const ChangeEvent = (props) => {
         setNote(eventObj.note);
       }, [eventObj]);
 
-    //setTitle(eventObj.title);
 
-
-    //get the eventID
-    //const eventtitle = localStorage.getItem('eventTitle');
-    //console.log(eventObj);
-
-    //get the event from the database
-
-    //update the textboxes to show the value from the eventobject
-
-    /*
-        once u get the event object
-        you can repopulate the texboxes
-        and then when the submit changes button has been clicked
-        use /edit post route to update the object  
-            make sure that the cal view changes accordingly
-        
-        if the delete button is clicked
-        use /delete post route to update hte object
-            make sure that the call view no longer shows that event
-
-    */
 
     const handleSubmit = (e) => {
         e.preventDefault();
     }
+
+    //check if the time is valid
+    useEffect(() => {
+        const start = new Date(`${date}T${startTime}:00`);
+        const end = new Date(`${date}T${endTime}:00`);
+        setIsValidTime(start <= end);
+    }, [date, startTime, endTime]);
     
     const update = async () => {
         try {
+            if (title === "" || date === "" || startTime === "" || endTime === "") {
+                alert("Please fill out all required fields");
+                return;
+            }
+            if (!isValidTime) {
+                window.alert("Start time must be before end time!");
+                return;
+            }
             const startDate = new Date(date);
             startDate.setDate(startDate.getDate() + 1)
             const startTimeSplit = startTime.split(':');
