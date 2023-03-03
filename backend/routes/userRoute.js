@@ -140,7 +140,7 @@ router.route("/delete").post(async (req, res) => {
 router.route("/email").post(async (req, res) => {
     const oldEmail = req.body.oldEmail;
     const newEmail = req.body.newEmail;
-    const duplicate = await User.findOne({ email: oldEmail }).lean().exec()
+    const duplicate = await User.findOne({ email: newEmail }).lean().exec()
     if (duplicate) {
         return res.status(409).json({ message: "Duplicate email found"});
     }

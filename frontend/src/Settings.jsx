@@ -39,6 +39,7 @@ export const Settings = (props) => {
                 //send the post api
                 console.log("api call");
                 await api.changeEmail(payload).then( async res => {
+                    sessionStorage.setItem("user", emailNew);
                     console.log("email changed")
                     window.alert("email changed!");
                     navigate("../cal");
