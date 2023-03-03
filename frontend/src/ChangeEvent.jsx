@@ -142,7 +142,12 @@ export const ChangeEvent = (props) => {
         <label htmlFor="text">Event Notes</label>
         <input size="65" value={note} onChange={(e) => setNote(e.target.value)} type="text" placeholder="Notes" id="text" name="text" />
         <button type="submit" onClick={update}>Submit Changes</button>
-        <button type="submit" onClick={deleteEvent}>Delete Event</button>
+        <button onClick={() => {
+            if (window.confirm('Are you sure you want to delete this event?')) {
+            deleteEvent();
+        }
+        }}>Delete Event</button>
+        {/* <button type="submit" onClick={deleteEvent}>Delete Event</button> */}
 
     </form>
     {/* <button className="link-btn" onClick={() => props.onFormSwitch('calender')}>Go back to Calender</button> */}
