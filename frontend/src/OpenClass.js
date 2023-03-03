@@ -16,19 +16,21 @@ export const OpenClass = (props) => {
         else {
             const startTime = new Date()
             const endTime = new Date()
+            console.log(endTime.getHours())
             endTime.setHours(endTime.getHours() + 1)
+            console.log(endTime.getHours())
             const building = classroom.split(' ')[0]
             const room = classroom.split(' ')[1]
             
             const payload = {
-                startTime: startTime.toISOString(),
-                endTime: endTime.toISOString(),
+                startTime: startTime,
+                endTime: endTime,
                 building: building,
                 room: room
             }
 
             await api.searchOpenClass(payload).then(res => {
-                window.alert("Searching...");
+                window.alert(res);
             }).catch (err => {
                 if (err.response) {
                     console.log(err.response.data);

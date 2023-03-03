@@ -9,14 +9,14 @@ router.route("/").get((req, res) => {
     //     res.send(rooms)
     // })
     // somehow find all the times that match
-    // OpenClass.find()
-    // .then(building => res.json(building))
-    // .catch(err => res.status(400).json("Error: " + err));
+    OpenClass.find()
+    .then(building => res.json(building))
+    .catch(err => res.status(400).json("Error: " + err));
     // OpenClass.aggregate([
     //     { $unwind: "$OpenClass" },
     //     { $project: { }}
     // ])
-    res.json('looking')
+    // res.send('looking')
 });
 
 router.route('/add').post((req, res) => {
