@@ -74,7 +74,7 @@ export const ChangeEvent = (props) => {
                 window.alert("Start time must be before end time!");
                 return;
             }
-            else if (note.length > 500) {
+            else if (note.length > 50) {
                 window.alert("Personal note can not be more than 500 characters");
                 return;
             }
