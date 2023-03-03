@@ -118,8 +118,8 @@ router.route("/reset").post(async (req, res) => {
 
 router.route("/delete").post(async (req, res) => {
     const email = req.body.email;
-    const password = req.body.password;
-    const seq = req.body.seq;
+    //const password = req.body.password;
+    //const seq = req.body.seq;
     // console.log(req.body);
     // console.log(email);
     const user = await User.findOne({ email }).exec();
@@ -127,14 +127,14 @@ router.route("/delete").post(async (req, res) => {
     if (!user) {
         return res.status(400).json({ message: "User not found"});
     }
-    const match = await bcrypt.compare(password, user.password);
-    if (match && user.seq1 === seq) {
+    //const match = await bcrypt.compare(password, user.password);
+    //if (match && user.seq1 === seq) {
         const result = await user.deleteOne();
         res.status(200).json({ message: `User with email ${result.email} was deleted successfully` })
-    }
-    else {
-        res.status(401).json({ message: "Credentials do not match"});
-    }
+    //}
+    //else {
+    //    res.status(401).json({ message: "Credentials do not match"});
+    //}
 })
 
 router.route("/email").post(async (req, res) => {

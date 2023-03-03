@@ -66,10 +66,29 @@ export const Settings = (props) => {
     const deleteUser = async () => {
         // console.log("USER: ");
         // console.log(sessionStorage.getItem("user"));
-        // if (sessionStorage.getItem("user") == null) {
-        //     console.log("wtf?")
-        //     window.alert("Please login delete your account!");
-        // }
+        if (sessionStorage.getItem("user") == null) {
+            console.log("wtf?")
+            window.alert("Please login delete your account!");
+        }
+        if (window.confirm('Are you sure you want to delete your account?')) {
+            console.log(sessionStorage.getItem("user"));
+            const payload = {
+                email: sessionStorage.getItem("user"),
+                //password: pass,
+                //seq: seq,
+            };
+            // const formEmail = email;
+            await api.deleteUser(payload).then( async res => {
+                // console.log(res);
+                alert("Account deleted successfully");
+                sessionStorage.removeItem("user");
+                navigate("../login");
+            }).catch (function (error) {
+                if (error.response) {
+                    alert(error.response.data.message);
+                }
+            })
+        }
         // else if (email !== sessionStorage.getItem("user")){
         //     window.alert("Please provide the email associated to your account");
         // }
