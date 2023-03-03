@@ -9,8 +9,13 @@ router.route("/").get((req, res) => {
     //     res.send(rooms)
     // })
     // somehow find all the times that match
-    OpenClass.find()
-    .then(building => res.json(building))
+    // OpenClass.find()
+    OpenClass.find({
+        startTime: { $lt: req.body.startTime},
+        endTime: {$gt: req.body.endTime},
+        building: req.body.building
+    })
+    .then(room => res.json(room))
     .catch(err => res.status(400).json("Error: " + err));
     // OpenClass.aggregate([
     //     { $unwind: "$OpenClass" },
@@ -18,6 +23,12 @@ router.route("/").get((req, res) => {
     // ])
     // res.send('looking')
 });
+
+router.route("/all").get((req, res) => {
+    OpenClass.find()
+    .then(room => res.json(room))
+    .catch(err => res.status(400).json("Error: " + err));
+})
 
 router.route('/add').post((req, res) => {
     const startTime = req.body.startTime
