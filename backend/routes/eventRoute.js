@@ -8,6 +8,14 @@ router.route('/').get((req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
+router.route('/single/:_id').get(async (req, res) => {
+  Event.findOne({ _id: req.params._id }).lean()
+    .then(event => res.json(event))
+    .catch(err => res.status(400).json('Error: ' + err));
+});
+
+//const event = await Event.findOne({ _id: id }).lean();
+
 router.route('/add').post((req, res) => {
   const title = req.body.title;
   const startTime = req.body.startTime;

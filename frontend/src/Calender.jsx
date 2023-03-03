@@ -115,7 +115,23 @@ function FullCalendarApp(props) {
         // }
         // eventClick={(e) => console.log(e.event.id)}
         // eventClick={(e) => props.onFormSwitch('change event')}
-        eventClick={(e) => navigate("../changeEvent")}
+        //eventClick={(e) => navigate("../changeEvent")}
+        eventClick={(e) => {
+          //console.log(e.title);
+          //console.log(e.event.id);
+          localStorage.setItem('eventID', e.event.id);
+          //localStorage.setItem('eventTitle', e.event.eventTitle);
+          navigate({
+          pathname: "../changeEvent",
+          /*
+          state: {
+            eventID: e.event.id,
+            eventTitle: e.event.title
+          }
+          */
+         
+        })}
+      }
 
 
         

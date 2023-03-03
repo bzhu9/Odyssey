@@ -15,6 +15,7 @@ export const insertEvent = payload => api.post("/event/add", payload);
 export const getAllEvents = () => api.get("/event");
 export const deleteEvent = payload => api.post("/event/delete", payload);
 export const editEvent = payload => api.post("/event/edit", payload);
+export const getSingleEvent = id => api.get(`/event/single/${id}`);
 
 const apis = {
     insertUser,
@@ -26,7 +27,8 @@ const apis = {
     insertEvent,
     getAllEvents,
     deleteEvent,
-    editEvent
+    editEvent,
+    getSingleEvent
 }
 
 export default apis;
