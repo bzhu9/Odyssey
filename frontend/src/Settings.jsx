@@ -14,6 +14,54 @@ export const Settings = (props) => {
         e.preventDefault();
     }
 
+    const changeEmail = async () => {
+        console.log("inside");
+        if (sessionStorage.getItem("user") == null) {
+            //console.log("wtf?")
+            console.log("user is null wtf");
+            window.alert("Please login delete your account!");
+        }
+        else if (email !== sessionStorage.getItem("user")){
+            console.log("email is not the same");
+            window.alert("Please provide the email associated to your account");
+        }
+        else {
+            //check if new email is identical to new email confirm
+            console.log("inside else");
+            if (emailNew === emailNew2) {
+                //make the payload object
+                console.log("making payload");
+                const payload = {
+                    oldEmail: email,
+                    newEmail: emailNew
+                };
+
+                //send the post api
+                console.log("api call");
+                await api.changeEmail(payload).then( async res => {
+                    console.log("email changed")
+                    window.alert("email changed!");
+                    navigate("../cal");
+                }).catch(function (error) {
+                    console.log("there was an error changing");
+                    if (error.reponse) {
+                        console.log("displaying error");
+                        window.alert(error.response.data.message);
+                    }
+                })
+
+                //show the response to the user
+            }
+            else {
+                console.log("email is the same as another user");
+                window.alert("please make sure new email is the same");
+            }
+
+            
+        }
+
+    }
+
     const deleteUser = async () => {
         // console.log("USER: ");
         // console.log(sessionStorage.getItem("user"));
@@ -61,7 +109,7 @@ export const Settings = (props) => {
             <input size="45" value={emailNew2} onChange={(e) => setEmailNew2(e.target.value)} type="email" placeholder="alexsmith2@gmail.com" id="email" name="email" />
             {/* <label htmlFor="password"> Password</label>
             <input size="45" value={pass} onChange={(e) => setPass(e.target.value)} type="password" placeholder="********" id="password" name="password" /> */}
-            <button type="submit">Change Email</button>
+            <button type="submit" onClick={changeEmail}>Change Email</button>
             <button type="submit" onClick={deleteUser}>Delete Account</button>
         </form>
         {/* <button className="link-btn" onClick={() => props.onFormSwitch('reset')}>Change Password</button> */}

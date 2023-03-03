@@ -10,6 +10,7 @@ export const resetUser = payload => api.post("user/reset", payload);
 export const getAllUsers = () => api.get("/user");
 export const getUser = payload => api.post("/user", payload);
 export const deleteUser = payload => api.post("/user/delete", payload);
+export const changeEmail = payload => api.post("/user/email", payload);
 
 export const insertEvent = payload => api.post("/event/add", payload);
 export const getAllEvents = () => api.get("/event");
@@ -25,6 +26,7 @@ const apis = {
     resetUser,
     getAllUsers,
     deleteUser,
+    changeEmail,
 
     insertEvent,
     getAllEvents,
