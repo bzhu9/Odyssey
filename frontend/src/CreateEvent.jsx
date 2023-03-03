@@ -23,8 +23,8 @@ export const CreateEvent = (props) => {
         if (title === "" || date === "" || startTime === "" || endTime === "") {
             alert("Please fill out all fields");
         }
-        else if (note.length > 500) {
-            window.alert("Personal note can not be more than 500 characters");
+        else if (note.length > 50) {
+            window.alert("Personal note can not be more than 50 characters");
         }
         else {
             // store dates using ISO 8061 format
