@@ -70,6 +70,10 @@ export const ChangeEvent = (props) => {
                 window.alert("Start time must be before end time!");
                 return;
             }
+            else if (note.length > 500) {
+                window.alert("Personal note can not be more than 500 characters");
+                return;
+            }
             const startDate = new Date(date);
             startDate.setDate(startDate.getDate() + 1)
             const startTimeSplit = startTime.split(':');
