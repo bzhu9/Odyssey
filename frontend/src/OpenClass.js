@@ -4,6 +4,7 @@ import api from "./apis"
 
 export const OpenClass = (props) => {
     const [classroom, setClassroom] = useState('');
+    const [openClassrooms, setOpenClassrooms] = useState([]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -36,7 +37,25 @@ export const OpenClass = (props) => {
             }
             console.log(payload)
             const openClasses = await api.searchOpenClass(payload);
-            console.log(openClasses);
+            var processedClassrooms = [];
+            var classes = [];
+            for (let i = 0; i < openClasses.data.length; i++) {
+                classes.push(`${openClasses.data[i].building} ${openClasses.data[i].room}`);
+                // processedClassrooms.push({name: `${openClasses.data[i].building} ${openClasses.data[i].room}`});
+            }
+            var set = new Set(classes);
+            classes = Array.from(set);
+            for (let i = 0; i < classes.length; i++) {
+                processedClassrooms.push({name: classes[i]})
+            }
+            if (openClasses.data.length === 0) {
+                processedClassrooms.push({name: "No matching classrooms"});
+            }
+            // var set = new Set(processedClassrooms);
+
+            // setOpenClassrooms(processedClassrooms);
+
+            setOpenClassrooms(processedClassrooms);
             // await api.searchOpenClass(payload).then(res => {
             //     console.log("hi")
             //     console.log(res);
@@ -63,6 +82,13 @@ export const OpenClass = (props) => {
                 <button type="submit" onClick={submit} >Submit</button>
 
             </form>
+
+            <ul>
+                {openClassrooms.map((item) => (
+                    <li>{item.name}</li>
+                ))}
+            </ul>
+
             {/* <button type="submit" onClick={() => props.onFormSwitch('calender')}>Weekly View</button> */}
             <Link to="/cal">
                 <button size="45" className="reset-btn" type="submit">Weekly View</button>

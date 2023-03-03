@@ -24,6 +24,16 @@ router.route("/").get((req, res) => {
     // res.send('looking')
 });
 
+router.route("/").post((req, res) => {
+    OpenClass.find({
+        // startTime: { $lt: req.body.startTime},
+        // endTime: {$gt: req.body.endTime},
+        building: req.body.building
+    })
+    .then(room => res.json(room))
+    .catch(err => res.status(400).json("Error: " + err));
+});
+
 router.route("/all").get((req, res) => {
     OpenClass.find()
     .then(room => res.json(room))
