@@ -5,11 +5,11 @@ const Schema = mongoose.Schema;
 
 const openClassSchema = new Schema({
     startTime: {
-        type: Date,
+        type: String,
         required: true,
     },
     endTime: {
-        type: Date,
+        type: String,
         required: true,
     },
     building: {
@@ -17,7 +17,7 @@ const openClassSchema = new Schema({
         required: true,
     },
     room: {
-        type: Number,
+        type: String,
         required: true
     }
     // latitude: {
