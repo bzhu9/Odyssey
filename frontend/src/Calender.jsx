@@ -43,6 +43,7 @@ function FullCalendarApp(props) {
   async function getData() {
     const rawEvents = await api.getAllEvents();
 
+    // https://fullcalendar.io/docs/event-object
     let processedEvents = []
     for (let i = 0; i < rawEvents.data.length; i++) {
       let e = rawEvents.data[i]
@@ -51,7 +52,8 @@ function FullCalendarApp(props) {
         title: `${e.title}\n${e.location}\n${e.note}`,
         start: e.startTime,
         end: e.endTime,
-        eventColor: "red",
+        // eventColor: "red",
+        backgroundColor: "green",
         editable: true
       })
     }
@@ -108,8 +110,8 @@ function FullCalendarApp(props) {
         events={events}
         eventDurationEditable
         nowIndicator
-        dateClick={(e) => console.log(e.dateStr)}
-        // dateClick={(e) => console.log(events)}
+        // dateClick={(e) => console.log(e.dateStr)}
+        dateClick={(e) => console.log(events)}
         // eventClick= {
         //   props.onFormSwitch('calender')
         // }
