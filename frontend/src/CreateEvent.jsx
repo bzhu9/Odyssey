@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import api from "./apis";
 import FullCalendar from '@fullcalendar/react';
@@ -13,11 +13,18 @@ export const CreateEvent = (props) => {
     const [endTime, setEndTime] = useState('');
     const [location, setLocation] = useState('');
     const [note, setNote] = useState('');
+    const [isValidTime, setIsValidTime] = useState(true);
 
     const navigate = useNavigate();
     const handleSubmit = (e) => {
         e.preventDefault();
     }
+
+    useEffect(() => {
+        const start = new Date(`${date}T${startTime}:00`);
+        const end = new Date(`${date}T${endTime}:00`);
+        setIsValidTime(start <= end);
+    }, [date, startTime, endTime]);
 
     const submit = async () => {
         if (title === "" || date === "" || startTime === "" || endTime === "") {
@@ -25,6 +32,9 @@ export const CreateEvent = (props) => {
         }
         else if (note.length > 50) {
             window.alert("Personal note can not be more than 50 characters");
+        }
+        else if (!isValidTime) {
+            window.alert("The start time must be before the end time")
         }
         else {
             // store dates using ISO 8061 format

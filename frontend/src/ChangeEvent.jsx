@@ -75,7 +75,7 @@ export const ChangeEvent = (props) => {
                 return;
             }
             else if (note.length > 50) {
-                window.alert("Personal note can not be more than 500 characters");
+                window.alert("Personal note can not be more than 50 characters");
                 return;
             }
             const startDate = new Date(date);
