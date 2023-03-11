@@ -2,13 +2,14 @@ const router = require("express").Router();
 let User = require("../models/User");
 const bcrypt = require("bcrypt");
 
-// GET
+// Get all users --------------------------------
 router.route("/").get((req, res) => {
     User.find()
     .then(users => res.json(users))
     .catch(err => res.status(400).json("Error: " + err));
 });
 
+// Get one user ----------------------------------
 router.route("/").post(async (req, res) => {
     const email = req.body.email;
     const user = await User.findOne({ email }).select("-password -seq1 -seq2 -seq3").lean();
@@ -64,6 +65,7 @@ router.route("/add").post(async (req, res) => {
         .catch(err => res.status(400).json("Error: " + err));
 });
 
+// LOGIN USER ------------------------------------
 router.route("/login").post(async (req, res) => {
     const email = req.body.email;
     const password = req.body.password;
@@ -85,6 +87,7 @@ router.route("/login").post(async (req, res) => {
     }
 });
 
+// Reset password -----------------------------------
 router.route("/reset").post(async (req, res) => {
     const email = req.body.email;
     const seq1 = req.body.seq1;
@@ -116,6 +119,7 @@ router.route("/reset").post(async (req, res) => {
 
 // need frontend delete button only if user is signed in
 
+// Delete user -----------------------------------
 router.route("/delete").post(async (req, res) => {
     const email = req.body.email;
     //const password = req.body.password;
@@ -137,6 +141,7 @@ router.route("/delete").post(async (req, res) => {
     //}
 })
 
+// Reset email --------------------------------------------
 router.route("/email").post(async (req, res) => {
     const oldEmail = req.body.oldEmail;
     const newEmail = req.body.newEmail;

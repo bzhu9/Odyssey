@@ -31,4 +31,15 @@ router.route("/add").post(async (req, res) => {
         .catch(err => res.status(400).json("Error: " + err));
 });
 
+router.route("/search").post(async (req, res) => {
+    const email = req.body.email;
+    const user = await User.findOne({ email }).select("_id name email status publicity")
+        .catch(err => res.status(400).json("Error: " + err));
+    
+    if (user === null) {
+        return res.status(400).json("User not found");
+    }
+    return res.status(200).json({ user: user})
+});
+
 module.exports = router;
