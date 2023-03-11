@@ -11,7 +11,7 @@ export const OpenClass = (props) => {
     }
 
     const submit = async () => {
-        if (!classroom.match(/[A-z]+ [0-9]+/)) {
+        if (!classroom.match(/[A-z]+ B*[0-9]+/)) {
             alert("Invalid classroom")
         }
         else {
@@ -44,7 +44,7 @@ export const OpenClass = (props) => {
             for (let i = 0; i < openClasses.data.length; i++) {
                 if (!set.has(`${openClasses.data[i].building} ${openClasses.data[i].room}`)) {
                     set.add(`${openClasses.data[i].building} ${openClasses.data[i].room}`);
-                    classes.push(`${openClasses.data[i].building} ${openClasses.data[i].room} ${openClasses.data[i].startTime}-${openClasses.data[i].endTime}`);
+                    classes.push(`${openClasses.data[i].building} ${openClasses.data[i].room} Closes at: ${openClasses.data[i].endTime}`);
                 }
                 // processedClassrooms.push({name: `${openClasses.data[i].building} ${openClasses.data[i].room}`});
             }

@@ -70,7 +70,7 @@ export const Settings = (props) => {
             console.log("wtf?")
             window.alert("Please login delete your account!");
         }
-        if (window.confirm('Are you sure you want to delete your account?')) {
+        else if (window.confirm('Are you sure you want to delete your account?')) {
             console.log(sessionStorage.getItem("user"));
             const payload = {
                 email: sessionStorage.getItem("user"),

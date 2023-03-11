@@ -20,6 +20,7 @@ connectDB()
 
 app.use("/event", require("./routes/eventRoute"));
 app.use("/user", require("./routes/userRoute"));
+app.use("/friend", require("./routes/friendRoute"));
 app.use("/building", require("./routes/buildingRoute"));
 app.use("/openclass", require("./routes/openClassRoute"));
 
