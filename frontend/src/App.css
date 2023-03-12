@@ -83,14 +83,23 @@ button {
   margin-top: 5px;
   color:  black;
   display: inline-block;
+  
   /* width:400px; */
 
 }
 
 .link-btn {
-  background: #CEB888;
-  color: black;
+  width:700px;
 }
+
+.reset-btn {
+  width:400px;
+}
+
+.reg-btn {
+  width:400px;
+}
+
 .settingsNav-btn {
   background: #CEB888;
   color: black;

@@ -142,7 +142,7 @@ function FullCalendarApp(props) {
       />
       {/* <button type="button" onClick={() => props.onFormSwitch('login')}>Go back to login</button> */}
       <Link to="/login">
-        <button className="link-btn">Go back to login screen</button>
+        <button>Go back to login screen</button>
       </Link>
       <br></br>
     </div>
