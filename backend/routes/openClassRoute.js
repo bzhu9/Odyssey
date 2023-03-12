@@ -26,7 +26,7 @@ router.route("/").get((req, res) => {
 
 router.route("/").post((req, res) => {
     OpenClass.find({
-        // startTime: { $lt: req.body.startTime},
+        startTime: { $lt: req.body.startTime},
         // endTime: {$gt: req.body.endTime},
         building: req.body.building
     })
