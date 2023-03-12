@@ -84,8 +84,16 @@ button {
   color:  black;
   display: inline-block;
   
+  
   /* width:400px; */
 
+}
+
+
+
+button:hover {
+  background-color:white;
+  transition: 0.7s;
 }
 
 .link-btn {
@@ -101,24 +109,25 @@ button {
 }
 
 .settingsNav-btn {
-  background: #CEB888;
   color: black;
   position: fixed;
   width: 100px;
   border: 3px;
-  top:100px;
-  left: 100px;
+  top:30px;
+  left: 40px;
   padding: 10px;
   
 }
+
+
+
 .friendNav-btn {
-  background: #CEB888;
   color: black;
   position: fixed;
   width: 100px;
   border: 3px;
-  top:100px;
-  right: 970px;
+  top:30px;
+  right: 1030px;
   padding: 10px;
   
 }

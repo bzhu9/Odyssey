@@ -18,10 +18,10 @@ export const Friends = (props) => {
     return (
         <div>
        <Link to="/settings">
-            <button size="45" className="settingsNav-btn">Profile</button>
+            <button size="45" className="settingsNav-btn" >Profile</button>
         </Link>
         <Link to="/friends">
-            <button size="45" className="friendNav-btn">Friends</button>
+            <button size="45" className="friendNav-btn" >Friends</button>
         </Link>
         <div className="auth-form-container">
             <h2>Friends Settings</h2>
