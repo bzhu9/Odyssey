@@ -42,6 +42,7 @@
   align-items: center;
   justify-content: center;
   color: #CEB888;
+  overflow: scroll;
   /* background: black; */
   background: #202020;
 }
@@ -119,6 +120,24 @@ button:hover {
   
 }
 
+.friendsTitle {
+  margin: 0.1rem;
+  padding: 5px;
+  margin-left: 50px;
+  border-radius: 10px;
+  border: 1px solid #CEB888;
+  width: 150px;
+  color: #CEB888;
+}
+
+.friendsList {
+  overflow: scroll;
+  width: 200px;
+  justify-content: left;
+  min-height: 200px;
+  color: #CEB888;
+
+}
 
 
 .friendNav-btn {
