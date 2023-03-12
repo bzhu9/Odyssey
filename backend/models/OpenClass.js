@@ -4,27 +4,43 @@ const Schema = mongoose.Schema;
 
 
 const openClassSchema = new Schema({
+    Name: {
+        type: String,
+        require: false,
+    },
+    Section: {
+        type: String,
+        require: false,
+    },
     StartTime: {
         type: Date,
         require: true,
     },
-    endTime: {
+    EndTime: {
         type: Date,
         require: true,
     },
-    building: {
+    Building: {
         type: String,
         require: true,
     },
-    room: {
+    Room: {
         type: String,
         require: true,
     },
-    lat: {
+    Capacity: {
         type: Number,
         require: true,
     },
-    long: {
+    Address: {
+        type: String,
+        require: false,
+    },
+    Lat: {
+        type: Number,
+        require: true,
+    },
+    Long: {
         type: Number,
         require: true,
     }

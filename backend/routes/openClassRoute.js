@@ -63,4 +63,19 @@ router.route('/clear').post(async (req,res) => {
     const status = await OpenClass.deleteMany({});
     res.status(200).json({message: 'cleared'})
 })
+
+router.route('/convertStartTime').post(async (req, res) => {
+    OpenClass.aggregate([
+        {
+            $project: {
+                startTime: {
+                    $dateFromString: {
+                        dateString: '$startTime'
+                    }
+                }
+            }
+        }
+    ])
+    res.status(200).json({message: 'converted'})
+})
 module.exports = router;
