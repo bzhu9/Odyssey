@@ -4,20 +4,12 @@ const Schema = mongoose.Schema;
 
 
 const openClassSchema = new Schema({
-    startTimeHour: {
-        type: Number,
-        required: true,
-    },
-    startTimeMinute: {
-        type: Number,
-        required: true,
-    },
-    endTimeHour: {
-        type: Number,
+    StartTime: {
+        type: Date,
         require: true,
     },
-    endTimeMinute: {
-        type: Number,
+    endTime: {
+        type: Date,
         require: true,
     },
     building: {
@@ -35,7 +27,7 @@ const openClassSchema = new Schema({
     long: {
         type: Number,
         require: true,
-    },
+    }
 });
 
 const OpenClass = mongoose.model("OpenClass", openClassSchema);
