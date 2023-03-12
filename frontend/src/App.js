@@ -15,6 +15,8 @@ import FullCalendarApp from "./Calender";
 import { ChangeEvent } from './ChangeEvent';
 import Layout from './Layout';
 import { ChangeEmail } from './ChangeEmail';
+import { Friends } from './Friends';
+
 
 function App() {
   const [currentForm, setCurrentForm] = useState('login');
@@ -47,6 +49,7 @@ function App() {
           {/* <Route path="login" element={<FullCalendarApp />} /> */}
           <Route path="cal" element={<FullCalendarApp />} />
           <Route path="changeEmail" element={<ChangeEmail />} />
+          <Route path="friends" element={<Friends />} />
           <Route path="settings" element={<Settings />} />
           <Route path="map" element={<Map />} />
           <Route path="addEvent" element={<CreateEvent />} />

@@ -118,6 +118,13 @@ export const Settings = (props) => {
     }
 
     return (
+        <div>
+       <Link to="/settings">
+            <button size="45" className="link-btn">Profile Settings</button>
+        </Link>
+        <Link to="/friends">
+            <button size="45" className="link-btn">Friends</button>
+        </Link>
         <div className="auth-form-container">
             <h2>Profile Settings</h2>
         <Link to="/changeEmail">
@@ -144,6 +151,7 @@ export const Settings = (props) => {
             <button size="45" className="reset-btn" type="submit">Weekly View</button>
         </Link>
 
+    </div>
     </div>
     )
 }
