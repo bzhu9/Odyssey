@@ -4,38 +4,38 @@ const Schema = mongoose.Schema;
 
 
 const openClassSchema = new Schema({
-    startTime: {
-        type: String,
+    startTimeHour: {
+        type: Number,
         required: true,
     },
-    endTime: {
-        type: String,
+    startTimeMinute: {
+        type: Number,
         required: true,
+    },
+    endTimeHour: {
+        type: Number,
+        require: true,
+    },
+    endTimeMinute: {
+        type: Number,
+        require: true,
     },
     building: {
         type: String,
-        required: true,
+        require: true,
     },
     room: {
         type: String,
-        required: true
+        require: true,
     },
-    address: {
-        type: String,
-        required: false,
-    }
-    // latitude: {
-    //     type: Number,
-    //     required: true,
-    //     min: -90,
-    //     max: 90
-    //   },
-    //   longitude: {
-    //     type: Number,
-    //     required: true,
-    //     min: -180,
-    //     max: 180
-    //   }
+    lat: {
+        type: Number,
+        require: true,
+    },
+    long: {
+        type: Number,
+        require: true,
+    },
 });
 
 const OpenClass = mongoose.model("OpenClass", openClassSchema);
