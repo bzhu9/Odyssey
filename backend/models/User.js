@@ -45,6 +45,10 @@ const userSchema = new Schema({
         type: String,
         default: "Public"
     },
+    events: [{
+        //not required for now
+        type: Schema.Types.ObjectId,
+    }]
     // add nutritional preferences: list of enums
         // vegetarian
         // vegan

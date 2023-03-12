@@ -21,11 +21,11 @@ const eventSchema = new Schema({
     // ref: 'Building'
     type: String,
   },
-  users: {
+  users: [{
     // list of _ids
     type: Schema.Types.ObjectId,
     //require: true,
-  },
+  }],
   note: {
     type: String,
     default: ""
