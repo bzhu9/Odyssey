@@ -91,3 +91,25 @@ button {
   background: #CEB888;
   color: black;
 }
+.settingsNav-btn {
+  background: #CEB888;
+  color: black;
+  position: fixed;
+  width: 100px;
+  border: 3px;
+  top:100px;
+  left: 100px;
+  padding: 10px;
+  
+}
+.friendNav-btn {
+  background: #CEB888;
+  color: black;
+  position: fixed;
+  width: 100px;
+  border: 3px;
+  top:100px;
+  right: 970px;
+  padding: 10px;
+  
+}
