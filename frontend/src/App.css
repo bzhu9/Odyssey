@@ -91,7 +91,6 @@ button {
 }
 
 
-
 button:hover {
   background-color:white;
   transition: 0.7s;
@@ -109,6 +108,8 @@ button:hover {
   width:400px;
 }
 
+
+
 .settingsNav-btn {
   color: black;
   position: fixed;
@@ -116,6 +117,17 @@ button:hover {
   border: 3px;
   top:30px;
   left: 40px;
+  padding: 10px;
+  
+}
+
+.friendNav-btn {
+  color: black;
+  position: fixed;
+  width: 100px;
+  border: 3px;
+  top:30px;
+  left: 150px;
   padding: 10px;
   
 }
@@ -139,14 +151,24 @@ button:hover {
 
 }
 
-
-.friendNav-btn {
-  color: black;
-  position: fixed;
-  width: 100px;
-  border: 3px;
-  top:30px;
-  right: 1030px;
-  padding: 10px;
-  
+.recTitle {
+  margin: 0.1rem;
+  margin-top: -260px;
+  padding: 5px;
+  margin-left: 350px;
+  border-radius: 10px;
+  border: 1px solid #CEB888;
+  width: 150px;
+  color: #CEB888;
 }
+
+.recList {
+  overflow: scroll;
+  width: 200px;
+  margin-left: 320px;
+  justify-content: left;
+  min-height: 200px;
+  color: #CEB888;
+}
+
+
