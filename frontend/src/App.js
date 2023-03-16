@@ -18,6 +18,7 @@ import { ChangeEmail } from './ChangeEmail';
 import { Friends } from './Friends';
 import ChangePrivacy from './ChangePrivacy'
 import ChangeStatus from './ChangeStatus';
+import { ChangeWorkday } from './ChangeWorkday';
 
 
 function App() {
@@ -60,6 +61,7 @@ function App() {
           <Route path ="reset" element={<Reset />}/>
           <Route path ="changePrivacy" element={<ChangePrivacy />}/>
           <Route path ="changeStatus" element={<ChangeStatus />}/>
+          <Route path ="changeWorkday" element={<ChangeWorkday />}/>
 
 
         </Route>

@@ -153,6 +153,9 @@ export const Settings = (props) => {
         <Link to="/changeStatus">
             <button size="45" className="reset-btn">Change Status</button>
         </Link>
+        <Link to="/changeWorkday">
+            <button size="45" className="reset-btn">Change Workday</button>
+        </Link>
         <Link to="/cal">
             <button size="45" className="reset-btn" type="submit">Weekly View</button>
         </Link>
