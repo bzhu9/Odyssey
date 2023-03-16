@@ -17,6 +17,7 @@ import Layout from './Layout';
 import { ChangeEmail } from './ChangeEmail';
 import { Friends } from './Friends';
 import ChangePrivacy from './ChangePrivacy'
+import ChangeStatus from './ChangeStatus';
 
 
 function App() {
@@ -58,6 +59,7 @@ function App() {
           <Route path="changeEvent" element={<ChangeEvent />} />
           <Route path ="reset" element={<Reset />}/>
           <Route path ="changePrivacy" element={<ChangePrivacy />}/>
+          <Route path ="changeStatus" element={<ChangeStatus />}/>
 
 
         </Route>
