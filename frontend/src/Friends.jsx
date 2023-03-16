@@ -4,16 +4,39 @@ import { Link, useNavigate } from "react-router-dom";
 
 const friendList = [
     {
-      id: '1',
-      firstname: 'Daniel',
-      lastname: 'McConnell',
+      id: '1232',
+      firstname: 'Daniel M',
+      lastname: 'not online right now',
     },
     {
-      id: 'b',
+      id: 'available',
       firstname: 'Olga R',
-      lastname: 'Gibson',
+      lastname: '2342',
+      //can make last name a unique number for identifying like in discord
+      //can make id their status
+    
     },
     {
+        id: 'not online',
+        firstname: 'Olga R',
+        lastname: '5453',
+      },
+      {
+        id: 'b',
+        firstname: 'Olga R',
+        lastname: 'Gibson',
+      },
+      {
+        id: 'b',
+        firstname: 'Olga R',
+        lastname: 'Gibson',
+      },
+      {
+        id: 'b',
+        firstname: 'Olga R',
+        lastname: 'Gibson',
+      },
+      {
         id: 'b',
         firstname: 'Olga R',
         lastname: 'Gibson',
@@ -109,8 +132,8 @@ export const Friends = (props) => {
                 );
              })}
          </ul>
-         <div className="auth-form-container">
-            <h3>Add Friend</h3>
+         <div className="auth-form-container" id="addFriend" >
+            {/* <h3>Add Friend</h3> */}
             <form className="login-form" onSubmit={handleSubmit}>
                 <label htmlFor="text">Enter user's name to add as friend</label>
                 <input size="45" value={friend} onChange={(e) => setFriend(e.target.value)} type="text" placeholder="Mary Ann" />
@@ -133,9 +156,9 @@ export const Friends = (props) => {
         <Link to="/cal">
             <button size="45" className="reset-btn" type="submit">Weekly View</button>
         </Link>
-        <Link to="/cal">
+        {/* <Link to="/cal">
             <button size="45" className="reset-btn" type="submit">Add Friend</button>
-        </Link>
+        </Link> */}
 
     </div>
     </div>
