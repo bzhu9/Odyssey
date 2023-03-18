@@ -36,7 +36,7 @@ router.route("/search").post(async (req, res) => {
     const user = await User.findOne({ email }).select("_id name email status publicity")
         .catch(err => res.status(400).json("Error: " + err));
     
-    if (user === null) {
+    if (user) {
         return res.status(400).json("User not found");
     }
     return res.status(200).json({ user: user})

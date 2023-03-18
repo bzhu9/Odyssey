@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import api from "./apis"
 import { Link, useNavigate } from "react-router-dom";
 
@@ -87,17 +87,46 @@ export const Friends = (props) => {
     // const [email, setEmail] = useState('');
     // const [emailNew, setEmailNew] = useState('');
     // const [emailNew2, setEmailNew2] = useState('');
-    const [pass, setPass] = useState('');
-    const [seq, setSeq] = useState('');
+    // const [pass, setPass] = useState('');
+    // const [seq, setSeq] = useState('');
     const navigate = useNavigate();
     const [friend, setFriend] = useState('');
+    const [friendList, setFriendList] = useState([]);
+    const [recList, setRecList] = useState([]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
     }
 
+    // need to clarify friendList fields
+    async function getFriends() {
+      const payload = { email: sessionStorage.getItem("user")}
+      const rawFriendList = await api.getFriends(payload);
+      let processedFriendList = []
+      console.log(rawFriendList);
+      for (let i = 0; i < rawFriendList.data.length; i++) {
+        let f = rawFriendList.data[i];
+        processedFriendList.push({
+          firstname: f.name,
+          lastname: f.status, // can change later
+          id: f.publicity // can change later, gets console error for unique ids
+        });
+      }
+      setFriendList(processedFriendList);
+    }
+
+    async function getRecs() {
+
+    }
     
-    
+    // called when loading page
+    useEffect (() => {
+      let ignore = false;
+      if (!ignore) {
+        getFriends();
+      }
+      return () => {ignore = true;}
+    }, []);
 
     return (
         <div>

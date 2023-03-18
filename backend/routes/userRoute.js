@@ -182,7 +182,7 @@ router.route("/getFriends").post(async (req, res) => {
                 });
             }
         }
-        res.status(200).json({ friendList: friendList });
+        res.status(200).json(friendList);
     }
     else {
         res.status(401).json({ message: "Email does not exist" });
