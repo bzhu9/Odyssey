@@ -41,6 +41,10 @@ const userSchema = new Schema({
         type: Schema.Types.ObjectId
         // user.friends.push(newFriend._id);
     }],
+    friend_reqs: [{
+        //list of _id's
+        type: Schema.Types.ObjectId
+    }],
     publicity: {
         type: String,
         default: "Public"
