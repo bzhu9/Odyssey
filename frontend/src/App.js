@@ -16,6 +16,9 @@ import { ChangeEvent } from './ChangeEvent';
 import Layout from './Layout';
 import { ChangeEmail } from './ChangeEmail';
 import { Friends } from './Friends';
+import ChangePrivacy from './ChangePrivacy'
+import ChangeStatus from './ChangeStatus';
+import { ChangeWorkday } from './ChangeWorkday';
 
 
 function App() {
@@ -56,6 +59,10 @@ function App() {
           <Route path="class" element={<OpenClass />} />
           <Route path="changeEvent" element={<ChangeEvent />} />
           <Route path ="reset" element={<Reset />}/>
+          <Route path ="changePrivacy" element={<ChangePrivacy />}/>
+          <Route path ="changeStatus" element={<ChangeStatus />}/>
+          <Route path ="changeWorkday" element={<ChangeWorkday />}/>
+
 
         </Route>
       </Routes>

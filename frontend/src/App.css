@@ -135,7 +135,7 @@ button:hover {
 .friendsTitle {
   margin: 0.1rem;
   padding: 5px;
-  margin-left: 50px;
+  margin-left: 90px;
   border-radius: 10px;
   border: 1px solid #CEB888;
   width: 150px;
@@ -144,18 +144,21 @@ button:hover {
 
 .friendsList {
   overflow: scroll;
-  width: 200px;
+  height: 300px;
+  width: 280px;
+  border-radius: 30px;
   justify-content: left;
-  min-height: 200px;
-  color: #CEB888;
+  background-color:#CEB888;
+  color:black;
 
 }
 
 .recTitle {
   margin: 0.1rem;
-  margin-top: -260px;
+  position: absolute;
+  margin-top: -363px;
   padding: 5px;
-  margin-left: 350px;
+  margin-left: 400px;
   border-radius: 10px;
   border: 1px solid #CEB888;
   width: 150px;
@@ -164,11 +167,36 @@ button:hover {
 
 .recList {
   overflow: scroll;
-  width: 200px;
+  position: absolute;
+  width: 280px;
+  margin-top: -316px;
+  height: 300px;
+  border-radius: 30px;
   margin-left: 320px;
   justify-content: left;
-  min-height: 200px;
-  color: #CEB888;
+  background-color:#CEB888;
+  color:black;
 }
 
+
+
+#addFriend {
+  position: absolute;
+  margin-left: -400px;
+  margin-top: -316px;
+
+
+}
+
+.dropdown {
+  max-width: 100%;
+  height: 50px;
+  display: flex;
+  font-size: 15px;
+  color: black;
+  justify-content: center;
+  border: solid 5px #CEB888;
+  padding: 0.5rem;
+  border-radius: 1rem;
+}
 
