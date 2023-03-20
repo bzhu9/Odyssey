@@ -42,7 +42,7 @@
   align-items: center;
   justify-content: center;
   color: #CEB888;
-  overflow: scroll;
+  /* overflow: scroll; */
   /* background: black; */
   background: #202020;
 }
