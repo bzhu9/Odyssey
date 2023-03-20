@@ -146,8 +146,10 @@ button:hover {
   overflow: scroll;
   height: 300px;
   width: 280px;
+  border-radius: 30px;
   justify-content: left;
-  color: #CEB888;
+  background-color:#CEB888;
+  color:black;
 
 }
 
@@ -169,10 +171,15 @@ button:hover {
   width: 280px;
   margin-top: -316px;
   height: 300px;
+  border-radius: 30px;
   margin-left: 320px;
   justify-content: left;
-  color: #CEB888;
+  background-color:#CEB888;
+  color:black;
 }
+
+
+
 #addFriend {
   position: absolute;
   margin-left: -400px;
