@@ -54,7 +54,7 @@ const friendList = [
     
   ];
 
-  const recList = [
+  const reqList = [
     {
       id: '1',
       firstname: 'Daniel',
@@ -179,6 +179,20 @@ export const Friends = (props) => {
 
             {/* <button type="submit" onClick={() => props.onFormSwitch('calender')}>Weekly View</button> */}
           
+
+        </div>
+        {/* <h3 id="friendReqTitle"> Friend Requests </h3> */}
+        <div id="friendReq" >
+        <ul>
+            {reqList.map(item => {
+            const ref = React.createRef();
+            return (
+                <li key={item.id} ref={ref} >
+                <div>{item.firstname} {item.lastname} {item.id}</div>
+                </li>
+                );
+             })}
+         </ul>        
 
         </div>
          
