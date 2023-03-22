@@ -146,7 +146,7 @@ button:hover {
   overflow: scroll;
   height: 300px;
   width: 280px;
-  border-radius: 30px;
+  border-radius: 10px;
   justify-content: left;
   background-color:#CEB888;
   color:black;
@@ -171,7 +171,7 @@ button:hover {
   width: 280px;
   margin-top: -316px;
   height: 300px;
-  border-radius: 30px;
+  border-radius: 10px;
   margin-left: 320px;
   justify-content: left;
   background-color:#CEB888;
@@ -194,8 +194,9 @@ button:hover {
   height: 180px;
   border-radius: 10px;
   border: 1px solid #CEB888;
+  color:black;
   width: 330px;
-  color: #CEB888;
+  background-color: #CEB888;
   margin-left: -390px;
   margin-top: -100px;
 
@@ -203,13 +204,15 @@ button:hover {
 }
 
 #friendReqTitle {
+  /* margin: 0.1rem; */
   position: absolute;
+  margin-top: -150px;
+  padding: 5px;
+  margin-left: -310px;
   border-radius: 10px;
   border: 1px solid #CEB888;
-  width: 330px;
+  width: 150px;
   color: #CEB888;
-  margin-left: -390px;
-  margin-top: -200px;
 
 
 }

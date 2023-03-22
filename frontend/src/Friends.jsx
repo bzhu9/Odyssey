@@ -181,7 +181,7 @@ export const Friends = (props) => {
           
 
         </div>
-        {/* <h3 id="friendReqTitle"> Friend Requests </h3> */}
+        <p id="friendReqTitle"> Friend Requests </p>
         <div id="friendReq" >
         <ul>
             {reqList.map(item => {
