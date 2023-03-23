@@ -109,10 +109,23 @@ button:hover {
   height: 40px;
   position: relative;
   /* margin: -20px -50px; */
-  width: 200px;
+  width: 300px;
   top: 30px;
-  left: -200%;
+  left: -100%;
   display: block; 
+}
+
+.prof {
+  position: absolute;
+  width: 200px;
+  top: 170px;
+  height: 350px;
+  width: 450px;
+  right: 200px;
+  border-radius: 10px;
+  background-color:#CEB888;
+  color:black;
+  /* left: -200%; */
 }
 
 

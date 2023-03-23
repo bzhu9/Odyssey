@@ -159,7 +159,12 @@ export const Settings = (props) => {
         <Link to="/cal">
             <button size="45" className="reset-btn2" type="submit">Weekly View</button>
         </Link>
-
+        <div className="prof" >
+        <p> Name: John Green</p>
+        <p> Status: Available</p>
+        <p> idk whatever else </p>
+        </div>
+    
     </div>
     </div>
     )
