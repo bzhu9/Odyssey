@@ -1,6 +1,7 @@
 {
   "dependencies": {
-    "i": "^0.3.7"
+    "i": "^0.3.7",
+    "multiselect-react-dropdown": "^2.0.25"
   },
   "devDependencies": {
     "concurrently": "^7.6.0"

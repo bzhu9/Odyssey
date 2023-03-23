@@ -5,6 +5,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import api from "./apis";
+import Select, { components } from "react-select";
 
 
 async function getEvent(eventID) {
@@ -14,6 +15,13 @@ async function getEvent(eventID) {
     //setTitle(eventObj.data.title);
     return eventObj.data
 }
+
+const allOptions = [
+    { value: "option 1", label: "option 1" },
+    { value: "option 2", label: "option 2" },
+    { value: "option 3", label: "option 3" },
+    { value: "option 4", label: "option 4" }
+  ];
 
 export const ChangeEvent = (props) => {
     //get the object ID from local storage
@@ -36,6 +44,8 @@ export const ChangeEvent = (props) => {
     const [endTime, setEndTime] = useState('');
     const [location, setLocation] = useState('');
     const [note, setNote] = useState('');
+    const [selectedOptions, setSelectedOptions] = useState([]);
+
 
     useEffect(() => {
         //preload the textboxes
@@ -136,7 +146,22 @@ export const ChangeEvent = (props) => {
         <input size="45" value={endTime} onChange={(e) => setEndTime(e.target.value)} type="time" placeholder="End time" id="time" name="time" />
         <label htmlFor="text">Location</label>
         <input size="45" value={location} onChange={(e) => setLocation(e.target.value)} type="text" placeholder="Location" id="text" name="text" />
+        <label htmlFor="text">Share Event</label>
+
+        <Select className="friendDropdown"
+        defaultValue={[]}
+        isMulti
+        closeMenuOnSelect={false}
+        hideSelectedOptions={false}
+        onChange={(options) => {
+          if (Array.isArray(options)) {
+            setSelectedOptions(options.map((opt) => opt.value));
+          }
+        }}
+        options={allOptions}
+        /> 
         <label htmlFor="text">Event Notes</label>
+        
         <input size="65" value={note} onChange={(e) => setNote(e.target.value)} type="text" placeholder="Notes" id="text" name="text" />
         <button type="submit" onClick={update}>Submit Changes</button>
         <button onClick={() => {
