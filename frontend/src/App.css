@@ -104,6 +104,20 @@ button:hover {
   width:400px;
 }
 
+
+.reset-btn2 {
+  height: 40px;
+  position: relative;
+  /* margin: -20px -50px; */
+  width: 200px;
+  top: 30px;
+  left: -200%;
+  display: block; 
+}
+
+
+
+
 .reg-btn {
   width:400px;
 }

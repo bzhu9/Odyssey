@@ -125,10 +125,10 @@ export const Settings = (props) => {
         <Link to="/friends">
             <button size="45" className="friendNav-btn" >Friends</button>
         </Link>
-        <div className="auth-form-container">
+        <div className='set-btn'>
             <h2>Profile Settings</h2>
         <Link to="/changeEmail">
-            <button size="45" className="reset-btn">Change Email</button>
+            <button size="45" className="reset-btn2" >Change Email</button>
         </Link>
          <form className="login-form" onSubmit={handleSubmit}>
             {/* <label htmlFor="email">Email</label>
@@ -140,24 +140,24 @@ export const Settings = (props) => {
             {/* <label htmlFor="password"> Password</label>
             <input size="45" value={pass} onChange={(e) => setPass(e.target.value)} type="password" placeholder="********" id="password" name="password" /> */}
             {/* <button type="submit" onClick={changeEmail}>Change Email</button>  */}
-            <button type="submit" onClick={deleteUser}>Delete Account</button>
+            <button type="submit" className="reset-btn2" onClick={deleteUser}>Delete Account</button>
         </form>
         {/* <button className="link-btn" onClick={() => props.onFormSwitch('reset')}>Change Password</button> */}
         {/* <button className="link-btn" onClick={() => props.onFormSwitch('calender')}>Go back to Calender</button> */}
         <Link to="/reset">
-            <button size="45" className="reset-btn">Change Password</button>
+            <button size="45" className="reset-btn2">Change Password</button>
         </Link>
         <Link to="/changePrivacy">
-            <button size="45" className="reset-btn">Change Privacy</button>
+            <button size="45" className="reset-btn2">Change Privacy</button>
         </Link>
         <Link to="/changeStatus">
-            <button size="45" className="reset-btn">Change Status</button>
+            <button size="45" className="reset-btn2">Change Status</button>
         </Link>
         <Link to="/changeWorkday">
-            <button size="45" className="reset-btn">Change Workday</button>
+            <button size="45" className="reset-btn2">Change Workday</button>
         </Link>
         <Link to="/cal">
-            <button size="45" className="reset-btn" type="submit">Weekly View</button>
+            <button size="45" className="reset-btn2" type="submit">Weekly View</button>
         </Link>
 
     </div>
