@@ -118,6 +118,18 @@ export const Friends = (props) => {
     async function getRecs() {
 
     }
+
+    async function sendFriendRequest() {
+      const email = sessionStorage.getItem("user");
+      if (!email) {
+        alert("You must be logged in to send a friend request!");
+        return;
+      }
+      const payload = {email: email, friend: friend};
+      console.log(`This is the friend ${friend}`);
+      await api.sendFriendRequest(payload);
+      // alert("request sent!");
+    }
     
     // called when loading page
     useEffect (() => {
@@ -166,7 +178,7 @@ export const Friends = (props) => {
             <form className="login-form" onSubmit={handleSubmit}>
                 <label htmlFor="text">Enter user's name to add as friend</label>
                 <input size="45" value={friend} onChange={(e) => setFriend(e.target.value)} type="text" placeholder="Mary Ann" />
-                 <button type="submit" >Submit</button> 
+                 <button type="submit" onClick={sendFriendRequest} >Submit</button> 
 
             </form>
 

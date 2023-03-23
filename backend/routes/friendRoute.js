@@ -36,10 +36,30 @@ router.route("/search").post(async (req, res) => {
     const user = await User.findOne({ email }).select("_id name email status publicity")
         .catch(err => res.status(400).json("Error: " + err));
     
-    if (user) {
+    if (!user) {
         return res.status(400).json("User not found");
     }
     return res.status(200).json({ user: user})
 });
+
+router.route("/sendFriendRequest").post(async (req, res) => {
+    const email = req.body.email;
+    const friend = req.body.friend;
+
+    const user = await User.findOne({ email: email }).select("-password -seq1 -seq2 -seq3")
+        .catch(err => res.status(400).json("Error: " + err));
+    const userid = user._id;
+    const friendObject = await User.findOne({ email: friend }).select("-password -seq1 -seq2 -seq3")
+        .catch(err => res.status(400).json("Error: " + err));
+
+    if (!friendObject) {
+        return res.status(400).json("User not found");
+    }
+    friendObject.friend_reqs.push(userid);
+    friendObject.save()
+        .then(() => res.status(201).json("Friend added!"))
+        .catch(err => res.status(400).json("Error: " + err));
+
+})
 
 module.exports = router;
