@@ -92,6 +92,7 @@ export const Friends = (props) => {
     const navigate = useNavigate();
     const [friend, setFriend] = useState('');
     const [friendList, setFriendList] = useState([]);
+    const [reqList, setReqList] = useState([]);
     const [recList, setRecList] = useState([]);
 
     const handleSubmit = (e) => {
@@ -119,6 +120,24 @@ export const Friends = (props) => {
 
     }
 
+    async function getFriendRequests() {
+      // TODO - CHANGE TO REQUESTS`
+      const payload = { email: sessionStorage.getItem("user")}
+      const rawFriendRequestList = await api.getFriendRequests(payload);
+      console.log("YAWOE");
+      console.log(rawFriendRequestList);
+      let processedFriendRequestList = []
+      for (let i = 0; i < rawFriendRequestList.data.length; i++) {
+        let f = rawFriendRequestList.data[i];
+        processedFriendRequestList.push({
+          firstname: f.name,
+          lastname: f.status, // can change later
+          id: f.publicity // can change later, gets console error for unique ids
+        });
+      }
+      setReqList(processedFriendRequestList);
+    }
+
     async function sendFriendRequest() {
       const email = sessionStorage.getItem("user");
       if (!email) {
@@ -136,6 +155,7 @@ export const Friends = (props) => {
       let ignore = false;
       if (!ignore) {
         getFriends();
+        getFriendRequests();
       }
       return () => {ignore = true;}
     }, []);

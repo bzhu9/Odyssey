@@ -189,5 +189,32 @@ router.route("/getFriends").post(async (req, res) => {
     }
 });
 
+// Get user objects from friend requests list ---------------
+router.route("/getFriendRequests").post(async (req, res) => {
+    const email = req.body.email;
+    const user = await User.findOne({ email }).select("-password -seq1 -seq2 -seq3").lean();
+
+    if (user) {
+        let friendReqList = [];
+        for (let i = 0; i < user.friend_reqs.length; i++) {
+            let id = user.friend_reqs[i];
+            // have to have _id, or else it will search friends list too
+            let friend = await User.findOne({ _id: id }).select("-password -seq1 -seq2 -seq3").lean();
+            if (friend) {
+                friendReqList.push({
+                    name: friend.name,
+                    email: friend.email,
+                    status: friend.status,
+                    publicity: friend.publicity
+                });
+            }
+        }
+        res.status(200).json(friendReqList);
+    }
+    else {
+        res.status(401).json({ message: "Email does not exist" });
+    }
+});
+
 
 module.exports = router;
