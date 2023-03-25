@@ -217,4 +217,32 @@ router.route("/getFriendRequests").post(async (req, res) => {
 });
 
 
+// Get user's privacy ---------------
+router.route("/getPrivacy").post(async (req, res) => {
+    const email = req.body.email;
+    const user = await User.findOne({ email: email }).select("privacy").lean();
+
+    if (user) {
+        res.status(200).json({privacy: user.privacy});
+    }
+    else {
+        res.status(401).json({ message: "Email does not exist" });
+    }
+});
+
+// Set user's privacy ---------------
+router.route("/setPrivacy").post(async (req, res) => {
+    const email = req.body.email;
+    const priv = req.body.priv;
+    const user = await User.findOne({ email: email }).select("privacy").lean();
+
+    if (user) {
+        await User.findOneAndUpdate({ email }, { privacy: priv }).lean();
+        res.status(200).json({privacy: priv});
+    }
+    else {
+        res.status(401).json({ message: "Email does not exist" });
+    }
+});
+
 module.exports = router;

@@ -2,93 +2,7 @@ import React, { useState, useEffect } from "react";
 import api from "./apis"
 import { Link, useNavigate } from "react-router-dom";
 
-const friendList = [
-    {
-      id: '1232',
-      firstname: 'Daniel M',
-      lastname: 'not online right now',
-    },
-    {
-      id: 'available',
-      firstname: 'Olga R',
-      lastname: '2342',
-      //can make last name a unique number for identifying like in discord
-      //can make id their status
-    
-    },
-    {
-        id: 'not online',
-        firstname: 'Olga R',
-        lastname: '5453',
-      },
-      {
-        id: 'b',
-        firstname: 'Olga R',
-        lastname: 'Gibson',
-      },
-      {
-        id: 'b',
-        firstname: 'Olga R',
-        lastname: 'Gibson',
-      },
-      {
-        id: 'b',
-        firstname: 'Olga R',
-        lastname: 'Gibson',
-      },
-      {
-        id: 'b',
-        firstname: 'Olga R',
-        lastname: 'Gibson',
-      },
-      {
-        id: 'b',
-        firstname: 'Olga R',
-        lastname: 'Gibson',
-      },
-      {
-        id: 'b',
-        firstname: 'Olga R',
-        lastname: 'Gibson',
-      },
-    
-  ];
-
-  const reqList = [
-    {
-      id: '1',
-      firstname: 'Daniel',
-      lastname: 'McConnell',
-    },
-    {
-      id: 'b',
-      firstname: 'Olga R',
-      lastname: 'Gibson',
-    },
-    {
-        id: 'b',
-        firstname: 'Olga R',
-        lastname: 'Gibson',
-      },
-      {
-        id: 'b',
-        firstname: 'Olga R',
-        lastname: 'Gibson',
-      },
-      {
-        id: 'b',
-        firstname: 'Olga R',
-        lastname: 'Gibson',
-      },
-    
-  ];
-
 export const Friends = (props) => {
-    // const [email, setEmail] = useState('');
-    // const [emailNew, setEmailNew] = useState('');
-    // const [emailNew2, setEmailNew2] = useState('');
-    // const [pass, setPass] = useState('');
-    // const [seq, setSeq] = useState('');
     const navigate = useNavigate();
     const [friend, setFriend] = useState('');
     const [friendList, setFriendList] = useState([]);
@@ -121,7 +35,6 @@ export const Friends = (props) => {
     }
 
     async function getFriendRequests() {
-      // TODO - CHANGE TO REQUESTS`
       const payload = { email: sessionStorage.getItem("user")}
       const rawFriendRequestList = await api.getFriendRequests(payload);
       console.log("YAWOE");
@@ -147,7 +60,6 @@ export const Friends = (props) => {
       const payload = {email: email, friend: friend};
       console.log(`This is the friend ${friend}`);
       await api.sendFriendRequest(payload);
-      // alert("request sent!");
     }
     
     // called when loading page

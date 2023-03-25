@@ -16,7 +16,7 @@ import { ChangeEvent } from './ChangeEvent';
 import Layout from './Layout';
 import { ChangeEmail } from './ChangeEmail';
 import { Friends } from './Friends';
-import ChangePrivacy from './ChangePrivacy'
+import { ChangePrivacy } from './ChangePrivacy'
 import ChangeStatus from './ChangeStatus';
 import { ChangeWorkday } from './ChangeWorkday';
 
