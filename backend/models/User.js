@@ -45,7 +45,7 @@ const userSchema = new Schema({
         //list of _id's
         type: Schema.Types.ObjectId
     }],
-    publicity: {
+    privacy: {
         type: String,
         default: "Public"
     },

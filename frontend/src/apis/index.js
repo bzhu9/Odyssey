@@ -19,7 +19,11 @@ export const editEvent = payload => api.post("/event/edit", payload);
 export const getSingleEvent = id => api.get(`/event/single/${id}`);
 
 export const getFriends = payload => api.post("/user/getFriends", payload);
+export const getFriendRequests = payload => api.post("/user/getFriendRequests", payload);
 export const sendFriendRequest = payload => api.post("/friend/sendFriendRequest", payload);
+
+export const getPrivacy = payload => api.post("/user/getPrivacy", payload);
+export const setPrivacy = payload => api.post("/user/setPrivacy", payload);
 
 // export const searchOpenClass = payload => api.get("/openclass", payload);
 export const searchOpenClass = payload => api.post("/openclass", payload);
@@ -39,7 +43,11 @@ const apis = {
     getSingleEvent,
 
     getFriends,
+    getFriendRequests,
     sendFriendRequest,
+
+    getPrivacy,
+    setPrivacy,
 
     searchOpenClass
 }
