@@ -270,3 +270,14 @@ button:hover {
   border-radius: 1rem;
 }
 
+.friendProfile {
+  align-items: center;
+  font:bold;
+  margin: 0.6rem;
+  padding: 10px;
+  margin-left: 2px;
+  border-radius: 10px;
+  border: 2px solid #CEB888;
+  width: 380px;
+  color: #CEB888;
+}
