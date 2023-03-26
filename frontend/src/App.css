@@ -123,12 +123,18 @@ button:hover {
 }
 
 .prof {
-  position: absolute;
-  width: 200px;
+  
+  position: relative;
+  left: 65%;
+  margin-top: -95%;
+  min-height: 300px;
+  
+
+  /* width: 200px;
   top: 170px;
   height: 350px;  
   width: 450px;
-  right: 200px;
+  right: 200px; */
   border-radius: 10px;
   background-color:#CEB888;
   color:black;

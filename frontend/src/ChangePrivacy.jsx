@@ -41,7 +41,7 @@ export const ChangePrivacy = (props) => {
         <option className="dropdown" value="public">Public</option>
         <option className="dropdown" value="friends-only">Friends-Only</option>
       </select>
-      <h3>You selected...{priv} </h3>
+      { <h3> </h3> }
       <button type="submit" onClick={setPrivacy}>Submit Changes</button>
       <Link to="/cal">
             <button size="45" className="reset-btn" type="submit">Weekly View</button>
