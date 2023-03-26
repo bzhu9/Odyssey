@@ -26,6 +26,9 @@ const eventSchema = new Schema({
     type: Schema.Types.ObjectId,
     //require: true,
   }],
+  req_users: [{
+    type: Schema.Types.ObjectId,
+  }],
   note: {
     type: String,
     default: ""
