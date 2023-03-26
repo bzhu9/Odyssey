@@ -76,7 +76,7 @@ export const ChangeWorkday = (props) => {
         <h2>Change Workday</h2>
     <form className="login-form" onSubmit={handleSubmit}>
         <label htmlFor="text">Start Date of Workday</label>
-        <input size="45" value={startDate} onChange={(e) => setStartDate(e.target.value)} type="text" placeholder="Date" id="date" name="date" />
+        <input size="45" value={startDate} onChange={(e) => setStartDate(e.target.value)} type="date" placeholder="Date" id="date" name="date" />
         <label htmlFor="date">End Date of Workday</label>
         <input size="45" value={endDate} onChange={(e) => setEndDate(e.target.value)} type="date" placeholder="Date" id="date" name="date" />
         <label htmlFor="time">Start Time of WorkDay</label>

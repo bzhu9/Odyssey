@@ -5,6 +5,19 @@ import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
+import Select, { components } from "react-select";
+
+
+
+const allOptions = [
+    { value: "option 1", label: "option 1" },
+    { value: "option 2", label: "option 2" },
+    { value: "option 3", label: "option 3" },
+    { value: "option 4", label: "option 4" }
+  ];
+
+
+
 
 export const CreateEvent = (props) => {
     const [title, setTitle] = useState('');
@@ -14,6 +27,10 @@ export const CreateEvent = (props) => {
     const [location, setLocation] = useState('');
     const [note, setNote] = useState('');
     const [isValidTime, setIsValidTime] = useState(true);
+    // const [friend, setFriend] = useState('');
+    const [selectedOptions, setSelectedOptions] = useState([]);
+
+
 
     const navigate = useNavigate();
     const handleSubmit = (e) => {
@@ -87,6 +104,33 @@ export const CreateEvent = (props) => {
         <input size="45" value={endTime} onChange={(e) => setEndTime(e.target.value)} type="time" placeholder="End Time" id="time" name="time" />
         <label htmlFor="text">Location</label>
         <input size="45" value={location} onChange={(e) => setLocation(e.target.value)} type="text" placeholder="Location" id="text" name="text" />
+        {/* <select onChange={(e) => setFriend(e.target.value)}  id="colours">
+        <option input type="checkbox" className="dropdown" value="brian">brian</option>
+        <option input type="checkbox" className="dropdown" value="sean">sean</option>
+        <option input type="checkbox" className="dropdown" value="arnav">arnav</option>
+        <option type="checkbox" className="dropdown" value="gargi">gargi</option>
+        </select>
+        <p>Event is shared with: {friend} </p> */}
+        <label htmlFor="text">Share Event</label>
+
+        <Select className="friendDropdown"
+        defaultValue={[]}
+        isMulti
+        closeMenuOnSelect={false}
+        hideSelectedOptions={false}
+        onChange={(options) => {
+          if (Array.isArray(options)) {
+            setSelectedOptions(options.map((opt) => opt.value));
+          }
+        }}
+        options={allOptions}
+        /> 
+        {/* // components={{
+        //   Option: InputOption
+        // }} */}
+   
+      {/* <pre>{JSON.stringify({ selected: selectedOptions }, null, 2)}</pre> */}
+    
         <label htmlFor="text">Event Notes</label>
         <input size="40" value={note} onChange={(e) => setNote(e.target.value)} type="text" placeholder="Notes" id="text" name="text" />
         {/* <button type="submit" onClick={() => props.onFormSwitch('calender')}>Submit Changes</button> */}

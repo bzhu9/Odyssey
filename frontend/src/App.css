@@ -42,7 +42,7 @@
   align-items: center;
   justify-content: center;
   color: #CEB888;
-  overflow: scroll;
+  /* overflow: scroll; */
   /* background: black; */
   background: #202020;
 }
@@ -74,6 +74,13 @@ input {
  
 }
 
+.friendDropdown {
+  margin: 0.5rem 0;
+  /* padding: 1rem; */
+  border: none;
+  border-radius: 100px;
+}
+
 button {
   border: none;
   background: #CEB888;
@@ -103,6 +110,33 @@ button:hover {
 .reset-btn {
   width:400px;
 }
+
+
+.reset-btn2 {
+  height: 40px;
+  position: relative;
+  /* margin: -20px -50px; */
+  width: 300px;
+  top: 30px;
+  left: -100%;
+  display: block; 
+}
+
+.prof {
+  position: absolute;
+  width: 200px;
+  top: 170px;
+  height: 350px;  
+  width: 450px;
+  right: 200px;
+  border-radius: 10px;
+  background-color:#CEB888;
+  color:black;
+  /* left: -200%; */
+}
+
+
+
 
 .reg-btn {
   width:400px;
@@ -146,7 +180,7 @@ button:hover {
   overflow: scroll;
   height: 300px;
   width: 280px;
-  border-radius: 30px;
+  border-radius: 10px;
   justify-content: left;
   background-color:#CEB888;
   color:black;
@@ -171,7 +205,7 @@ button:hover {
   width: 280px;
   margin-top: -316px;
   height: 300px;
-  border-radius: 30px;
+  border-radius: 10px;
   margin-left: 320px;
   justify-content: left;
   background-color:#CEB888;
@@ -187,6 +221,36 @@ button:hover {
 
 
 }
+
+#friendReq {
+  position: absolute;
+  overflow: scroll;
+  height: 180px;
+  border-radius: 10px;
+  border: 1px solid #CEB888;
+  color:black;
+  width: 330px;
+  background-color: #CEB888;
+  margin-left: -390px;
+  margin-top: -100px;
+
+
+}
+
+#friendReqTitle {
+  /* margin: 0.1rem; */
+  position: absolute;
+  margin-top: -150px;
+  padding: 5px;
+  margin-left: -310px;
+  border-radius: 10px;
+  border: 1px solid #CEB888;
+  width: 150px;
+  color: #CEB888;
+
+
+}
+
 
 .dropdown {
   max-width: 100%;

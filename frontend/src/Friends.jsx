@@ -2,96 +2,11 @@ import React, { useState, useEffect } from "react";
 import api from "./apis"
 import { Link, useNavigate } from "react-router-dom";
 
-const friendList = [
-    {
-      id: '1232',
-      firstname: 'Daniel M',
-      lastname: 'not online right now',
-    },
-    {
-      id: 'available',
-      firstname: 'Olga R',
-      lastname: '2342',
-      //can make last name a unique number for identifying like in discord
-      //can make id their status
-    
-    },
-    {
-        id: 'not online',
-        firstname: 'Olga R',
-        lastname: '5453',
-      },
-      {
-        id: 'b',
-        firstname: 'Olga R',
-        lastname: 'Gibson',
-      },
-      {
-        id: 'b',
-        firstname: 'Olga R',
-        lastname: 'Gibson',
-      },
-      {
-        id: 'b',
-        firstname: 'Olga R',
-        lastname: 'Gibson',
-      },
-      {
-        id: 'b',
-        firstname: 'Olga R',
-        lastname: 'Gibson',
-      },
-      {
-        id: 'b',
-        firstname: 'Olga R',
-        lastname: 'Gibson',
-      },
-      {
-        id: 'b',
-        firstname: 'Olga R',
-        lastname: 'Gibson',
-      },
-    
-  ];
-
-  const recList = [
-    {
-      id: '1',
-      firstname: 'Daniel',
-      lastname: 'McConnell',
-    },
-    {
-      id: 'b',
-      firstname: 'Olga R',
-      lastname: 'Gibson',
-    },
-    {
-        id: 'b',
-        firstname: 'Olga R',
-        lastname: 'Gibson',
-      },
-      {
-        id: 'b',
-        firstname: 'Olga R',
-        lastname: 'Gibson',
-      },
-      {
-        id: 'b',
-        firstname: 'Olga R',
-        lastname: 'Gibson',
-      },
-    
-  ];
-
 export const Friends = (props) => {
-    // const [email, setEmail] = useState('');
-    // const [emailNew, setEmailNew] = useState('');
-    // const [emailNew2, setEmailNew2] = useState('');
-    // const [pass, setPass] = useState('');
-    // const [seq, setSeq] = useState('');
     const navigate = useNavigate();
     const [friend, setFriend] = useState('');
     const [friendList, setFriendList] = useState([]);
+    const [reqList, setReqList] = useState([]);
     const [recList, setRecList] = useState([]);
 
     const handleSubmit = (e) => {
@@ -118,12 +33,41 @@ export const Friends = (props) => {
     async function getRecs() {
 
     }
+
+    async function getFriendRequests() {
+      const payload = { email: sessionStorage.getItem("user")}
+      const rawFriendRequestList = await api.getFriendRequests(payload);
+      console.log("YAWOE");
+      console.log(rawFriendRequestList);
+      let processedFriendRequestList = []
+      for (let i = 0; i < rawFriendRequestList.data.length; i++) {
+        let f = rawFriendRequestList.data[i];
+        processedFriendRequestList.push({
+          firstname: f.name,
+          lastname: f.status, // can change later
+          id: f.publicity // can change later, gets console error for unique ids
+        });
+      }
+      setReqList(processedFriendRequestList);
+    }
+
+    async function sendFriendRequest() {
+      const email = sessionStorage.getItem("user");
+      if (!email) {
+        alert("You must be logged in to send a friend request!");
+        return;
+      }
+      const payload = {email: email, friend: friend};
+      console.log(`This is the friend ${friend}`);
+      await api.sendFriendRequest(payload);
+    }
     
     // called when loading page
     useEffect (() => {
       let ignore = false;
       if (!ignore) {
         getFriends();
+        getFriendRequests();
       }
       return () => {ignore = true;}
     }, []);
@@ -166,7 +110,7 @@ export const Friends = (props) => {
             <form className="login-form" onSubmit={handleSubmit}>
                 <label htmlFor="text">Enter user's name to add as friend</label>
                 <input size="45" value={friend} onChange={(e) => setFriend(e.target.value)} type="text" placeholder="Mary Ann" />
-                 <button type="submit" >Submit</button> 
+                 <button type="submit" onClick={sendFriendRequest} >Submit</button> 
 
             </form>
 
@@ -179,6 +123,20 @@ export const Friends = (props) => {
 
             {/* <button type="submit" onClick={() => props.onFormSwitch('calender')}>Weekly View</button> */}
           
+
+        </div>
+        <p id="friendReqTitle"> Friend Requests </p>
+        <div id="friendReq" >
+        <ul>
+            {reqList.map(item => {
+            const ref = React.createRef();
+            return (
+                <li key={item.id} ref={ref} >
+                <div>{item.firstname} {item.lastname} {item.id}</div>
+                </li>
+                );
+             })}
+         </ul>        
 
         </div>
          
