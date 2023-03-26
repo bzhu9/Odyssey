@@ -281,3 +281,22 @@ button:hover {
   width: 380px;
   color: #CEB888;
 }
+
+.friendDropdown {
+
+  overflow: scroll;
+  max-height: 10px;
+}
+
+.friendDropdownTitle {
+  border-radius: 10px;
+  border: 2px solid #CEB888;
+  padding: 10px;
+}
+
+.viewSchedule {
+  border-radius: 10px;
+  border: 2px solid #CEB888;
+  padding: 5px;
+}
+

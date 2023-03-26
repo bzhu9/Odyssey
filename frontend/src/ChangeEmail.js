@@ -6,6 +6,7 @@ export const ChangeEmail = (props) => {
     const [email, setEmail] = useState('');
     const [emailNew, setEmailNew] = useState('');
     const [emailNew2, setEmailNew2] = useState('');
+
     const navigate = useNavigate();
 
     const handleSubmit = (e) => {
@@ -84,6 +85,7 @@ export const ChangeEmail = (props) => {
         <Link to="/cal">
             <button size="45" className="reset-btn" type="submit">Weekly View</button>
         </Link>
+        
 
     </div>
     )
