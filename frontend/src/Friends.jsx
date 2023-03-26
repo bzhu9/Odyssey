@@ -177,7 +177,7 @@ export const Friends = (props) => {
             {/* <h3>Add Friend</h3> */}
             <form className="login-form" onSubmit={handleSubmit}>
                 <label htmlFor="text">Enter user's name to add as friend</label>
-                <input size="45" value={friend} onChange={(e) => setFriend(e.target.value)} type="text" placeholder="Mary Ann" />
+                <input size="45" value={friend} onChange={(e) => setFriend(e.target.value)} type="text" placeholder="maryann@gmail.com" />
                  <button type="submit" onClick={sendFriendRequest} >Submit</button> 
 
             </form>
