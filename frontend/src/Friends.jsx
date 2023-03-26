@@ -89,7 +89,8 @@ export const Friends = (props) => {
             const ref = React.createRef();
             return (
                 <li key={item.id} ref={ref} >
-                <div>{item.firstname} {item.lastname} {item.id}</div>
+                  <a href="localhost:3000/login">{item.firstname} {item.lastname} {item.id}</a>
+                {/* <div>{item.firstname} {item.lastname} {item.id}</div> */}
                 </li>
                 );
              })}
@@ -100,7 +101,8 @@ export const Friends = (props) => {
             const ref = React.createRef();
             return (
                 <li key={item.id} ref={ref} >
-                <div>{item.firstname} {item.lastname} {item.id}</div>
+                <a href="localhost:3500/login">{item.firstname} {item.lastname} {item.id}</a>
+                {/* <div>{item.firstname} {item.lastname} {item.id}</div> */}
                 </li>
                 );
              })}
@@ -132,7 +134,9 @@ export const Friends = (props) => {
             const ref = React.createRef();
             return (
                 <li key={item.id} ref={ref} >
-                <div>{item.firstname} {item.lastname} {item.id}</div>
+                <div>{item.firstname} {item.lastname} {item.id}
+                <button>Delete</button>
+                </div>
                 </li>
                 );
              })}
