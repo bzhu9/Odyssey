@@ -30,6 +30,7 @@ export const CreateEvent = (props) => {
     const [isValidTime, setIsValidTime] = useState(true);
     // const [friend, setFriend] = useState('');
     const [selectedOptions, setSelectedOptions] = useState([]);
+    const [friendList, setFriendList] = useState([]);
 
 
 
@@ -43,6 +44,37 @@ export const CreateEvent = (props) => {
         const end = new Date(`${date}T${endTime}:00`);
         setIsValidTime(start <= end);
     }, [date, startTime, endTime]);
+
+    async function getFriends() {
+        //get the user's friend list
+        const pload = { email: sessionStorage.getItem("user")}
+        const rawFriendList = await api.getFriends(pload);
+        let processedFriendList = []
+        //console.log(rawFriendList);
+        for (let i = 0; i < rawFriendList.data.length; i++) {
+          let f = rawFriendList.data[i];
+          //each object will contain the email and the id of the friend
+          processedFriendList.push({
+            email: f.email,
+            id: f.id, 
+          });
+        }
+        //set the friendList
+        setFriendList(processedFriendList);
+    }
+
+    useEffect (() => {
+        let ignore = false;
+        if (!ignore) {
+          getFriends();
+          //console.log(friendList);
+        }
+        return () => {ignore = true;}
+      }, []);
+
+    useEffect(() => {
+        console.log(friendList);
+    }, [friendList]);
 
     const submit = async () => {
         if (title === "" || date === "" || startTime === "" || endTime === "") {
@@ -148,7 +180,11 @@ export const CreateEvent = (props) => {
             setSelectedOptions(options.map((opt) => opt.value));
           }
         }}
-        options={allOptions}
+        options={friendList.map((friend) => ({
+            value: friend.id,
+            label: friend.email
+          }))}
+        //options={allOptions}
         /> 
         {/* // components={{
         //   Option: InputOption

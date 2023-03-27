@@ -10,6 +10,7 @@ router.route("/").get((req, res) => {
     .catch(err => res.status(400).json("Error: " + err));
 });
 
+// Get only the ID of a user ----------------------------------
 router.route("/getID").post(async (req, res) => {
     const email = req.body.email;
     const user = await User.findOne({ email }).select("_id").lean();
@@ -20,10 +21,9 @@ router.route("/getID").post(async (req, res) => {
     // } else {
     //     console.log("id is false");
     // }
-
-    
     return res.status(200).json({ id });
 });
+
 // Get one user ----------------------------------
 router.route("/").post(async (req, res) => {
     const email = req.body.email;
@@ -190,6 +190,7 @@ router.route("/getFriends").post(async (req, res) => {
             let friend = await User.findOne({ _id: id }).select("-password -seq1 -seq2 -seq3").lean();
             if (friend) {
                 friendList.push({
+                    id: friend._id,
                     name: friend.name,
                     email: friend.email,
                     status: friend.status,
