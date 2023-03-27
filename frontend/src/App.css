@@ -282,10 +282,8 @@ button:hover {
   color: #CEB888;
 }
 
-.friendDropdown {
-
+.friendCheckbox{
   overflow: scroll;
-  max-height: 10px;
 }
 
 .friendDropdownTitle {
