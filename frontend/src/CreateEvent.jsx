@@ -79,14 +79,11 @@ export const CreateEvent = (props) => {
             
             //contains the userID of the user who created the new event
             const userID = await api.getUserID(pl);
-            //console.log(userObj);
-            //console.log(userObj.data.id);
-            //console.log(userObj.user);
-
-            //turn it into a list
-            //const usersArray = [];
-            //usersArray.push(userID);
-            //console.log(usersArray);
+           
+            //what is wrong currently is that when I uncomment user: userID
+            //the createEvent breaks
+            //if i make it a array and then add it, it will still break
+                //maybe its bc the schema requires an event objectID and not a user
 
 
             const payload = {
@@ -94,8 +91,7 @@ export const CreateEvent = (props) => {
                 startTime: startDate.toISOString(),
                 endTime: endDate.toISOString(),
                 location: location,
-                //it will be an array with 1 user id
-                users: userID,
+                //users: userID,
                 note: note
             };
 
