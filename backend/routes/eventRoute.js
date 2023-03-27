@@ -8,6 +8,7 @@ router.route('/').get((req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
+//get a single event
 router.route('/single/:_id').get(async (req, res) => {
   Event.findOne({ _id: req.params._id }).lean()
     .then(event => res.json(event))
@@ -21,7 +22,10 @@ router.route('/add').post((req, res) => {
   const startTime = req.body.startTime;
   const endTime = req.body.endTime;
   const location = req.body.location;
-  const users = req.body.users;
+  //add the owner to the users
+  const users = req.body.users
+  //any other user must be added to the req users list
+  const req_users = req.body.req_users;
   // const users = req.body.users;
   const note = req.body.note;
   // const repeating = req.body.repeating;

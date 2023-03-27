@@ -6,6 +6,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import Select, { components } from "react-select";
+import { array } from "i/lib/util";
 
 
 
@@ -67,11 +68,34 @@ export const CreateEvent = (props) => {
             endDate.setHours(endTimeSplit[0]);
             endDate.setMinutes(endTimeSplit[1]);
 
+            if (sessionStorage.getItem("user") == null) {
+                console.log("wtf? user not in session storage")
+            }
+            //get  the user id of the user making the event
+
+            const pl = {
+                email: sessionStorage.getItem("user")
+            };
+            
+            //contains the userID of the user who created the new event
+            const userID = await api.getUserID(pl);
+            //console.log(userObj);
+            //console.log(userObj.data.id);
+            //console.log(userObj.user);
+
+            //turn it into a list
+            //const usersArray = [];
+            //usersArray.push(userID);
+            //console.log(usersArray);
+
+
             const payload = {
                 title: title,
                 startTime: startDate.toISOString(),
                 endTime: endDate.toISOString(),
                 location: location,
+                //it will be an array with 1 user id
+                users: userID,
                 note: note
             };
 

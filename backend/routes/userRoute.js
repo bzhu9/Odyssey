@@ -9,6 +9,13 @@ router.route("/").get((req, res) => {
     .catch(err => res.status(400).json("Error: " + err));
 });
 
+router.route("/getID").post(async (req, res) => {
+    const email = req.body.email;
+    const user = await User.findOne({ email }).select("_id").lean();
+    const id = user._id;
+    
+    return res.status(200).json({ id });
+});
 // Get one user ----------------------------------
 router.route("/").post(async (req, res) => {
     const email = req.body.email;
