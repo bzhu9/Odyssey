@@ -112,7 +112,7 @@ export const CreateEvent = (props) => {
             //contains the userID of the user who created the new event
             const userData= await api.getUserID(pl);
             const userID = userData.data.id;
-            console.log(userID);
+            //console.log(userID);
 
             //creating the list of users
             const userList = [];
@@ -120,6 +120,9 @@ export const CreateEvent = (props) => {
 
             //creating the list of requested users
             const reqUserList = [];
+
+            //selectedOptions
+            // is a list of user objects
             
             const payload = {
                 title: title,
@@ -128,6 +131,7 @@ export const CreateEvent = (props) => {
                 location: location,
                 objectId: userID,
                 users: userList,
+                req_users: selectedOptions,
                 note: note
             };
             //console.log("there");

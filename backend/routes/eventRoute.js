@@ -24,9 +24,10 @@ router.route('/add').post((req, res) => {
   const startTime = req.body.startTime;
   const endTime = req.body.endTime;
   const location = req.body.location;
-  
+
   //const req_users = req.body.req_users;
   const users = req.body.users;
+  const req_users = req.body.req_users;
   const note = req.body.note;
   // const repeating = req.body.repeating;
   // const type = req.body.type;
@@ -46,6 +47,7 @@ router.route('/add').post((req, res) => {
     "endTime": endTime,
     "location": location,
     "users": users,
+    "req_users": req_users,
     "note": note,
     // "repeating": repeating,
     // "type": type,
