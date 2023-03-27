@@ -123,12 +123,18 @@ button:hover {
 }
 
 .prof {
-  position: absolute;
-  width: 200px;
+  
+  position: relative;
+  left: 65%;
+  margin-top: -95%;
+  min-height: 300px;
+  
+
+  /* width: 200px;
   top: 170px;
   height: 350px;  
   width: 450px;
-  right: 200px;
+  right: 200px; */
   border-radius: 10px;
   background-color:#CEB888;
   color:black;
@@ -262,5 +268,35 @@ button:hover {
   border: solid 5px #CEB888;
   padding: 0.5rem;
   border-radius: 1rem;
+}
+
+.friendProfile {
+  align-items: center;
+  font:bold;
+  margin: 0.6rem;
+  padding: 10px;
+  margin-left: 2px;
+  border-radius: 10px;
+  border: 2px solid #CEB888;
+  width: 380px;
+  color: #CEB888;
+}
+
+.friendDropdown {
+
+  overflow: scroll;
+  max-height: 10px;
+}
+
+.friendDropdownTitle {
+  border-radius: 10px;
+  border: 2px solid #CEB888;
+  padding: 10px;
+}
+
+.viewSchedule {
+  border-radius: 10px;
+  border: 2px solid #CEB888;
+  padding: 5px;
 }
 

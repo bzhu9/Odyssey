@@ -8,6 +8,7 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 
 
+const checkList = ["friend1", "friend2", "friend3", "friend4", "friend5", "friend6", "friend7",];
 
 // const events = [
 //   //add in an events array instead of this constant here
@@ -144,6 +145,17 @@ function FullCalendarApp(props) {
       <Link to="/login">
         <button>Go back to login screen</button>
       </Link>
+      <div className="viewSchedule">
+    <h4 className="friendCheckboxTitle">View Friend(s) schedule:</h4>
+    <div className="friendCheckbox">
+    {checkList.map((item, index) => (
+   <li key={index}>
+     <input value={item} type="checkbox" />
+     <span>{item}</span>
+   </li>
+))}
+    </div>
+  </div>
       <br></br>
     </div>
     

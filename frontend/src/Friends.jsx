@@ -89,7 +89,8 @@ export const Friends = (props) => {
             const ref = React.createRef();
             return (
                 <li key={item.id} ref={ref} >
-                <div>{item.firstname} {item.lastname} {item.id}</div>
+                  <a href="localhost:3000/login">{item.firstname} {item.lastname} {item.id}</a>
+                {/* <div>{item.firstname} {item.lastname} {item.id}</div> */}
                 </li>
                 );
              })}
@@ -100,7 +101,8 @@ export const Friends = (props) => {
             const ref = React.createRef();
             return (
                 <li key={item.id} ref={ref} >
-                <div>{item.firstname} {item.lastname} {item.id}</div>
+                <a href="localhost:3500/login">{item.firstname} {item.lastname} {item.id}</a>
+                {/* <div>{item.firstname} {item.lastname} {item.id}</div> */}
                 </li>
                 );
              })}
@@ -109,8 +111,8 @@ export const Friends = (props) => {
             {/* <h3>Add Friend</h3> */}
             <form className="login-form" onSubmit={handleSubmit}>
                 <label htmlFor="text">Enter user's name to add as friend</label>
-                <input size="45" value={friend} onChange={(e) => setFriend(e.target.value)} type="text" placeholder="Mary Ann" />
-                 <button type="submit" onClick={sendFriendRequest} >Submit</button> 
+                <input size="45" value={friend} onChange={(e) => setFriend(e.target.value)} type="text" placeholder="maryann@gmail.com" />
+                 <button>Submit</button> 
 
             </form>
 
@@ -132,7 +134,9 @@ export const Friends = (props) => {
             const ref = React.createRef();
             return (
                 <li key={item.id} ref={ref} >
-                <div>{item.firstname} {item.lastname} {item.id}</div>
+                <div>{item.firstname} {item.lastname} {item.id}
+                {/* <button type="submit" onClick={}>Delete</button> */}
+                </div>
                 </li>
                 );
              })}
