@@ -24,10 +24,11 @@ const eventSchema = new Schema({
   users: [{
     // list of _ids
     type: Schema.Types.ObjectId,
-    //require: true,
+    ref: 'User',
   }],
   req_users: [{
     type: Schema.Types.ObjectId,
+    ref: 'User',
   }],
   note: {
     type: String,

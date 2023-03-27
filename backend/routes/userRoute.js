@@ -1,6 +1,7 @@
 const router = require("express").Router();
 let User = require("../models/User");
 const bcrypt = require("bcrypt");
+const mongoose = require('mongoose');
 
 // Get all users --------------------------------
 router.route("/").get((req, res) => {
@@ -13,6 +14,13 @@ router.route("/getID").post(async (req, res) => {
     const email = req.body.email;
     const user = await User.findOne({ email }).select("_id").lean();
     const id = user._id;
+
+    // if(mongoose.Types.ObjectId.isValid(id)) {
+    //     console.log("id is TRUE");
+    // } else {
+    //     console.log("id is false");
+    // }
+
     
     return res.status(200).json({ id });
 });

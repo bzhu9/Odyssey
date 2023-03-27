@@ -1,6 +1,7 @@
 const router = require('express').Router();
 let Event = require('../models/Event');
 const User = require('../models/User');
+const mongoose = require('mongoose');
 
 router.route('/').get((req, res) => {
     Event.find()
@@ -18,15 +19,14 @@ router.route('/single/:_id').get(async (req, res) => {
 //const event = await Event.findOne({ _id: id }).lean();
 
 router.route('/add').post((req, res) => {
+  //console.log("3");
   const title = req.body.title;
   const startTime = req.body.startTime;
   const endTime = req.body.endTime;
   const location = req.body.location;
-  //add the owner to the users
-  const users = req.body.users
-  //any other user must be added to the req users list
-  const req_users = req.body.req_users;
-  // const users = req.body.users;
+  
+  //const req_users = req.body.req_users;
+  const users = req.body.users;
   const note = req.body.note;
   // const repeating = req.body.repeating;
   // const type = req.body.type;
