@@ -9,6 +9,7 @@ export const loginUser = payload => api.post("user/login", payload);
 export const resetUser = payload => api.post("user/reset", payload);
 export const getAllUsers = () => api.get("/user");
 export const getUser = payload => api.post("/user", payload);
+export const getUserWithID = payload => api.post("/user/getWithID", payload);
 export const getUserID = payload => api.post("/user/getID", payload);
 export const deleteUser = payload => api.post("/user/delete", payload);
 export const changeEmail = payload => api.post("/user/email", payload);
@@ -35,6 +36,7 @@ const apis = {
     insertUser,
     loginUser,
     resetUser,
+    getUserWithID,
     getAllUsers,
     getUser,
     getUserID,

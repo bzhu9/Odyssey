@@ -6,6 +6,7 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import api from "./apis";
 import Select, { components } from "react-select";
+//import { set } from "mongoose";
 
 
 async function getEvent(eventID) {
@@ -45,6 +46,11 @@ export const ChangeEvent = (props) => {
     const [location, setLocation] = useState('');
     const [note, setNote] = useState('');
     const [selectedOptions, setSelectedOptions] = useState([]);
+    const [friendList, setFriendList] = useState([]);
+    const [eventReqList, setEventReqList] = useState([]);
+    const [preSelectedOptions, setPreSelectedOptions] = useState([]);
+
+
 
 
     useEffect(() => {
@@ -59,9 +65,81 @@ export const ChangeEvent = (props) => {
         setEndTime(((endDay.getHours() < 10) ? "0" : "") + endDay.getHours() + ":" + ((endDay.getMinutes() < 10) ? "0" : "") + endDay.getMinutes());
         setLocation(eventObj.location);
         setNote(eventObj.note);
-      }, [eventObj]);
+        //console.log(eventObj.req_users)
+        setEventReqList(eventObj.req_users);
+     }, [eventObj]);
 
 
+    async function userReqObj() {
+        //get the user object
+        let userReqObj = [];
+        for (let i = 0; i < eventReqList.length; i++) {
+            //convert it to an object
+            //add it to the list
+            let pload = {
+                id: eventReqList[i]
+            };
+            let obj = await api.getUserWithID(pload);
+            userReqObj.push({
+                email: obj.data.user.email,
+                id: obj.data.user._id,
+            })
+
+            //console.log(userReqObj);
+            //console.log(obj.data);
+            //console.log(obj.data.name);
+            //console.log(obj.data.user._id);
+            //console.log(obj.data.user.email);
+
+        }
+        //add it to a list
+        //create the pre selected options
+        //set the pre selected options
+        setPreSelectedOptions(userReqObj);
+    }
+
+    useEffect(() => {
+        console.log(eventReqList); //convert this to objects with ID and email
+        userReqObj();
+        
+     }, [eventReqList]);
+
+    useEffect(() => {
+        console.log("hi");
+        console.log(preSelectedOptions);
+    }, [preSelectedOptions]);
+
+
+    async function getFriends() {
+        //get the user's friend list
+        const pload = { email: sessionStorage.getItem("user")}
+        const rawFriendList = await api.getFriends(pload);
+        let processedFriendList = []
+        //console.log(rawFriendList);
+        for (let i = 0; i < rawFriendList.data.length; i++) {
+          let f = rawFriendList.data[i];
+          //each object will contain the email and the id of the friend
+          processedFriendList.push({
+            email: f.email,
+            id: f.id, 
+          });
+        }
+        //set the friendList
+        setFriendList(processedFriendList);
+    }
+
+    useEffect (() => {
+        let ignore = false;
+        if (!ignore) {
+          getFriends();
+          //console.log(friendList);
+        }
+        return () => {ignore = true;}
+      }, []);
+
+    // useEffect(() => {
+    //     console.log(friendList);
+    // }, [friendList]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -149,16 +227,20 @@ export const ChangeEvent = (props) => {
         <label htmlFor="text">Share Event</label>
 
         <Select className="friendDropdown"
-        defaultValue={[]}
+        defaultValue={preSelectedOptions}
         isMulti
         closeMenuOnSelect={false}
         hideSelectedOptions={false}
+        //setSelectedOptions(preSelectedOptions.map((opt) => opt.value));
         onChange={(options) => {
           if (Array.isArray(options)) {
             setSelectedOptions(options.map((opt) => opt.value));
           }
         }}
-        options={allOptions}
+        options={friendList.map((friend) => ({
+            value: friend.id,
+            label: friend.email
+        }))}
         /> 
         <label htmlFor="text">Event Notes</label>
         

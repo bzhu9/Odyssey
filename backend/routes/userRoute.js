@@ -32,6 +32,13 @@ router.route("/").post(async (req, res) => {
     return res.status(200).json({ user: user });
 });
 
+// Get one user using objectID --------------------
+router.route("/getWithID").post(async (req, res) => {
+    const id = req.body.id;
+    const user = await User.findOne({ _id: id }).select("-password -seq1 -seq2 -seq3").lean();
+    return res.status(200).json({ user: user });
+});
+
 // POST to Register User
 router.route("/add").post(async (req, res) => {
     const name = req.body.name;
