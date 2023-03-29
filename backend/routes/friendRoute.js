@@ -55,9 +55,18 @@ router.route("/sendFriendRequest").post(async (req, res) => {
     if (!friendObject) {
         return res.status(400).json("User not found");
     }
+    if (user.sent_reqs.includes(friendObject._id)) {
+        return res.status(400).json("You have already sent a friend request to this user!");
+    }
+
+    if (user.friends.includes(friendObject._id)) {
+        return res.status(400).json("This user is already your friend");
+    }
+    user.sent_reqs.push(friendObject._id);
     friendObject.friend_reqs.push(userid);
-    friendObject.save()
-        .then(() => res.status(201).json("Friend added!"))
+    friendObject.save();
+    user.save()
+        .then(() => res.status(201).json("Friend request sent!"))
         .catch(err => res.status(400).json("Error: " + err));
 })
 
@@ -75,9 +84,11 @@ router.route("/acceptFriendRequest").post(async (req, res) => {
     friendObject.friends.push(user._id);
     
     // remove from friends request list
-    const index = user.friend_reqs.indexOf(friendObject._id);
+    let index = user.friend_reqs.indexOf(friendObject._id);
     user.friend_reqs.splice(index, 1);
     user.save();
+    index = friendObject.sent_reqs.indexOf(user._id);
+    friendObject.sent_reqs.splice(index, 1);
     friendObject.save().then(() => res.status(201).json("Friend added!"))
         .catch(err => res.status(400).json("Error: " + err));
 })
@@ -94,6 +105,9 @@ router.route("/deleteFriendRequest").post(async (req, res) => {
     // remove from friends request list
     const index = user.friend_reqs.indexOf(friendObject._id);
     user.friend_reqs.splice(index, 1);
+    index = friendObject.sent_reqs.indexOf(user._id);
+    friendObject.sent_reqs.splice(index, 1);
+    friendObject.save();
     user.save()
         .then(() => res.status(201).json("Friend added!"))
         .catch(err => res.status(400).json("Error: " + err));
