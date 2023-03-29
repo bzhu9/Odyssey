@@ -49,14 +49,6 @@ router.route("/").post((req, res) => {
     .then(room => res.json(room))
     .catch(err => res.status(400).json("Error: " + err));
 
-    // OpenClass.find({building: req.body.building}, {geoPoint : 1})
-    // OpenClass.find({
-    //     building: req.body.building
-    // })
-    // // .then(doc => point = doc.geoPoint)
-    // .then(room => res.json(room))
-    // .catch(err => res.status(400).json("Error: " + err));
-
     // OpenClass.find({
     //     endTime: {$gt: req.body.endTime},
     //     startTime: {$lt: req.body.startTime},
