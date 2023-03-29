@@ -4,20 +4,24 @@ const Schema = mongoose.Schema;
 
 
 const openClassSchema = new Schema({
-    name: {
+    date: {
         type: String,
         require: false,
     },
-    section: {
+    startString: {
         type: String,
         require: false,
     },
-    startTime: {
-        type: Date,
+    endString: {
+        type: String,
+        require: false,
+    },
+    location: {
+        type: String,
         require: true,
     },
-    endTime: {
-        type: Date,
+    capacity: {
+        type: Number,
         require: true,
     },
     building: {
@@ -28,13 +32,9 @@ const openClassSchema = new Schema({
         type: String,
         require: true,
     },
-    capacity: {
-        type: Number,
-        require: true,
-    },
     address: {
         type: String,
-        require: false,
+        require: true,
     },
     lat: {
         type: Number,
@@ -43,7 +43,56 @@ const openClassSchema = new Schema({
     long: {
         type: Number,
         require: true,
+    },
+    startTime: {
+        type: Number,
+        require: true,
+    },
+    endTime: {
+        type: Number,
+        require: true,
     }
+
+    // name: {
+    //     type: String,
+    //     require: false,
+    // },
+    // section: {
+    //     type: String,
+    //     require: false,
+    // },
+    // startTime: {
+    //     type: Date,
+    //     require: true,
+    // },
+    // endTime: {
+    //     type: Date,
+    //     require: true,
+    // },
+    // building: {
+    //     type: String,
+    //     require: true,
+    // },
+    // room: {
+    //     type: String,
+    //     require: true,
+    // },
+    // capacity: {
+    //     type: Number,
+    //     require: true,
+    // },
+    // address: {
+    //     type: String,
+    //     require: false,
+    // },
+    // lat: {
+    //     type: Number,
+    //     require: true,
+    // },
+    // long: {
+    //     type: Number,
+    //     require: true,
+    // }
 });
 
 const OpenClass = mongoose.model("OpenClass", openClassSchema);
