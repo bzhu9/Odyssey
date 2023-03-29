@@ -38,20 +38,22 @@ export const OpenClass = (props) => {
                 building: building,
                 room: room
             }
-            console.log(payload)
+            // console.log(payload)
             const openClasses = await api.searchOpenClass(payload);
+            // console.log(openClasses)
             var processedClassrooms = [];
             var classes = [];
             var set = new Set();
             
-            var d = new Date(0);
+            
             const zeroPad = (num, places) => String(num).padStart(places, '0')
             for (let i = 0; i < openClasses.data.length; i++) {
                 if (!set.has(`${openClasses.data[i].building} ${openClasses.data[i].room}`)) {
                     set.add(`${openClasses.data[i].building} ${openClasses.data[i].room}`);
+                    var d = new Date(0);
                     d.setUTCSeconds(openClasses.data[i].endTime)
-                    // classes.push(`${openClasses.data[i].building} ${openClasses.data[i].room} Closes at: ${zeroPad(d.getHours(), 2)}:${zeroPad(d.getMinutes(), 2)}`);
-                    classes.push(`${openClasses.data[i].building} ${openClasses.data[i].room} Closes at: ${openClasses.data[i].endTime}`);
+                    classes.push(`${openClasses.data[i].building} ${openClasses.data[i].room} Closes at: ${zeroPad(d.getHours(), 2)}:${zeroPad(d.getMinutes(), 2)}`);
+                    // classes.push(`${openClasses.data[i].building} ${openClasses.data[i].room} Closes at: ${openClasses.data[i].endTime}`);
                 }
                 // processedClassrooms.push({name: `${openClasses.data[i].building} ${openClasses.data[i].room}`});
             }
