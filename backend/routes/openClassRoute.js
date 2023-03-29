@@ -64,18 +64,23 @@ router.route('/clear').post(async (req,res) => {
     res.status(200).json({message: 'cleared'})
 })
 
-router.route('/convertStartTime').post(async (req, res) => {
-    OpenClass.aggregate([
+router.route('/addGeo').post(async (req, res) => {
+    OpenClass.updateMany({}, [
         {
-            $project: {
-                startTime: {
-                    $dateFromString: {
-                        dateString: '$startTime'
-                    }
+            $set: {
+                geoPoint: {
+                    type: "Point",
+                    coordinates: [
+                        "$long",
+                        "$lat"
+                    ]
                 }
             }
         }
-    ])
-    res.status(200).json({message: 'converted'})
+    ], (err, result) => {
+        if (err) throw err;
+        console.log(`${result.modifiedCount} documents updated.`);
+    });
+    res.status(200).json({message: 'added geo'})
 })
 module.exports = router;
