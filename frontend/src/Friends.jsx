@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import api from "./apis"
+import {FaCheck, FaTimes} from "react-icons/fa"
 import { Link, useNavigate } from "react-router-dom";
 
 export const Friends = (props) => {
@@ -22,9 +23,13 @@ export const Friends = (props) => {
       for (let i = 0; i < rawFriendList.data.length; i++) {
         let f = rawFriendList.data[i];
         processedFriendList.push({
-          firstname: f.name,
-          lastname: f.status, // can change later
-          id: f.publicity // can change later, gets console error for unique ids
+          // firstname: f.name,
+          // lastname: f.status, // can change later
+          // id: f.publicity // can change later, gets console error for unique ids
+          name: f.name,
+          status: f.status,
+          privacy: f.privacy,
+          email: f.email
         });
       }
       setFriendList(processedFriendList);
@@ -37,15 +42,18 @@ export const Friends = (props) => {
     async function getFriendRequests() {
       const payload = { email: sessionStorage.getItem("user")}
       const rawFriendRequestList = await api.getFriendRequests(payload);
-      console.log("YAWOE");
       console.log(rawFriendRequestList);
       let processedFriendRequestList = []
       for (let i = 0; i < rawFriendRequestList.data.length; i++) {
         let f = rawFriendRequestList.data[i];
         processedFriendRequestList.push({
-          firstname: f.name,
-          lastname: f.status, // can change later
-          id: f.publicity // can change later, gets console error for unique ids
+          // firstname: f.name,
+          // lastname: f.status, // can change later
+          // id: f.privacy // can change later, gets console error for unique ids
+          name: f.name,
+          status: f.status,
+          privacy: f.privacy,
+          email: f.email
         });
       }
       setReqList(processedFriendRequestList);
@@ -60,6 +68,23 @@ export const Friends = (props) => {
       const payload = {email: email, friend: friend};
       console.log(`This is the friend ${friend}`);
       await api.sendFriendRequest(payload);
+    }
+
+    async function acceptFriendRequest(friendEmail, friendName) {
+      const email = sessionStorage.getItem("user");
+      const payload = {email: email, friendEmail: friendEmail};
+      await api.acceptFriendRequest(payload);
+      await getFriends();
+      await getFriendRequests();
+      alert(`${friendName} is your new friend!`);
+    }
+
+    async function deleteFriendRequest(friendEmail) {
+      const email = sessionStorage.getItem("user");
+      const payload = {email: email, friendEmail: friendEmail};
+      await api.deleteFriendRequest(payload);
+      await getFriendRequests();
+      alert(`${friendEmail} deleted!`);
     }
     
     // called when loading page
@@ -89,7 +114,7 @@ export const Friends = (props) => {
             const ref = React.createRef();
             return (
                 <li key={item.id} ref={ref} >
-                  <a href="localhost:3000/login">{item.firstname} {item.lastname} {item.id}</a>
+                  <a href="localhost:3000/login">{item.name} {item.status} {item.privacy}</a>
                 {/* <div>{item.firstname} {item.lastname} {item.id}</div> */}
                 </li>
                 );
@@ -101,8 +126,7 @@ export const Friends = (props) => {
             const ref = React.createRef();
             return (
                 <li key={item.id} ref={ref} >
-                <a href="localhost:3500/login">{item.firstname} {item.lastname} {item.id}</a>
-                {/* <div>{item.firstname} {item.lastname} {item.id}</div> */}
+                <a href="localhost:3500/login">{item.name} {item.status} {item.privacy}</a>
                 </li>
                 );
              })}
@@ -112,7 +136,7 @@ export const Friends = (props) => {
             <form className="login-form" onSubmit={handleSubmit}>
                 <label htmlFor="text">Enter user's name to add as friend</label>
                 <input size="45" value={friend} onChange={(e) => setFriend(e.target.value)} type="text" placeholder="maryann@gmail.com" />
-                 <button>Submit</button> 
+                 <button onClick={sendFriendRequest}>Submit</button> 
 
             </form>
 
@@ -134,8 +158,10 @@ export const Friends = (props) => {
             const ref = React.createRef();
             return (
                 <li key={item.id} ref={ref} >
-                <div>{item.firstname} {item.lastname} {item.id}
-                {/* <button type="submit" onClick={}>Delete</button> */}
+                <div>{item.name} {item.status} {item.privacy}
+                &nbsp;
+                <button type="submit" onClick={() => acceptFriendRequest(item.email, item.name)}><FaCheck color="green"/> </button>
+                <button type="submit" onClick={() => deleteFriendRequest(item.email)}><FaTimes color="red"/> </button>
                 </div>
                 </li>
                 );

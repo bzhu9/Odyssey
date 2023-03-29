@@ -194,7 +194,7 @@ router.route("/getFriends").post(async (req, res) => {
                     name: friend.name,
                     email: friend.email,
                     status: friend.status,
-                    publicity: friend.publicity
+                    privacy: friend.privacy
                 });
             }
         }
@@ -221,7 +221,7 @@ router.route("/getFriendRequests").post(async (req, res) => {
                     name: friend.name,
                     email: friend.email,
                     status: friend.status,
-                    publicity: friend.publicity
+                    privacy: friend.privacy
                 });
             }
         }

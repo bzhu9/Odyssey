@@ -59,7 +59,44 @@ router.route("/sendFriendRequest").post(async (req, res) => {
     friendObject.save()
         .then(() => res.status(201).json("Friend added!"))
         .catch(err => res.status(400).json("Error: " + err));
-
 })
+
+router.route("/acceptFriendRequest").post(async (req, res) => {
+    const email = req.body.email;
+    const friendEmail = req.body.friendEmail;
+
+    const user = await User.findOne({ email: email }).select("-password -seq1 -seq2 -seq3")
+        .catch(err => res.status(400).json("Error: " + err));
+    const friendObject = await User.findOne({ email: friendEmail }).select("-password -seq1 -seq2 -seq3")
+        .catch(err => res.status(400).json("Error: " + err));
+    
+    // add to friends list
+    user.friends.push(friendObject._id);
+    friendObject.friends.push(user._id);
+    
+    // remove from friends request list
+    const index = user.friend_reqs.indexOf(friendObject._id);
+    user.friend_reqs.splice(index, 1);
+    user.save();
+    friendObject.save().then(() => res.status(201).json("Friend added!"))
+        .catch(err => res.status(400).json("Error: " + err));
+})
+
+router.route("/deleteFriendRequest").post(async (req, res) => {
+    const email = req.body.email;
+    const friendEmail = req.body.friendEmail;
+    
+    const user = await User.findOne({ email: email }).select("-password -seq1 -seq2 -seq3")
+        .catch(err => res.status(400).json("Error: " + err));
+    const friendObject = await User.findOne({ email: friendEmail }).select("-password -seq1 -seq2 -seq3")
+        .catch(err => res.status(400).json("Error: " + err));
+    
+    // remove from friends request list
+    const index = user.friend_reqs.indexOf(friendObject._id);
+    user.friend_reqs.splice(index, 1);
+    user.save()
+        .then(() => res.status(201).json("Friend added!"))
+        .catch(err => res.status(400).json("Error: " + err));
+});
 
 module.exports = router;
