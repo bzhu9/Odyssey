@@ -15,23 +15,26 @@ export const OpenClass = (props) => {
             alert("Invalid classroom")
         }
         else {
-            const zeroPad = (num, places) => String(num).padStart(places, '0')
-            const now = new Date()
-            const hour = Number(now.getHours())
-            const nextHour = hour + 1
-            const minute = Number(now.getMinutes())
-            const startTime = `${zeroPad(hour, 2)}:${zeroPad(minute, 2)}`
-            const endTime = `${zeroPad(nextHour, 2)}:${zeroPad(minute, 2)}`
+            // const now = new Date()
+            // const hour = Number(now.getHours())
+            // const nextHour = hour + 1
+            // const minute = Number(now.getMinutes())
+            // const startTime = `${zeroPad(hour, 2)}:${zeroPad(minute, 2)}`
+            // const endTime = `${zeroPad(nextHour, 2)}:${zeroPad(minute, 2)}`
+            // const now = (new Date().getTime()) / 1000
+            // const nextHour = (new Date().getTime() + 60*60*1000) / 1000
+            const now = 1680099600
+            const nextHour = 1680103200
             
-            const building = classroom.split(' ')[0]
+            const building = (classroom.split(' ')[0]).toUpperCase()
             const room = classroom.split(' ')[1]
-            console.log(startTime)
-            console.log(endTime)
-            console.log(building)
-            console.log(room)
+            // console.log(startTime)
+            // console.log(endTime)
+            // console.log(building)
+            // console.log(room)
             const payload = {
-                startTime: startTime,
-                endTime: endTime,
+                startTime: now,
+                endTime: nextHour,
                 building: building,
                 room: room
             }
@@ -41,9 +44,13 @@ export const OpenClass = (props) => {
             var classes = [];
             var set = new Set();
             
+            var d = new Date(0);
+            const zeroPad = (num, places) => String(num).padStart(places, '0')
             for (let i = 0; i < openClasses.data.length; i++) {
                 if (!set.has(`${openClasses.data[i].building} ${openClasses.data[i].room}`)) {
                     set.add(`${openClasses.data[i].building} ${openClasses.data[i].room}`);
+                    d.setUTCSeconds(openClasses.data[i].endTime)
+                    // classes.push(`${openClasses.data[i].building} ${openClasses.data[i].room} Closes at: ${zeroPad(d.getHours(), 2)}:${zeroPad(d.getMinutes(), 2)}`);
                     classes.push(`${openClasses.data[i].building} ${openClasses.data[i].room} Closes at: ${openClasses.data[i].endTime}`);
                 }
                 // processedClassrooms.push({name: `${openClasses.data[i].building} ${openClasses.data[i].room}`});
