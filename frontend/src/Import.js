@@ -48,15 +48,21 @@ function FileUploadPage(){
    <div>
 			<input type="file" name="file" onChange={changeHandler} />
 			{isFilePicked ? (
-				<div>
-					<p>Filename: {selectedFile.name}</p>
-					<p>Filetype: {selectedFile.type}</p>
-					<p>Size in bytes: {selectedFile.size}</p>
-					<p>
-						lastModifiedDate:{' '}
-						{selectedFile.lastModifiedDate.toLocaleDateString()}
-					</p>
-				</div>
+				selectedFile.name.split('.').pop() === "ics" ? (
+					<div>
+						<div>
+							<p>Filename: {selectedFile.name}</p>
+							<p>Filetype: {selectedFile.type}</p>
+							<p>Size in bytes: {selectedFile.size}</p>
+							<p>
+							lastModifiedDate:{' '}
+							{selectedFile.lastModifiedDate.toLocaleDateString()}
+							</p>
+						</div>
+					</div>
+				) : (
+					<p>bad</p>
+				)
 			) : (
 				<p>Select a file to show details</p>
 			)}
