@@ -56,6 +56,10 @@ const userSchema = new Schema({
     events: [{
         //not required for now
         type: Schema.Types.ObjectId,
+    }],
+    req_events: [{
+        //not required for now
+        type: Schema.Types.ObjectId,
     }]
     // add nutritional preferences: list of enums
         // vegetarian
