@@ -61,13 +61,21 @@ export const Friends = (props) => {
 
     async function sendFriendRequest() {
       const email = sessionStorage.getItem("user");
+      if (friend.length === 0) {
+        alert("Please enter a value!");
+        return;
+      }
       if (!email) {
         alert("You must be logged in to send a friend request!");
         return;
       }
       const payload = {email: email, friend: friend};
-      console.log(`This is the friend ${friend}`);
-      await api.sendFriendRequest(payload);
+      await api.sendFriendRequest(payload)
+      .catch (err => {
+        if (err.response) {
+            alert(err.response.data);
+        }
+      });
     }
 
     async function acceptFriendRequest(friendEmail, friendName) {
@@ -138,7 +146,7 @@ export const Friends = (props) => {
          <div className="auth-form-container" id="addFriend" >
             {/* <h3>Add Friend</h3> */}
             <form className="login-form" onSubmit={handleSubmit}>
-                <label htmlFor="text">Enter user's name to add as friend</label>
+                <label htmlFor="text">Enter user's email to add as friend</label>
                 <input size="45" value={friend} onChange={(e) => setFriend(e.target.value)} type="text" placeholder="maryann@gmail.com" />
                  <button onClick={sendFriendRequest}>Submit</button> 
 
