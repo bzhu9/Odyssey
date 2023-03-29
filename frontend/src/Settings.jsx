@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import api from "./apis"
 import { Link, useNavigate } from "react-router-dom";
 
@@ -8,64 +8,28 @@ export const Settings = (props) => {
     // const [emailNew2, setEmailNew2] = useState('');
     const [pass, setPass] = useState('');
     const [seq, setSeq] = useState('');
+    const [email, setEmail] = useState('');
+    const [name, setName] = useState('');
+    const [status, setStatus] = useState('');
+    const [privacy, setPrivacy] = useState('');
     const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault();
     }
 
-    // const changeEmail = async () => {
-    //     console.log("inside");
-    //     if (sessionStorage.getItem("user") == null) {
-    //         //console.log("wtf?")
-    //         console.log("user is null wtf");
-    //         window.alert("Please login to change your email!");
-    //     }
-    //     else if (email !== sessionStorage.getItem("user")){
-    //         console.log("email is not the same");
-    //         window.alert("Please provide the email associated to your account");
-    //     }
-    //     else {
-    //         //check if new email is identical to new email confirm
-    //         console.log("inside else");
-    //         if (emailNew === emailNew2) {
-    //             //make the payload object
-    //             console.log("making payload");
-    //             const payload = {
-    //                 oldEmail: email,
-    //                 newEmail: emailNew
-    //             };
-
-    //             //send the post api
-    //             console.log("api call");
-    //             await api.changeEmail(payload).then( async res => {
-    //                 sessionStorage.setItem("user", emailNew);
-    //                 console.log("email changed")
-    //                 window.alert("email changed!");
-    //                 navigate("../cal");
-    //             }).catch(function (error) {
-    //                 console.log("there was an error changing");
-    //                 if (error.reponse) {
-    //                     console.log("displaying error");
-    //                     window.alert(error.response.data.message);
-    //                 }
-    //             })
-
-    //             //show the response to the user
-    //         }
-    //         else {
-    //             console.log("email is the same as another user");
-    //             window.alert("please make sure new email is the same");
-    //         }
-
-            
-    //     }
-
-    // }
+    async function getUserData() {
+        const email = sessionStorage.getItem("user");
+        const payload = {email: email};
+        const user = await api.getUser(payload);
+        setEmail(user.data.user.email);
+        setName(user.data.user.name);
+        setStatus(user.data.user.status);
+        setPrivacy(user.data.user.privacy);
+        console.log(user);
+    }
 
     const deleteUser = async () => {
-        // console.log("USER: ");
-        // console.log(sessionStorage.getItem("user"));
         if (sessionStorage.getItem("user") == null) {
             console.log("wtf?")
             window.alert("Please login delete your account!");
@@ -117,6 +81,17 @@ export const Settings = (props) => {
         // }
     }
 
+    // called when loading page
+    useEffect (() => {
+        let ignore = false;
+        if (!ignore) {
+            if (sessionStorage.getItem("user") != null) {
+                getUserData();
+            }
+        }
+        return () => {ignore = true;}
+        }, []);
+
     return (
         <div>
        <Link to="/settings">
@@ -160,9 +135,25 @@ export const Settings = (props) => {
             <button size="45" className="reset-btn2" type="submit">Weekly View</button>
         </Link>
         <div className="prof" >
-        <p> Name: John Green</p>
-        <p> Status: Available</p>
+        <br />
+        { sessionStorage.getItem("user") == null ? 
+        <>
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <h3>Please login to see your profile!</h3>
+        </>
+        :
+        <>
+        <p> <b>Name:</b> {name}</p>
+        <p> <b>Email:</b> {email}</p>
+        <p> <b>Privacy:</b> {privacy}</p>
+        <p> <b>Status:</b> {status}</p>
         <p> idk whatever else </p>
+        </>
+        }
         </div>
     
     </div>

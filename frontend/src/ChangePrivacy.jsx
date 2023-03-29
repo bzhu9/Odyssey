@@ -27,7 +27,7 @@ export const ChangePrivacy = (props) => {
       let ignore = false;
       if (!ignore) {
         getPrivacy();
-        setPriv("None");
+        setPriv("Private");
       }
       return () => {ignore = true;}
     }, []);
@@ -37,9 +37,9 @@ export const ChangePrivacy = (props) => {
       <h2>Privacy Settings</h2>
       <h3>Your current setting is: {currentPriv}</h3>
       <select className="dropdown" onChange={(e) => setPriv(e.target.value)}  id="colours">
-        <option className="dropdown" value="private">Private</option>
-        <option className="dropdown" value="public">Public</option>
-        <option className="dropdown" value="friends-only">Friends-Only</option>
+        <option className="dropdown" value="Private">Private</option>
+        <option className="dropdown" value="Public">Public</option>
+        <option className="dropdown" value="Friends-Only">Friends-Only</option>
       </select>
       { <h3> </h3> }
       <button type="submit" onClick={setPrivacy}>Submit Changes</button>
