@@ -20,7 +20,7 @@ import { ChangePrivacy } from './ChangePrivacy'
 import ChangeStatus from './ChangeStatus';
 import { ChangeWorkday } from './ChangeWorkday';
 import { FriendProfile } from './FriendProfile';
-import { Import } from './Import';
+import FileUploadPage from './Import';
 
 function App() {
   const [currentForm, setCurrentForm] = useState('login');
@@ -64,7 +64,7 @@ function App() {
           <Route path ="changeStatus" element={<ChangeStatus />}/>
           <Route path ="changeWorkday" element={<ChangeWorkday />}/>
           <Route path ="friendProfile" element={<FriendProfile />}/>
-          <Route path ="import" element={<Import />}/>
+          <Route path ="import" element={<FileUploadPage />}/>
 
 
 

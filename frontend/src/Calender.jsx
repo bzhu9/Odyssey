@@ -146,7 +146,7 @@ function FullCalendarApp(props) {
         <button>Go back to login screen</button>
       </Link>
       <Link to="/import">
-        <button>Import</button>
+        <button className="importButton">Import</button>
       </Link>     
        <div className="viewSchedule">
     <h4 className="friendCheckboxTitle">View Friend(s) schedule:</h4>
