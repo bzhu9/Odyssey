@@ -27,7 +27,7 @@ export const Import = (props) => {
                 <button size="45" className="reset-btn" type="submit">Weekly View</button>
             </Link>
             <Link to="/register">
-                <button size="45" className="reg-btn">Import Calender</button>
+                <button size="45" className="reg-btn">Import Calendar</button>
             </Link>
             
 
