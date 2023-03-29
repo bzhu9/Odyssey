@@ -151,7 +151,6 @@ export const Settings = (props) => {
         <p> <b>Email:</b> {email}</p>
         <p> <b>Privacy:</b> {privacy}</p>
         <p> <b>Status:</b> {status}</p>
-        <p> idk whatever else </p>
         </>
         }
         </div>
