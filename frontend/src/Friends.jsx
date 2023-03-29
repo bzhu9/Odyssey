@@ -108,18 +108,22 @@ export const Friends = (props) => {
         </Link>
         <div >
             <h2 >Friends Settings</h2>
+            {/* FRIEND LIST ----------------------------------------------*/}
             <h4 className="friendsTitle">Current Friends</h4>
             <ul className="friendsList">
             {friendList.map(item => {
             const ref = React.createRef();
             return (
                 <li key={item.id} ref={ref} >
-                  <a href="localhost:3000/login">{item.name} {item.status} {item.privacy}</a>
+                  <button onClick={() => navigate("../friendProfile", {state: {email: item.email, name: item.name, status: item.status, privacy: item.privacy}})}>
+                    {item.name} {item.status} {item.privacy}
+                    </button>
                 {/* <div>{item.firstname} {item.lastname} {item.id}</div> */}
                 </li>
                 );
              })}
          </ul>
+         {/* FRIEND RECCOMENDATIONS ----------------------------------------------*/}
          <h4 className="recTitle"> Friend Reccs</h4>
             <ul className="recList">
             {recList.map(item => {
@@ -151,6 +155,7 @@ export const Friends = (props) => {
           
 
         </div>
+        {/* FRIEND REQUESTS ----------------------------------------------*/}
         <p id="friendReqTitle"> Friend Requests </p>
         <div id="friendReq" >
         <ul>

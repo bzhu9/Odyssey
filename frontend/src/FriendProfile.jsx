@@ -1,8 +1,8 @@
 import React, {useState} from "react"
 import api from "./apis"
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 export const FriendProfile = (props) => {
-   
+    const { state } = useLocation();
     const navigate = useNavigate();
 
     const handleSubmit = (e) => {
@@ -15,9 +15,10 @@ export const FriendProfile = (props) => {
         <div className="auth-form-container">
             <h2>Friend's Profile</h2>
             <form  >
-                <h4 className="friendProfile">Friend's Name: </h4><p>Alex Smith</p>
-                <h4 className="friendProfile">Friend's Email: </h4> <p>alexsmith@gmail.com</p>
-                <h4 className="friendProfile">Friend's Status: </h4> <p>Friends Only</p>
+                <h4 className="friendProfile">Friend's Name: </h4><p>{state.name}</p>
+                <h4 className="friendProfile">Friend's Email: </h4> <p>{state.email}</p>
+                <h4 className="friendProfile">Friend's Status: </h4> <p>{state.status}</p>
+                <h4 className="friendProfile">Friend's Privacy: </h4> <p>{state.privacy}</p>
 
 
             </form>
