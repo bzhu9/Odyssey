@@ -121,6 +121,9 @@ router.route("/isFriend").post(async (req, res) => {
         .catch(err => res.status(400).json("Error: " + err));
     const friendObject = await User.findOne({ email: friendEmail }).select("-password -seq1 -seq2 -seq3")
         .catch(err => res.status(400).json("Error: " + err));
+    if (!user || !friendObject) {
+        return res.status(400).json("Error: ");
+    }
     if (user.friends.includes(friendObject._id)) {
         return res.status(200).json(true);
     }
