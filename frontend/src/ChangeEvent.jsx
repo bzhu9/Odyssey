@@ -66,7 +66,7 @@ export const ChangeEvent = (props) => {
         setLocation(eventObj.location);
         setNote(eventObj.note);
         //console.log(eventObj.req_users)
-        setEventReqList(eventObj.req_users);
+        setEventReqList(eventObj.req_users);        
      }, [eventObj]);
 
 
@@ -101,12 +101,20 @@ export const ChangeEvent = (props) => {
     useEffect(() => {
         console.log(eventReqList); //convert this to objects with ID and email
         userReqObj();
-        
      }, [eventReqList]);
 
     useEffect(() => {
-        console.log("hi");
-        console.log(preSelectedOptions);
+        console.log("HERE");
+        setSelectedOptions(preSelectedOptions.map((friend) => ({
+            key: friend.id,
+            value: friend.id,
+            label: friend.email
+        })))
+        console.log(preSelectedOptions.map((friend) => ({
+            value: friend.id,
+            label: friend.email
+        })))
+        
     }, [preSelectedOptions]);
 
 
@@ -227,17 +235,24 @@ export const ChangeEvent = (props) => {
         <label htmlFor="text">Share Event</label>
 
         <Select className="friendDropdown"
-        defaultValue={preSelectedOptions}
-        isMulti
+        value={selectedOptions}
+        isMulti={true}
         closeMenuOnSelect={false}
         hideSelectedOptions={false}
-        //setSelectedOptions(preSelectedOptions.map((opt) => opt.value));
-        onChange={(options) => {
-          if (Array.isArray(options)) {
-            setSelectedOptions(options.map((opt) => opt.value));
-          }
-        }}
+        // onChange={(options) => {
+        //   if (Array.isArray(options)) {
+        //     setSelectedOptions(options.map((opt) => ({
+        //         key: opt.id,
+        //         value: opt.id,
+        //         label: opt.email
+        //     })));
+        //     console.log("asjldhfvkasdjhfvkasdhj")
+        //     console.log(selectedOptions);
+        //   }
+        // }}
+        onChange={(options) => setSelectedOptions(options)}
         options={friendList.map((friend) => ({
+            key: friend.id,
             value: friend.id,
             label: friend.email
         }))}

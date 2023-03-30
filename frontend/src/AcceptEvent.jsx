@@ -3,7 +3,7 @@ import api from "./apis"
 import {FaCheck, FaTimes} from "react-icons/fa"
 import { Link, useNavigate } from "react-router-dom";
 
-export const Friends = (props) => {
+export const AcceptEvent = (props) => {
     const navigate = useNavigate();
     const [friend, setFriend] = useState('');
     const [friendList, setFriendList] = useState([]);
@@ -59,6 +59,25 @@ export const Friends = (props) => {
       setReqList(processedFriendRequestList);
     }
 
+    async function sendFriendRequest() {
+      const email = sessionStorage.getItem("user");
+      if (friend.length === 0) {
+        alert("Please enter a value!");
+        return;
+      }
+      if (!email) {
+        alert("You must be logged in to send a friend request!");
+        return;
+      }
+      const payload = {email: email, friend: friend};
+      await api.sendFriendRequest(payload)
+      .catch (err => {
+        if (err.response) {
+            alert(err.response.data);
+        }
+      });
+    }
+
     async function acceptFriendRequest(friendEmail, friendName) {
       const email = sessionStorage.getItem("user");
       const payload = {email: email, friendEmail: friendEmail};
@@ -79,24 +98,6 @@ export const Friends = (props) => {
     function redirectToProfile(item) {
       navigate("../friendProfile", {state: {email: item.email, name: item.name, status: item.status, privacy: item.privacy}});
     }
-
-    async function searchProfile() {
-      if (friend.length === 0) {
-        alert("Please enter a value!");
-        return;
-      }
-      const item = await api.getUser({email: friend})
-        .catch(err => {
-          if (err.response) {
-              alert("User not found!");
-          }
-          return;
-        });
-      if  (item?.data.user) {
-        redirectToProfile(item.data.user);
-      }
-      
-    }
     
     // called when loading page
     useEffect (() => {
@@ -111,68 +112,11 @@ export const Friends = (props) => {
     return (
         <div>
             
-       <Link to="/settings">
-            <button size="45" className="settingsNav-btn" >Profile</button>
-        </Link>
-        <Link to="/friends">
-            <button size="45" className="friendNav-btn" >Friends</button>
-        </Link>
-        <div >
-            <h2 >Friends Settings</h2>
-            {/* FRIEND LIST ----------------------------------------------*/}
-            <h4 className="friendsTitle">Current Friends</h4>
-            <ul className="friendsList">
-            {friendList.map(item => {
-            const ref = React.createRef();
-            return (
-                <li key={item.id} ref={ref} >
-                  {/* <button onClick={() => navigate("../friendProfile", {state: {email: item.email, name: item.name, status: item.status, privacy: item.privacy}})}> */}
-                  <button onClick={() => redirectToProfile(item)}>
-                    {item.name} {item.status} {item.privacy}
-                    </button>
-                {/* <div>{item.firstname} {item.lastname} {item.id}</div> */}
-                </li>
-                );
-             })}
-         </ul>
-         {/* FRIEND RECCOMENDATIONS ----------------------------------------------*/}
-         <h4 className="recTitle"> Friend Reccs</h4>
-            <ul className="recList">
-            {recList.map(item => {
-            const ref = React.createRef();
-            return (
-                <li key={item.id} ref={ref} >
-                <a href="localhost:3500/login">{item.name} {item.status} {item.privacy}</a>
-                </li>
-                );
-             })}
-         </ul>
-         {/* SEARCH USER PROFILE ----------------------------------------------------*/}
-         <div className="auth-form-container" id="addFriend" >
-            {/* <h3>Add Friend</h3> */}
-            <form className="login-form" onSubmit={handleSubmit}>
-                <label htmlFor="text">Search for a user with their email</label>
-                <input size="45" value={friend} onChange={(e) => setFriend(e.target.value)} type="text" placeholder="maryann@gmail.com" />
-                {/* <button onClick={sendFriendRequest}>Submit</button>  */}
-                <button onClick={() => searchProfile()}>Search</button> 
-
-
-            </form>
-
-            {/* <ul>
-                {openClassrooms.map((item) => (
-                    <li>{item.name}</li>
-                ))}
-            </ul> */}
-
-
-            {/* <button type="submit" onClick={() => props.onFormSwitch('calender')}>Weekly View</button> */}
-          
-
-        </div>
+       
+       
         {/* FRIEND REQUESTS ----------------------------------------------*/}
-        <p id="friendReqTitle"> Friend Requests </p>
-        <div id="friendReq" >
+        <h2 >Event Requests</h2>
+        <div id="eventReq" >
         <ul>
             {reqList.map(item => {
             const ref = React.createRef();
@@ -197,7 +141,7 @@ export const Friends = (props) => {
             <button size="45" className="reset-btn" type="submit">Add Friend</button>
         </Link> */}
 
-    </div>
+ 
     </div>
     )
 }

@@ -79,9 +79,15 @@ function FullCalendarApp(props) {
         editable
         initialView="dayGridWeek"
         headerToolbar={{
-          center: 'timeGridWeek,dayGridMonth,timeGridDay,new,settings,classSearch',
+          center: 'timeGridWeek,dayGridMonth,new,eventReq,settings,classSearch',
         }}
+        //took out timeGridDay
         customButtons={{
+          eventReq: {
+            text: 'event req',
+            // click: () => props.onFormSwitch('addEvent'),
+            click: () => navigate("../acceptEvent"),
+          },
           edit: {
             text: 'edit event',
             // click: () => props.onFormSwitch('addEvent'),

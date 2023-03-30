@@ -27,7 +27,10 @@ router.route("/getID").post(async (req, res) => {
 // Get one user ----------------------------------
 router.route("/").post(async (req, res) => {
     const email = req.body.email;
-    const user = await User.findOne({ email }).select("-password -seq1 -seq2 -seq3").lean();
+    const user = await User.findOne({ email: email }).select("-password -seq1 -seq2 -seq3").lean();
+    if (!user) {
+        return res.status(400).json("User not found");
+    }
 
     return res.status(200).json({ user: user });
 });
