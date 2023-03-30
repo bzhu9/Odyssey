@@ -94,6 +94,10 @@ export const Friends = (props) => {
       await getFriendRequests();
       alert(`${friendEmail} deleted!`);
     }
+
+    function redirectToProfile(item) {
+      navigate("../friendProfile", {state: {email: item.email, name: item.name, status: item.status, privacy: item.privacy}});
+    }
     
     // called when loading page
     useEffect (() => {
@@ -123,7 +127,8 @@ export const Friends = (props) => {
             const ref = React.createRef();
             return (
                 <li key={item.id} ref={ref} >
-                  <button onClick={() => navigate("../friendProfile", {state: {email: item.email, name: item.name, status: item.status, privacy: item.privacy}})}>
+                  {/* <button onClick={() => navigate("../friendProfile", {state: {email: item.email, name: item.name, status: item.status, privacy: item.privacy}})}> */}
+                  <button onClick={() => redirectToProfile(item)}>
                     {item.name} {item.status} {item.privacy}
                     </button>
                 {/* <div>{item.firstname} {item.lastname} {item.id}</div> */}
