@@ -42,20 +42,41 @@ router.route("/").get((req, res) => {
 });
 
 router.route("/").post((req, res) => {
+    console.log(req.body)
     const lat = Number(coordinates[req.body.building].lat)
     const long = Number(coordinates[req.body.building].long)
-    OpenClass.find({
-        geoPoint: {
-            $near: {
-                $geometry: {    
-                    type: "Point",
-                    coordinates: [long, lat]
-                }
+    // OpenClass.find({
+    //     geoPoint: {
+    //         $near: {
+    //             $geometry: {    
+    //                 type: "Point",
+    //                 coordinates: [long, lat]
+    //             }
+    //         }
+    //     },
+    //     startTime: { $lt: req.body.startTime},
+    //     endTime: {$gt: req.body.endTime},
+    // }).limit(3)
+    OpenClass.aggregate([
+        {
+            $geoNear: {
+            near: {
+                type: "Point",
+                coordinates: [long, lat]
+            },
+            distanceField: "geoPoint",
             }
         },
-        startTime: { $lt: req.body.startTime},
-        endTime: {$gt: req.body.endTime},
-    })
+        {
+            $match: {
+                startTime: { $lt: req.body.startTime},
+                endTime: {$gt: req.body.endTime}
+            }
+        },
+        {
+            $limit: 3
+        }
+    ])
     .then(room => res.json(room))
     // .then(room => console.log("hi"))
     // .catch(err => res.status(400).json("Error: " + err));
