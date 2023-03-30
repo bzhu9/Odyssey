@@ -39,7 +39,7 @@ function FileUploadPage(){
 	const [selectedFile, setSelectedFile] = useState();
 	const [isFilePicked, setIsFilePicked] = useState(false);
 	var [parseError, setParseError] = useState(false)
-	var [property, setProperty] = useState([])
+	var [events, setEvents] = useState([])
 
 
 	const changeHandler = (event) => {
@@ -54,34 +54,33 @@ function FileUploadPage(){
 				var jcalData = ICAL.parse(fileText)
 				var comp = new ICAL.Component(jcalData)
 				var properties = comp.getAllSubcomponents("vevent")
+				const eventsList = []
 				for (let i = 0; i < properties.length; i++) {
-					let temp = Object.values(properties[i])[0][1]
+					const temp = Object.values(properties[i])[0][1]
 					console.log(temp)
-					let title
-					let startTime
-					let endTime
-					let location
+					const eventInfo = {}
 					for (let j = 0; j < temp.length; j++) {
 						switch(temp[j][0]) {
 							case "description":
-								title = temp[j][3]
+								eventInfo.note = temp[j][3]
 								break;
 							case "dtend":
-								endTime = temp[j][3]
+								eventInfo.endTime = temp[j][3]
 								break;
 							case "dtstart":
-								startTime = temp[j][3];
+								eventInfo.startTime = temp[j][3];
 								break;
 							case "location":
-								location = temp[j][3];
+								eventInfo.location = temp[j][3];
 								break;
 							case "summary":
-								title = temp[j][3];
+								eventInfo.title = temp[j][3];
 								break;
 						}
 					}
-
+					eventsList.push(eventInfo)
 				}
+				setEvents(eventsList)
 			} catch (error) {
 				console.log(error)
 				if (event.target.files[0].name.split('.')[1] === 'ics' ) {
@@ -93,7 +92,40 @@ function FileUploadPage(){
 	};
 
 	const submit = async () => {
-
+		if (events.length === 0) {
+			alert("Please select a file!")
+		}
+		else {
+			if (sessionStorage.getItem("user") == null) {
+				alert("User not logged in")
+			}
+			const pl = {
+				email: sessionStorage.getItem("user")
+			}
+			const userData = await api.getUserID(pl);
+			const userID = userData.data.id;
+			const userList = [];
+			const selectedOptions = [];
+			for (let i = 0; i < events.length; i++) {
+				const payload = {
+					title: events[i].title,
+					startTime: events[i].startTime,
+					endTime: events[i].endTime,
+					location: events[i].location,
+					objectId: userID,
+					users: selectedOptions,
+					note: events[i].note
+				}
+				await api.insertEvent(payload)
+				.then(res => {
+					console.log("inserted")
+				}).catch (err => {
+					if (err.response) {
+						console.log(err.response.data);
+					}
+				})
+			}
+		}
 	}
 
 	return(
