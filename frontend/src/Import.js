@@ -38,28 +38,38 @@ import { Link, useNavigate } from "react-router-dom";
 function FileUploadPage(){
 	const [selectedFile, setSelectedFile] = useState();
 	const [isFilePicked, setIsFilePicked] = useState(false);
-	var {parseError} = useState('imported!')
+	var [parseError, setParseError] = useState(false)
+	var {imported} = useState(false)
 
 
 	const changeHandler = (event) => {
 		setSelectedFile(event.target.files[0]);
 		setIsFilePicked(true);
+		setParseError(false);
 		let fileText = '';
 		var reader = new FileReader()
+		var jcalData;
+		var comp;
+		var read = false;
 		reader.onload = async (e) => {
 			fileText = (e.target.result)
 			try {
 				var jcalData = ICAL.parse(fileText)
-				var comp = new ICAL.Component(jcalData)
-				var vevent = comp.getFirstSubcomponent("vevent")
-				var summary = vevent.getFirstPropertyValue("summary");
-				console.log(summary)
+				comp = new ICAL.Component(jcalData)
+				read = true;
 			} catch (error) {
-				console.log(error)
-				parseError = 'parsing failed'
+				if (event.target.files[0].name.split('.')[1] === 'ics' ) {
+					setParseError(true);
+					console.log("hi")
+				}
 			}
 		};
 		reader.readAsText(event.target.files[0])
+		if (read) {
+			var vevent = comp.getFirstSubcomponent("vevent")
+			var summary = vevent.getFirstPropertyValue("summary");
+			console.log(summary)
+		}
 	};
 
 	return(
@@ -67,9 +77,15 @@ function FileUploadPage(){
 			<input type="file" name="file" onChange={changeHandler} />
 			{isFilePicked ? (
 				selectedFile.name.split('.').pop() === "ics" ? (
-					<div>
-						<p>{parseError}</p>
-					</div>
+					parseError ? (
+						<div>
+							<p>Error parsing ical file!</p>
+						</div>
+					) : (
+						<div>
+							<p>Correct file</p>
+						</div>
+					)
 				) : (
 					<p>Please select a .ics file!</p>
 				)
