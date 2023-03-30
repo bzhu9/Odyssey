@@ -39,7 +39,7 @@ function FileUploadPage(){
 	const [selectedFile, setSelectedFile] = useState();
 	const [isFilePicked, setIsFilePicked] = useState(false);
 	var [parseError, setParseError] = useState(false)
-	var {imported} = useState(false)
+	var [property, setProperty] = useState([])
 
 
 	const changeHandler = (event) => {
@@ -48,29 +48,53 @@ function FileUploadPage(){
 		setParseError(false);
 		let fileText = '';
 		var reader = new FileReader()
-		var jcalData;
-		var comp;
-		var read = false;
 		reader.onload = async (e) => {
 			fileText = (e.target.result)
 			try {
 				var jcalData = ICAL.parse(fileText)
-				comp = new ICAL.Component(jcalData)
-				read = true;
+				var comp = new ICAL.Component(jcalData)
+				var properties = comp.getAllSubcomponents("vevent")
+				for (let i = 0; i < properties.length; i++) {
+					let temp = Object.values(properties[i])[0][1]
+					console.log(temp)
+					let title
+					let startTime
+					let endTime
+					let location
+					for (let j = 0; j < temp.length; j++) {
+						switch(temp[j][0]) {
+							case "description":
+								title = temp[j][3]
+								break;
+							case "dtend":
+								endTime = temp[j][3]
+								break;
+							case "dtstart":
+								startTime = temp[j][3];
+								break;
+							case "location":
+								location = temp[j][3];
+								break;
+							case "summary":
+								title = temp[j][3];
+								break;
+						}
+					}
+
+				}
 			} catch (error) {
+				console.log(error)
 				if (event.target.files[0].name.split('.')[1] === 'ics' ) {
 					setParseError(true);
-					console.log("hi")
 				}
 			}
 		};
 		reader.readAsText(event.target.files[0])
-		if (read) {
-			var vevent = comp.getFirstSubcomponent("vevent")
-			var summary = vevent.getFirstPropertyValue("summary");
-			console.log(summary)
-		}
 	};
+
+	const submit = async () => {
+
+	}
 
 	return(
    <div>
@@ -92,9 +116,15 @@ function FileUploadPage(){
 			) : (
 				<p>Select a file to show details</p>
 			)}
-			<Link to="/cal">
-                <button size="45" className="reset-btn">Back to Calendar</button>
-            </Link>
+			<div>
+				<button type="submit" onClick={submit} >Import</button>
+			</div>
+			<div>
+				<Link to="/cal">
+					<button size="45" className="reset-btn">Back to Calendar</button>
+				</Link>
+			</div>
+			
 		</div>
 	)
 }
