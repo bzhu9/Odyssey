@@ -1,5 +1,6 @@
 const router = require("express").Router();
 let OpenClass = require("../models/OpenClass");
+const coordinates = require('../coordinates.json');
 
 // GET
 router.route("/").get((req, res) => {
@@ -41,13 +42,24 @@ router.route("/").get((req, res) => {
 });
 
 router.route("/").post((req, res) => {
+    const lat = Number(coordinates[req.body.building].lat)
+    const long = Number(coordinates[req.body.building].long)
     OpenClass.find({
+        geoPoint: {
+            $near: {
+                $geometry: {    
+                    type: "Point",
+                    coordinates: [long, lat]
+                }
+            }
+        },
         startTime: { $lt: req.body.startTime},
         endTime: {$gt: req.body.endTime},
-        building: req.body.building
     })
     .then(room => res.json(room))
-    .catch(err => res.status(400).json("Error: " + err));
+    // .then(room => console.log("hi"))
+    // .catch(err => res.status(400).json("Error: " + err));
+    .catch(err => console.log(err));
 
     // OpenClass.find({
     //     endTime: {$gt: req.body.endTime},
@@ -109,6 +121,7 @@ router.route('/addGeo').post(async (req, res) => {
         if (err) throw err;
         console.log(`${result.modifiedCount} documents updated.`);
     });
+    OpenClass.createIndex( { geoPoint : "2dsphere" } )
     res.status(200).json({message: 'added geo'})
 })
 module.exports = router;

@@ -40,14 +40,15 @@ export const OpenClass = (props) => {
             }
             // console.log(payload)
             const openClasses = await api.searchOpenClass(payload);
-            // console.log(openClasses)
+            console.log(openClasses)
             var processedClassrooms = [];
             var classes = [];
             var set = new Set();
             
             
             const zeroPad = (num, places) => String(num).padStart(places, '0')
-            for (let i = 0; i < openClasses.data.length; i++) {
+            // for (let i = 0; i < openClasses.data.length; i++) {
+                for (let i = 0; i < 3; i++) {
                 if (!set.has(`${openClasses.data[i].building} ${openClasses.data[i].room}`)) {
                     set.add(`${openClasses.data[i].building} ${openClasses.data[i].room}`);
                     var d = new Date(0);
