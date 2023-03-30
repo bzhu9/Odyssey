@@ -1,9 +1,10 @@
-import React, {useState} from "react"
-import api from "./apis"
+import React, {useState, useEffect} from "react"
+import api, { isFriend } from "./apis"
 import { Link, useNavigate, useLocation } from "react-router-dom";
 export const FriendProfile = (props) => {
     const { state } = useLocation();
     const navigate = useNavigate();
+    const [isFriend, setIsFriend] = useState(false);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -31,20 +32,40 @@ export const FriendProfile = (props) => {
           return;
         });
       }
+    
+
+    async function checkIsFriend() {
+        const email = sessionStorage.getItem("user");
+        const isFriendBool = await api.isFriend({email: email, friendEmail: state.email})
+        setIsFriend(isFriendBool.data);
+    }
+
+    // called when loading page
+    useEffect (() => {
+        let ignore = false;
+        if (!ignore) {
+            checkIsFriend();
+        }
+        return () => {ignore = true;}
+    }, []);
 
     return (
         <div className="auth-form-container">
             <h2>User's Profile</h2>
             <form  >
-                <h4 className="friendProfile">Friend's Name: </h4><p>{state.name}</p>
-                <h4 className="friendProfile">Friend's Email: </h4> <p>{state.email}</p>
-                <h4 className="friendProfile">Friend's Status: </h4> <p>{state.status}</p>
-                <h4 className="friendProfile">Friend's Privacy: </h4> <p>{state.privacy}</p>
-                <button>Send Friend Request</button> 
-
-
+                <h4 className="friendProfile">User's Name: </h4><p>{state.name}</p>
+                <h4 className="friendProfile">User's Email: </h4> <p>{state.email}</p>
+                { isFriend ?
+                <>
+                <h4 className="friendProfile">User's Status: </h4> <p>{state.status}</p>
+                <h4 className="friendProfile">User's Privacy: </h4> <p>{state.privacy}</p>
+                </>
+                :
+                <>
+                </>
+                }
+                <button onClick={sendFriendRequest}>Send Friend Request</button> 
             </form>
-            <button onClick={sendFriendRequest}>Send Friend Request</button> 
             {/* <button type="submit" onClick={() => props.onFormSwitch('calender')}>Weekly View</button>
             <button className="reg-btn" onClick={() => props.onFormSwitch('register')}>Create an account</button>
             <button className="reset-btn" onClick={() => props.onFormSwitch('reset')}>Reset Password</button> */}
