@@ -1,5 +1,6 @@
 import React, {useState} from "react"
 import api from "./apis"
+import ICAL from 'ical.js'
 import { Link, useNavigate } from "react-router-dom";
 // export const Import = (props) => {
     // const [email, setEmail] = useState('');
@@ -37,11 +38,28 @@ import { Link, useNavigate } from "react-router-dom";
 function FileUploadPage(){
 	const [selectedFile, setSelectedFile] = useState();
 	const [isFilePicked, setIsFilePicked] = useState(false);
+	var {parseError} = useState('imported!')
 
 
 	const changeHandler = (event) => {
 		setSelectedFile(event.target.files[0]);
 		setIsFilePicked(true);
+		let fileText = '';
+		var reader = new FileReader()
+		reader.onload = async (e) => {
+			fileText = (e.target.result)
+			try {
+				var jcalData = ICAL.parse(fileText)
+				var comp = new ICAL.Component(jcalData)
+				var vevent = comp.getFirstSubcomponent("vevent")
+				var summary = vevent.getFirstPropertyValue("summary");
+				console.log(summary)
+			} catch (error) {
+				console.log(error)
+				parseError = 'parsing failed'
+			}
+		};
+		reader.readAsText(event.target.files[0])
 	};
 
 	return(
@@ -50,18 +68,10 @@ function FileUploadPage(){
 			{isFilePicked ? (
 				selectedFile.name.split('.').pop() === "ics" ? (
 					<div>
-						<div>
-							<p>Filename: {selectedFile.name}</p>
-							<p>Filetype: {selectedFile.type}</p>
-							<p>Size in bytes: {selectedFile.size}</p>
-							<p>
-							lastModifiedDate:{' '}
-							{selectedFile.lastModifiedDate.toLocaleDateString()}
-							</p>
-						</div>
+						<p>{parseError}</p>
 					</div>
 				) : (
-					<p>bad</p>
+					<p>Please select a .ics file!</p>
 				)
 			) : (
 				<p>Select a file to show details</p>
