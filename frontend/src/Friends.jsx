@@ -153,7 +153,7 @@ export const Friends = (props) => {
             <form className="login-form" onSubmit={handleSubmit}>
                 <label htmlFor="text">Enter user's email to add as friend</label>
                 <input size="45" value={friend} onChange={(e) => setFriend(e.target.value)} type="text" placeholder="maryann@gmail.com" />
-                 <button onClick={sendFriendRequest}>Submit</button> 
+                 <button onClick={sendFriendRequest}>Search for Friend</button> 
 
             </form>
 

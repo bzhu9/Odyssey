@@ -19,6 +19,7 @@ export const FriendProfile = (props) => {
                 <h4 className="friendProfile">Friend's Email: </h4> <p>{state.email}</p>
                 <h4 className="friendProfile">Friend's Status: </h4> <p>{state.status}</p>
                 <h4 className="friendProfile">Friend's Privacy: </h4> <p>{state.privacy}</p>
+                <button>Send Friend Request</button> 
 
 
             </form>
