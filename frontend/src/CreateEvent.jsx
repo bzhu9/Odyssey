@@ -141,6 +141,7 @@ export const CreateEvent = (props) => {
                 navigate("../cal");
 
             }).catch (err => {
+                console.log("yo why are you here")
                 if (err.response) {
                     console.log(err.response.data);
                     alert(err.response.data.message);

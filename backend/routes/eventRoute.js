@@ -9,6 +9,17 @@ router.route('/').get((req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
+router.route("/getUsersEvents").post(async (req, res) => {
+  const userEmail = req.body.userEmail;
+  const owner = await User.findOne({ email: userEmail })
+    .catch(err => res.status(400).json({message: 'Error: ' + err}));
+  let events = []
+  for (let i = 0; i < owner.events.length; i++) {
+    events.push(await Event.findOne({ _id: owner.events[i]}).catch(err => res.status(400).json({message: 'Error: ' + err})));
+  }
+  return res.status(200).json(events);
+})
+
 //get a single event
 router.route('/single/:_id').get(async (req, res) => {
   Event.findOne({ _id: req.params._id }).lean()
@@ -18,7 +29,7 @@ router.route('/single/:_id').get(async (req, res) => {
 
 //const event = await Event.findOne({ _id: id }).lean();
 
-router.route('/add').post((req, res) => {
+router.route('/add').post(async (req, res) => {
   //console.log("3");
   const title = req.body.title;
   const startTime = req.body.startTime;
@@ -55,8 +66,16 @@ router.route('/add').post((req, res) => {
   });
 
   newEvent.save()
+    .catch(err => res.status(400).json({message: 'Error: ' + err}));
+    
+  let owner = await User.findById(users[0])
+    .catch(err => res.status(400).json({message: 'Error: ' + err}));
+
+  owner.events.push(newEvent._id);
+  owner.save()
     .then(() => res.json('Event added!'))
-    .catch(err => res.status(400).json('Error: ' + err));
+    .catch(err => res.status(400).json({message: 'Error: ' + err}));
+  
 });
 
 

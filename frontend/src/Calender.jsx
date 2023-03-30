@@ -10,39 +10,23 @@ import interactionPlugin from '@fullcalendar/interaction';
 
 const checkList = ["friend1", "friend2", "friend3", "friend4", "friend5", "friend6", "friend7",];
 
-// const events = [
-//   //add in an events array instead of this constant here
-//   {
-//     id: 1,
-//     title: 'CS 307 Lecture\nHAAS G040\nnotes',
-//     start: '2023-02-22T10:00:00',
-//     end: '2023-02-22T12:00:00',
-//     eventColor: "blue",
-//     editable:true,
-//   },
-//   {
-//     id: 2,
-//     title: 'CS 307 Lecture\nSmith 108 ',
-//     start: '2023-02-23T13:00:00',
-//     end: '2023-02-23T18:00:00',
-//     eventColor: "red",
-//     editable:true,
-
-
-
-//   },
-// ];
-
-
-
-
 function FullCalendarApp(props) {
+  const [ownEvents, setOwnEvents] = useState('')
   const [events, setEvents] = useState('');
+  const [friendEvents, setFriendEvents] = useState({});
+  const [checked, setChecked] = useState([]);
+  const [friendList, setFriendList] = useState({});
   const navigate = useNavigate();
   // get events from DB
 
   async function getData() {
-    const rawEvents = await api.getAllEvents();
+    // const rawEvents = await api.getAllEvents();
+    const userEmail = sessionStorage.getItem("user");
+    if (!userEmail) {
+      return;
+    }
+    console.log("hello there");
+    const rawEvents = await api.getUsersEvents({userEmail: userEmail});
 
     // https://fullcalendar.io/docs/event-object
     let processedEvents = []
@@ -58,19 +42,73 @@ function FullCalendarApp(props) {
         editable: true
       })
     }
-    // console.log(processedEvents);
-    setEvents(processedEvents);
-    // console.log(events);
+    setOwnEvents(processedEvents);
   }
+
+  async function getFriendsEvents() {
+    const user = sessionStorage.getItem("user");
+    const payload = { email: user};
+    const friendList = await api.getFriends(payload);
+
+    let friendEventDict = {};
+    let friends = {};
+    for (let i = 0; i < friendList.data.length; i++) {
+      let rawEvents = await api.getUsersEvents({ userEmail: friendList.data[i].email });
+      let processedEvents = []
+      for (let i = 0; i < rawEvents.data.length; i++) {
+        let e = rawEvents.data[i]
+        processedEvents.push({
+          id: e._id,
+          title: `${e.title}\n${e.location}\n${e.note}`,
+          start: e.startTime,
+          end: e.endTime,
+          // eventColor: "red",
+          backgroundColor: "#" + Math.floor(Math.random()*16777215*(i + 1)).toString(16),
+          editable: true
+        })
+      }
+      friends[friendList.data[i].name] = friendList.data[i].email;
+      friendEventDict[friendList.data[i].email] = processedEvents;
+    }
+
+    setFriendList(friends);
+    setFriendEvents(friendEventDict);
+  }
+
+  async function getEvents() {
+    let events = ownEvents;
+    for (let i = 0; i < checked.length; i++) {
+      events = events.concat(friendEvents[checked[i]]);
+    }
+    setEvents(events);
+  }
+
+  // Add/Remove checked item from list
+  const handleCheck = async (event) => {
+    var updatedList = [...checked];
+    if (event.target.checked) {
+      updatedList = [...checked, event.target.value];
+    } else {
+      updatedList.splice(checked.indexOf(event.target.value), 1);
+    }
+    setChecked(updatedList);
+    await getEvents();
+  };
 
   useEffect (() => {
     let ignore = false;
     if (!ignore) {
-      getData()
+      // refresh();
+      getData();
+      getFriendsEvents();
       // console.log("hey");
     }
     return () => {ignore = true;}
   }, []);
+  useEffect (() => {
+    getEvents();
+  }, [ownEvents, friendEvents, checked]);
+
 
   return (
     <div className="App">
@@ -157,12 +195,22 @@ function FullCalendarApp(props) {
        <div className="viewSchedule">
     <h4 className="friendCheckboxTitle">View Friend(s) schedule:</h4>
     <div className="friendCheckbox">
-    {checkList.map((item, index) => (
+    {/* {checkList.map((item, index) => ( */}
+    {/* { friendList.map (() => (
    <li key={index}>
-     <input value={item} type="checkbox" />
+     <input value={item} type="checkbox" onChange={handleCheck}/>
      <span>{item}</span>
    </li>
-))}
+))} */}
+    {
+      Object.keys(friendList).map( (key) => (
+        <li key={friendList[key]}>
+          <input value={friendList[key]} type="checkbox" onChange={handleCheck}/>
+          <span>{key}</span>
+        </li>
+      ))
+    }
+
     </div>
   </div>
       <br></br>

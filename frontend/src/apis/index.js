@@ -16,6 +16,7 @@ export const changeEmail = payload => api.post("/user/email", payload);
 
 export const insertEvent = payload => api.post("/event/add", payload);
 export const getAllEvents = () => api.get("/event");
+export const getUsersEvents = payload => api.post("/event/getUsersEvents", payload);
 export const deleteEvent = payload => api.post("/event/delete", payload);
 export const editEvent = payload => api.post("/event/edit", payload);
 export const getSingleEvent = id => api.get(`/event/single/${id}`);
@@ -48,6 +49,7 @@ const apis = {
 
     insertEvent,
     getAllEvents,
+    getUsersEvents,
     deleteEvent,
     editEvent,
     getSingleEvent,
