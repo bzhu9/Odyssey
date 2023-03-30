@@ -59,25 +59,6 @@ export const Friends = (props) => {
       setReqList(processedFriendRequestList);
     }
 
-    async function sendFriendRequest() {
-      const email = sessionStorage.getItem("user");
-      if (friend.length === 0) {
-        alert("Please enter a value!");
-        return;
-      }
-      if (!email) {
-        alert("You must be logged in to send a friend request!");
-        return;
-      }
-      const payload = {email: email, friend: friend};
-      await api.sendFriendRequest(payload)
-      .catch (err => {
-        if (err.response) {
-            alert(err.response.data);
-        }
-      });
-    }
-
     async function acceptFriendRequest(friendEmail, friendName) {
       const email = sessionStorage.getItem("user");
       const payload = {email: email, friendEmail: friendEmail};
@@ -97,6 +78,24 @@ export const Friends = (props) => {
 
     function redirectToProfile(item) {
       navigate("../friendProfile", {state: {email: item.email, name: item.name, status: item.status, privacy: item.privacy}});
+    }
+
+    async function searchProfile() {
+      if (friend.length === 0) {
+        alert("Please enter a value!");
+        return;
+      }
+      const item = await api.getUser({email: friend})
+        .catch(err => {
+          if (err.response) {
+              alert("User not found!");
+          }
+          return;
+        });
+      if  (item?.data.user) {
+        redirectToProfile(item.data.user);
+      }
+      
     }
     
     // called when loading page
@@ -148,12 +147,15 @@ export const Friends = (props) => {
                 );
              })}
          </ul>
+         {/* SEARCH USER PROFILE ----------------------------------------------------*/}
          <div className="auth-form-container" id="addFriend" >
             {/* <h3>Add Friend</h3> */}
             <form className="login-form" onSubmit={handleSubmit}>
-                <label htmlFor="text">Enter user's email to add as friend</label>
+                <label htmlFor="text">Search for a user with their email</label>
                 <input size="45" value={friend} onChange={(e) => setFriend(e.target.value)} type="text" placeholder="maryann@gmail.com" />
-                 <button onClick={sendFriendRequest}>Submit</button> 
+                {/* <button onClick={sendFriendRequest}>Submit</button>  */}
+                <button onClick={() => searchProfile()}>Search</button> 
+
 
             </form>
 
