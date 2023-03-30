@@ -21,6 +21,7 @@ import ChangeStatus from './ChangeStatus';
 import { ChangeWorkday } from './ChangeWorkday';
 import { FriendProfile } from './FriendProfile';
 import FileUploadPage from './Import';
+import { AcceptEvent } from './AcceptEvent';
 
 function App() {
   const [currentForm, setCurrentForm] = useState('login');
@@ -65,6 +66,9 @@ function App() {
           <Route path ="changeWorkday" element={<ChangeWorkday />}/>
           <Route path ="friendProfile" element={<FriendProfile />}/>
           <Route path ="import" element={<FileUploadPage />}/>
+          <Route path ="acceptEvent" element={<AcceptEvent />}/>
+
+
 
 
 
