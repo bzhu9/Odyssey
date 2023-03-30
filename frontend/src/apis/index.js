@@ -29,6 +29,8 @@ export const isFriend = payload => api.post("/friend/isFriend", payload);
 
 export const getPrivacy = payload => api.post("/user/getPrivacy", payload);
 export const setPrivacy = payload => api.post("/user/setPrivacy", payload);
+export const getStatus = payload => api.post("/user/getStatus", payload);
+export const setStatus = payload => api.post("/user/setStatus", payload);
 
 // export const searchOpenClass = payload => api.get("/openclass", payload);
 export const searchOpenClass = payload => api.post("/openclass", payload);
@@ -59,6 +61,8 @@ const apis = {
 
     getPrivacy,
     setPrivacy,
+    getStatus,
+    setStatus,
 
     searchOpenClass
 }
