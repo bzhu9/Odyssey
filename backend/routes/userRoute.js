@@ -1,5 +1,6 @@
 const router = require("express").Router();
 let User = require("../models/User");
+let Event = require("../models/Event");
 let Course = require("../models/Course");
 const bcrypt = require("bcrypt");
 const mongoose = require('mongoose');
@@ -237,6 +238,56 @@ router.route("/getFriendRequests").post(async (req, res) => {
             }
         }
         res.status(200).json(friendReqList);
+    }
+    else {
+        res.status(401).json({ message: "Email does not exist" });
+    }
+});
+
+// Get user's event requests from list -------------
+router.route("/getEventRequests").post(async (req, res) => {
+    const email = req.body.email;
+    const user = await User.findOne({ email }).select("-password -seq1 -seq2 -seq3").lean();
+
+    if (user) {
+        let eventReqList = [];
+        for (let i = 0; i < user.req_events.length; i++) {
+            let id = user.req_events[i];
+            // have to have _id, or else it will search friends list too
+            let event = await Event.findOne({ _id: id }).lean();
+            //let event = await api.getSingleEvent(id);
+            if (event) {
+                //parse it so that it is 
+                // Name of event
+                // Day
+                // Start time - end time
+
+                let startDate = event.startTime;
+                // console.log(startDate);
+                // console.log(startDate.getHours());
+                // console.log(startDate.getMinutes());
+                // console.log("fjdajfdsaf");
+                //console.log(startDate.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}));
+                const startTime = startDate.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+                const endDate = event.endTime;
+                const endTime = endDate.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+
+                const date = startDate.toLocaleString('en-us', { month: 'short', day: '2-digit', year: 'numeric' });
+                //console.log(date);
+                const [month, day, year] = date.split(' ');
+                const startDay = `${month} ${day} ${year}`;
+
+                //parse into hr:minute
+
+                eventReqList.push({
+                    title: event.title,
+                    day: startDay,
+                    startTime: startTime,
+                    endTime: endTime
+                });
+            }
+        }
+        res.status(200).json(eventReqList);
     }
     else {
         res.status(401).json({ message: "Email does not exist" });

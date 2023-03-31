@@ -1,5 +1,5 @@
 const router = require('express').Router();
-let Event = require('../models/Event');
+const Event = require('../models/Event');
 const User = require('../models/User');
 const mongoose = require('mongoose');
 const { ObjectId } = require('mongodb');
@@ -228,6 +228,41 @@ router.route('/edit').post(async (req, res) => {
   
 
   
+});
+
+
+router.route("/acceptEventRequest").post(async (req, res) => {
+  const email = req.body.email;
+  const eventID = req.body.id;
+  //get the user
+    //add it to the event list
+    //remove it from the req list
+  const user = await User.findOne({ email: email }).select("-password -seq1 -seq2 -seq3")
+      .catch(err => res.status(400).json("Error: " + err));
+  
+  const event = await Event.findOne({_id: eventID})
+      .catch(err => res.status(400).json("Error: " + err));
+
+  //console.log(event);
+  
+  //convert objects into strings and then find and remove
+  user.req_events.splice(user.req_events.indexOf(event._id), 1)
+  //adding event to User object
+  user.events.push(event._id);
+
+  //get the event ID
+    //remove it from the req list
+  event.req_users.splice(event.req_users.indexOf(user._id), 1);
+    // add it to the user list
+  event.users.push(user._id);
+
+  //save the user and event
+  user.save()
+      .catch(err => res.status(400).json({message: 'accept invite user Error: ' + err}));
+  event.save()
+      .catch(err => res.status(400).json({message: 'accept invite event Error: ' + err}));
+
+  return res.status(200).json({ message: `Event: ${event.title} sucessfully accepted`});
 });
 
 

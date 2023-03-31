@@ -28,6 +28,9 @@ export const acceptFriendRequest = payload => api.post("/friend/acceptFriendRequ
 export const deleteFriendRequest = payload => api.post("/friend/deleteFriendRequest", payload);
 export const isFriend = payload => api.post("/friend/isFriend", payload);
 
+export const getEventRequests = payload => api.post("/user/getEventRequests", payload);
+export const acceptEventRequest = payload => api.post("/event/acceptEventRequest", payload);
+
 export const getPrivacy = payload => api.post("/user/getPrivacy", payload);
 export const setPrivacy = payload => api.post("/user/setPrivacy", payload);
 export const getStatus = payload => api.post("/user/getStatus", payload);
@@ -66,6 +69,9 @@ const apis = {
     acceptFriendRequest,
     deleteFriendRequest,
     isFriend,
+
+    getEventRequests,
+    acceptEventRequest,
 
     getPrivacy,
     setPrivacy,
