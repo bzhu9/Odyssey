@@ -33,6 +33,7 @@ export const setPrivacy = payload => api.post("/user/setPrivacy", payload);
 export const getStatus = payload => api.post("/user/getStatus", payload);
 export const setStatus = payload => api.post("/user/setStatus", payload);
 export const setWorkday = payload => api.post("/user/setWorkday", payload);
+export const getWorkday = payload => api.post("/user/getWorkday", payload);
 
 // export const searchOpenClass = payload => api.get("/openclass", payload);
 export const searchOpenClass = payload => api.post("/openclass", payload);
@@ -67,6 +68,7 @@ const apis = {
     getStatus,
     setStatus,
     setWorkday,
+    getWorkday,
 
     searchOpenClass
 }
