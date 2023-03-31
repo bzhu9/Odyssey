@@ -5,6 +5,7 @@ export const FriendProfile = (props) => {
     const { state } = useLocation();
     const navigate = useNavigate();
     const [isFriend, setIsFriend] = useState(false);
+    const [courses, setCourses] = useState([]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -39,11 +40,21 @@ export const FriendProfile = (props) => {
         setIsFriend(isFriendBool.data);
     }
 
+    async function getCourses() {
+        let c = [];
+        let rawCourses = (await api.getMyCourses({ email: state.email})).data;
+        for (let i = 0; i < rawCourses.length; i++) {
+            c.push(rawCourses[i].name);
+        }
+        setCourses(c);
+    }
+
     // called when loading page
     useEffect (() => {
         let ignore = false;
         if (!ignore) {
             checkIsFriend();
+            getCourses();
         }
         return () => {ignore = true;}
     }, []);
@@ -54,10 +65,30 @@ export const FriendProfile = (props) => {
             <form  >
                 <h4 className="friendProfile">User's Name: </h4><p>{state.name}</p>
                 <h4 className="friendProfile">User's Email: </h4> <p>{state.email}</p>
-                { state.privacy === "Public" || (isFriend && state.privacy === "Friends-Only") ?
+                { (isFriend && state.privacy !== "Private") ?
                 <>
                 <h4 className="friendProfile">User's Status: </h4> <p>{state.status}</p>
+                </>
+                :
+                <>
+                </>
+                }
+                { state.privacy === "Public" || (isFriend && state.privacy === "Friends-Only") ?
+                <>
                 <h4 className="friendProfile">User's Privacy: </h4> <p>{state.privacy}</p>
+                { courses.length > 0 ?
+                    <>
+                    <h4 className="friendProfile">Courses: </h4>
+                    <ul>
+                    {courses.map(c => (
+                        <li>{c}</li>
+                    ))}
+                    </ul>
+                    </>
+                    :
+                    <>
+                    </>
+                }
                 </>
                 :
                 <>

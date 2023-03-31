@@ -14,6 +14,7 @@ export const Settings = (props) => {
     const [privacy, setPrivacy] = useState('');
     const [workdayStart, setWorkdayStart] = useState("");
     const [workdayEnd, setWorkdayEnd] = useState("");
+    const [courses, setCourses] = useState([]);
     const navigate = useNavigate();
 
     const handleSubmit = (e) => {
@@ -30,7 +31,12 @@ export const Settings = (props) => {
         setPrivacy(user.data.user.privacy);
         setWorkdayStart(user.data.user.workdayStart);
         setWorkdayEnd(user.data.user.workdayEnd);
-        console.log(user);
+        let c = [];
+        let rawCourses = (await api.getMyCourses({ email: email})).data;
+        for (let i = 0; i < rawCourses.length; i++) {
+            c.push(rawCourses[i].name);
+        }
+        setCourses(c);
     }
 
     const deleteUser = async () => {
@@ -167,6 +173,19 @@ export const Settings = (props) => {
         <p> <b>Workday End:</b> {workdayEnd}</p>
         </> :
         <> </>
+        }
+        { courses.length > 0 ?
+            <>
+            <p> <b>Courses: </b></p>
+            <ul>
+            {courses.map(c => (
+                <li>{c}</li>
+            ))}
+            </ul>
+            </>
+            :
+            <>
+            </>
         }
         </>
         }
