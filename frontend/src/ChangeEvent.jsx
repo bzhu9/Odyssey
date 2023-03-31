@@ -275,6 +275,8 @@ export const ChangeEvent = (props) => {
 
             //console.log(selectedOptions);
             const values = selectedOptions.map(obj => obj.value);
+            console.log("this is what values is");
+            console.log(values);
             // console.log("after selected");
             // console.log(values);
 

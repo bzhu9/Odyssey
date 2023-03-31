@@ -18,7 +18,8 @@ export const AcceptEvent = (props) => {
     async function getEventRequests() {
       const payload = { email: sessionStorage.getItem("user")};
       const rawEventList = await api.getEventRequests(payload);
-      console.log(rawEventList);
+      console.log(rawEventList.data);
+      setReqList(rawEventList.data);
       /*
       const payload = { email: sessionStorage.getItem("user")}
       const rawFriendRequestList = await api.getFriendRequests(payload);
@@ -40,17 +41,31 @@ export const AcceptEvent = (props) => {
       */
     }
 
-    async function acceptEvent() {
+    async function acceptEvent(id, name) {
       //get the event ID
+      const payload = { 
+        email: sessionStorage.getItem("user"),
+        id: id
+      };
+      await api.acceptEventRequest(payload);
+      await getEventRequests();
+      window.alert(`${name} has been accepted`);
       //remove it from req List
       //add it to event list
 
 
     }
 
-    async function deleteEvent() {
+    async function deleteEvent(id, title) {
       //get the event ID
       //remove it from req List
+      const payload = {
+        email: sessionStorage.getItem("user"),
+        id: id
+      };
+      await api.deleteEventRequest(payload);
+      await getEventRequests();
+      window.alert(`${title} has been deleted`);
     }
 
     /*
@@ -63,7 +78,6 @@ export const AcceptEvent = (props) => {
     useEffect (() => {
       let ignore = false;
       if (!ignore) {
-        getFriends();
         getEventRequests();
       }
       return () => {ignore = true;}
@@ -74,18 +88,20 @@ export const AcceptEvent = (props) => {
             
        
        
-        {/* FRIEND REQUESTS ----------------------------------------------*/}
+        {/* Event REQUESTS ----------------------------------------------*/}
         <h2 >Event Requests</h2>
         <div id="eventReq" >
         <ul>
             {reqList.map(item => {
             const ref = React.createRef();
-            return (
-                <li key={item.id} ref={ref} >
-                <div>{item.name} {item.status} {item.privacy}
-                &nbsp;
-                <button type="submit" onClick={() => acceptFriendRequest(item.email, item.name)}><FaCheck color="green"/> </button>
-                <button type="submit" onClick={() => deleteFriendRequest(item.email)}><FaTimes color="red"/> </button>
+            return (<li key={item.id} ref={ref} >
+              <div>{item.title}</div>
+              <div> {item.day} </div>
+              <div> {item.startTime} {item.endTime} </div>
+              <div>
+              &nbsp;
+                <button type="submit" onClick={() => acceptEvent(item.id, item.title)}><FaCheck color="green"/> </button>
+                <button type="submit" onClick={() => deleteEvent(item.id, item.title)}><FaTimes color="red"/> </button>
                 </div>
                 </li>
                 );

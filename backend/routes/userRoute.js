@@ -257,17 +257,12 @@ router.route("/getEventRequests").post(async (req, res) => {
             let event = await Event.findOne({ _id: id }).lean();
             //let event = await api.getSingleEvent(id);
             if (event) {
-                //parse it so that it is 
+                // parse it so that it is 
                 // Name of event
                 // Day
                 // Start time - end time
 
                 let startDate = event.startTime;
-                // console.log(startDate);
-                // console.log(startDate.getHours());
-                // console.log(startDate.getMinutes());
-                // console.log("fjdajfdsaf");
-                //console.log(startDate.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}));
                 const startTime = startDate.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
                 const endDate = event.endTime;
                 const endTime = endDate.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
@@ -280,6 +275,7 @@ router.route("/getEventRequests").post(async (req, res) => {
                 //parse into hr:minute
 
                 eventReqList.push({
+                    id: event._id,
                     title: event.title,
                     day: startDay,
                     startTime: startTime,
@@ -293,6 +289,8 @@ router.route("/getEventRequests").post(async (req, res) => {
         res.status(401).json({ message: "Email does not exist" });
     }
 });
+
+
 
 
 // Get user's privacy ---------------
