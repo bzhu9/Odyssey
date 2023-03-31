@@ -111,6 +111,41 @@ function FullCalendarApp(props) {
     getEvents();
   }, [ownEvents, friendEvents, checked]);
 
+  async function genClass() {
+    const todayList = []
+    const today = new Date()
+    console.log(Date.parse(ownEvents[0].end))
+    // console.log(new Date(ownEvents[0]))
+    for (let i = 0; i < ownEvents.length; i++) {
+      let year = Number(ownEvents[i].end.substring(0, 4))
+      let month = Number(ownEvents[i].end.substring(5, 7))
+      let day = Number(ownEvents[i].end.substring(8,10))
+      if ((year == today.getFullYear() && month - 1 == today.getMonth()) && day == today.getDate()) {
+        ownEvents[i].month = today.getMonth()
+        todayList.push(ownEvents[i])
+      }
+    }
+    console.log(todayList)
+    const user = sessionStorage.getItem("user");
+    const payload = { email: user};
+    const workday = await api.getWorkday(payload);
+    let workdayStart = today.setHours(workday.data.workdayStart.split(':')[0])
+    workdayStart = today.setMinutes(workday.data.workdayStart.split(':')[1])
+    let workdayEnd = today.setHours(workday.data.workdayEnd.split(':')[0])
+    workdayEnd = today.setMinutes(workday.data.workdayEnd.split(':')[1])
+    const epochList = []
+    epochList.push([workdayStart, workdayStart])
+    epochList.push([workdayEnd, workdayEnd])
+    for (let i = 0; i < todayList.length; i++) {
+      epochList.push([Date.parse(todayList[i].start), Date.parse(todayList[i].end)])
+    }
+    console.log(epochList)
+    epochList.sort(function(x,y) {
+      return x[0] - y[0]
+    })
+    console.log(epochList)
+  }
+
 
   return (
     <div className="App">
@@ -199,7 +234,7 @@ function FullCalendarApp(props) {
       <Link to="/import">
         <button className="importButton">Import</button>
       </Link>  
-      <button className="genClass">Generate Classes</button>
+      <button className="genClass" onClick={genClass}>Generate Classes</button>
          
        <div className="viewSchedule">
     <h4 className="friendCheckboxTitle">View Friend(s) schedule:</h4>
