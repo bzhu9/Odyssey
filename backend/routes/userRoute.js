@@ -1,5 +1,6 @@
 const router = require("express").Router();
 let User = require("../models/User");
+let Course = require("../models/Course");
 const bcrypt = require("bcrypt");
 const mongoose = require('mongoose');
 
@@ -330,5 +331,50 @@ router.route("/getWorkday").post(async (req, res) => {
 
 
 
+router.route("/setCourses").post(async (req, res) => {
+    const email = req.body.email;
+    const courseNames = req.body.courseNames;
+
+    const user = await User.findOne({ email: email }).select("-password -seq1 -seq2 -seq3");
+
+    let tempCourses = [];
+    for (let i = 0; i < courseNames.length; i++) {
+        const course = await Course.findOne({ name: courseNames[i]});
+        tempCourses.push(course._id);
+    }
+
+    user.courses = tempCourses;
+    user.save()
+    .then(() => res.status(201).json("Course added!"))
+    .catch(err => res.status(400).json("Error: " + err));
+    // course.save();
+    // .then(() => res.status(201).json("Course added!"))
+    // .catch(err => res.status(400).json("Error: " + err));
+})
+
+router.route("/getCourses").post(async (req, res) => {
+    const email = req.body.email;
+    const user = await User.findOne({ email: email }).select("-password -seq1 -seq2 -seq3")
+    .catch(err => res.status(400).json("Error: " + err));
+    
+    if (user) {
+        let courseList = [];
+        for (let i = 0; i < user.courses.length; i++) {
+            let id = user.courses[i];
+            // have to have _id, or else it will search friends list too
+            let course = await Course.findOne({ _id: id }).lean();
+            if (course) {
+                courseList.push({
+                    name: course.name,
+                    _id: course._id
+                });
+            }
+        }
+        res.status(200).json(courseList);
+    }
+    else {
+        res.status(401).json({ message: "Email does not exist" });
+    }
+})
 
 module.exports = router;

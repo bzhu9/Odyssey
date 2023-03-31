@@ -135,11 +135,11 @@ export const Settings = (props) => {
         <Link to="/changeWorkday">
             <button size="45" className="reset-btn2">Change Workday</button>
         </Link>
-        <Link to="/login">
-            <button size="45" className="reset-btn2" onClick={() => (sessionStorage.removeItem("user"))}>Log out</button>
+        <Link to="/addCourse">
+            <button size="45" className="reset-btn2">Set Courses</button>
         </Link>
-        <Link to="/addClass">
-            <button size="45" className="reset-btn2">Add classes</button>
+        <Link to="/login">
+            <button size="45" className="reset-btn2" onClick={() => (sessionStorage.removeItem("user"))}>Log Out</button>
         </Link>
         <Link to="/cal">
             <button size="45" className="reset-btn2" type="submit">Weekly View</button>
