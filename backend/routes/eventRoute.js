@@ -73,9 +73,17 @@ router.route('/add').post(async (req, res) => {
 
   owner.events.push(newEvent._id);
   owner.save()
-    .then(() => res.json('Event added!'))
+    //.then(() => res.json('Event added!'))
     .catch(err => res.status(400).json({message: 'Error: ' + err}));
-  
+  for (let i = 0; i < req_users.length; i++) {
+    let reqUserID = req_users[i];
+    let reqUser = await User.findById(reqUserID);
+    reqUser.req_events.push(newEvent._id);
+    console.log("here 1");
+    reqUser.save()
+      .then(() => res.json('Requested invites Sent!'))
+      .catch(err => res.status(400).json({message: 'ReqInv Error: ' + err}));
+  }
 });
 
 
