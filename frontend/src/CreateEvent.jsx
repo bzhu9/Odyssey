@@ -163,7 +163,11 @@ export const CreateEvent = (props) => {
         <input size="45" value={startTime} onChange={(e) => setStartTime(e.target.value)} type="time" placeholder="Start Time" id="time" name="time" />
         <label htmlFor="time">End Time of Event</label>
         <input size="45" value={endTime} onChange={(e) => setEndTime(e.target.value)} type="time" placeholder="End Time" id="time" name="time" />
-        <label htmlFor="text">Location</label>
+        <label htmlFor="text">Event Type</label>
+        <select className="friendDropdown">                                             
+            <option value="virtual">Virtual</option>
+            <option value="inperson">In-Person</option>
+        </select> 
         <input size="45" value={location} onChange={(e) => setLocation(e.target.value)} type="text" placeholder="Location" id="text" name="text" />
         {/* <select onChange={(e) => setFriend(e.target.value)}  id="colours">
         <option input type="checkbox" className="dropdown" value="brian">brian</option>

@@ -325,3 +325,11 @@ button:hover {
   left: -110%;
   display: block; }
 
+  .genClass {
+    position: relative;
+    /* margin: -20px -50px; */
+    width: 150px;
+    top: 150px;
+    left: -20%;
+    display: block; }
+

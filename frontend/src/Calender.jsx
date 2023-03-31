@@ -98,6 +98,7 @@ function FullCalendarApp(props) {
             // click: () => props.onFormSwitch('addEvent'),
             click: () => navigate("../addEvent"),
           },
+         
           map: {
             text: 'map view',
             // click: () => props.onFormSwitch('map'),
@@ -153,7 +154,9 @@ function FullCalendarApp(props) {
       </Link>
       <Link to="/import">
         <button className="importButton">Import</button>
-      </Link>     
+      </Link>  
+      <button className="genClass">Generate Classes</button>
+         
        <div className="viewSchedule">
     <h4 className="friendCheckboxTitle">View Friend(s) schedule:</h4>
     <div className="friendCheckbox">
