@@ -36,7 +36,63 @@ export const Friends = (props) => {
     }
 
     async function getRecs() {
+      const user = sessionStorage.getItem("user")
+      if (!user) {
+        return;
+      }
+      let allUsers = await api.getAllUsers();
+      let notFriends = [];
+      for (let i = 0; i < allUsers.data.length; i++) {
+        const friendBool = await api.isFriend({email: user, friendEmail: allUsers.data[i].email})
+        if (!friendBool.data && allUsers.data[i].email !== user) {
+          notFriends.push(allUsers.data[i]);
+        }
+      }
 
+      let courseCount = {};
+      const myCourses = (await api.getMyCourses({email: user})).data;
+      for (let i = 0; i < notFriends.length; i++) {
+        let courses = (await api.getMyCourses({email: notFriends[i].email})).data;
+        let intersectCount = 0;
+        for (let j = 0; j < myCourses.length; j++) {
+          for (let k = 0; k < courses.length; k++) {
+            if (myCourses[j]._id === courses[k]._id) {
+              intersectCount++;
+            }
+          }
+        }
+        if (intersectCount > 0) {
+          courseCount[notFriends[i].email] = intersectCount;
+        }
+      }
+
+      // Create items array
+      var items = Object.keys(courseCount).map(function(key) {
+        return [key, courseCount[key]];
+      });
+
+      // Sort the array based on the second element
+      items.sort(function(first, second) {
+        return second[1] - first[1];
+      });
+
+      let processedRecList = []
+      for (let i = 0; i < items.length; i++) {
+        for (let j = 0; j < notFriends.length; j++) {
+          if (notFriends[j].email === items[i][0]) {
+            let f = notFriends[j];
+            processedRecList.push({
+              name: f.name,
+              status: f.status,
+              privacy: f.privacy,
+              email: f.email
+            })
+            break;
+          }
+        }
+      }
+      setRecList(processedRecList);
+      console.log(processedRecList);
     }
 
     async function getFriendRequests() {
@@ -104,6 +160,7 @@ export const Friends = (props) => {
       if (!ignore) {
         getFriends();
         getFriendRequests();
+        getRecs();
       }
       return () => {ignore = true;}
     }, []);
@@ -136,13 +193,16 @@ export const Friends = (props) => {
              })}
          </ul>
          {/* FRIEND RECCOMENDATIONS ----------------------------------------------*/}
-         <h4 className="recTitle"> Friend Reccs</h4>
+         <h4 className="recTitle"> Suggested Friends</h4>
             <ul className="recList">
             {recList.map(item => {
             const ref = React.createRef();
             return (
                 <li key={item.id} ref={ref} >
-                <a href="localhost:3500/login">{item.name} {item.status} {item.privacy}</a>
+                {/* <a href="localhost:3500/login">{item.name} {item.status} {item.privacy}</a> */}
+                <button onClick={() => redirectToProfile(item)}>
+                    {item.name} {item.status} {item.privacy}
+                </button>
                 </li>
                 );
              })}

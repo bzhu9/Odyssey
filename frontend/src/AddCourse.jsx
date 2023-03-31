@@ -4,21 +4,6 @@ import api from "./apis"
 import { Link, useNavigate } from "react-router-dom";
 import Select, { components } from "react-select";
 
-
-const allOptions = [
-    { value: "CS 307", label: "CS 307" },
-    { value: "EAPS 106", label: "EAPS 106" },
-    { value: "COM 217", label: "COM 217" },
-    { value: "CS 252", label: "CS 252" },
-    { value: "MA 351", label: "MA 351" },
-    { value: "CS 252", label: "CS 252" },
-    { value: "ENGR 100", label: "ENGR 100" },
-    { value: "POL 327", label: "POL 327" },
-    { value: "MA 261", label: "MA 261" },
-    { value: "PHIL 110", label: "PHIL 110" },
-  ];
-
-
 export const AddCourse = (props) => {
  
     
