@@ -55,11 +55,12 @@ function FullCalendarApp(props) {
     for (let i = 0; i < friendList.data.length; i++) {
       let rawEvents = await api.getUsersEvents({ userEmail: friendList.data[i].email });
       let processedEvents = []
-      for (let i = 0; i < rawEvents.data.length; i++) {
-        let e = rawEvents.data[i]
+      for (let j = 0; j < rawEvents.data.length; j++) {
+        let e = rawEvents.data[j];
         processedEvents.push({
           id: e._id,
-          title: `${e.title}\n${e.location}\n${e.note}`,
+          // title: `${e.title}\n${e.location}\n${e.note}`,
+          title: `${friendList.data[i].name}'s event`,
           start: e.startTime,
           end: e.endTime,
           // eventColor: "red",
@@ -164,6 +165,10 @@ function FullCalendarApp(props) {
         // eventClick={(e) => props.onFormSwitch('change event')}
         //eventClick={(e) => navigate("../changeEvent")}
         eventClick={(e) => {
+
+          if (e.event.backgroundColor !== "blue") {
+            return;
+          }
           //console.log(e.title);
           //console.log(e.event.id);
           localStorage.setItem('eventID', e.event.id);
