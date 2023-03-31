@@ -1,0 +1,126 @@
+import React from "react";
+import { useState, useEffect } from "react";
+import api from "./apis"
+import { Link, useNavigate } from "react-router-dom";
+import Select, { components } from "react-select";
+
+
+const allOptions = [
+    { value: "CS 307", label: "CS 307" },
+    { value: "EAPS 106", label: "EAPS 106" },
+    { value: "COM 217", label: "COM 217" },
+    { value: "CS 252", label: "CS 252" },
+    { value: "MA 351", label: "MA 351" },
+    { value: "CS 252", label: "CS 252" },
+    { value: "ENGR 100", label: "ENGR 100" },
+    { value: "POL 327", label: "POL 327" },
+    { value: "MA 261", label: "MA 261" },
+    { value: "PHIL 110", label: "PHIL 110" },
+  ];
+
+
+export const AddCourse = (props) => {
+ 
+    
+    const [selectedOptions, setSelectedOptions] = useState([]);
+    const [courseList, setCourseList] = useState([]);
+    const navigate = useNavigate();
+
+    async function getCourses() {
+        //get the user's friend list
+        const rawCourseList = await api.getAllCourses();
+        let processedCourseList = []
+        //console.log(rawFriendList);
+        for (let i = 0; i < rawCourseList.data.length; i++) {
+          let c = rawCourseList.data[i];
+          //each object will contain the email and the id of the friend
+          processedCourseList.push({
+            value: c.name,
+            label: c.name, 
+            id: c._id
+          });
+        }
+        console.log(processedCourseList);
+        //set the friendList
+        setCourseList(processedCourseList);
+    }
+
+    async function getMyCourses() {
+      //get the user object
+      const user = sessionStorage.getItem("user");
+      if (!user) {
+        return;
+      }
+      const rawCourseList = await api.getMyCourses({ email: user});
+      let processedCourseList = []
+      //console.log(rawFriendList);
+      for (let i = 0; i < rawCourseList.data.length; i++) {
+        let c = rawCourseList.data[i];
+        //each object will contain the email and the id of the friend
+        processedCourseList.push({
+          value: c.name,
+          label: c.name, 
+          id: c._id
+        });
+      }
+      setSelectedOptions(processedCourseList);
+    }
+
+    async function setMyCourses() {
+      const user = sessionStorage.getItem("user");
+      if (!user) {
+        alert("You must be signed in to select courses!");
+        return;
+      }
+      let courseNames = [];
+      for (let i = 0; i < selectedOptions.length; i++) {
+        console.log(selectedOptions[i])
+        courseNames.push(selectedOptions[i].value);
+      }
+      const payload = {email: user, courseNames: courseNames};
+      api.setCourses(payload)
+      .then( async res => {
+          // console.log(res);
+          alert("Courses set successfully");
+          navigate("../settings");
+      }).catch (function (error) {
+          if (error.response) {
+              alert(error.response.data.message);
+          }
+      });
+      }
+
+    useEffect (() => {
+      let ignore = false;
+      if (!ignore) {
+        getCourses();
+        getMyCourses();
+      }
+      return () => {ignore = true;}
+    }, []);
+
+    return (
+        <div>
+        <h3> Set Courses </h3>
+        <Select className="friendDropdown"
+        defaultValue={[]}
+        value={selectedOptions}
+        isMulti
+        closeMenuOnSelect={false}
+        hideSelectedOptions={false}
+        onChange={(options) => setSelectedOptions(options)}
+        options={courseList}
+        /> 
+        <button className="reset-btn" type="submit" onClick={() => setMyCourses()}>Set Courses</button>
+        <div></div>
+        <Link to="/cal">
+            <button size="45" className="reset-btn" >Cancel</button>
+        </Link>
+
+            </div>
+
+    );
+  
+}
+
+// export default ChangePrivacy;

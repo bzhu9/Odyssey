@@ -23,6 +23,7 @@ app.use("/user", require("./routes/userRoute"));
 app.use("/friend", require("./routes/friendRoute"));
 app.use("/building", require("./routes/buildingRoute"));
 app.use("/openclass", require("./routes/openClassRoute"));
+app.use("/course", require("./routes/courseRoute"));
 
 
 mongoose.connection.once("open", () => {

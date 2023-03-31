@@ -22,7 +22,7 @@ import { ChangeWorkday } from './ChangeWorkday';
 import { FriendProfile } from './FriendProfile';
 import FileUploadPage from './Import';
 import { AcceptEvent } from './AcceptEvent';
-import {AddClass} from './AddClass';
+import {AddCourse} from './AddCourse';
 
 function App() {
   const [currentForm, setCurrentForm] = useState('login');
@@ -68,7 +68,7 @@ function App() {
           <Route path ="friendProfile" element={<FriendProfile />}/>
           <Route path ="import" element={<FileUploadPage />}/>
           <Route path ="acceptEvent" element={<AcceptEvent />}/>
-          <Route path ="addClass" element={<AddClass />}/>
+          <Route path ="addCourse" element={<AddCourse />}/>
 
           
 

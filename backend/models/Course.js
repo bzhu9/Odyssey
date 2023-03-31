@@ -7,13 +7,13 @@ const courseSchema = new Schema({
         type: String,
         required: true,
     },
-    users: [{
-        //list of _id's
-        type: Schema.Types.ObjectId
-    }]
+    // users: [{
+    //     //list of _id's
+    //     type: Schema.Types.ObjectId
+    // }]
 })
 
 
 const Course = mongoose.model("Course", courseSchema);
 
-module.exports = User;
+module.exports = Course;

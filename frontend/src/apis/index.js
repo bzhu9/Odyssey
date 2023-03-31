@@ -37,6 +37,10 @@ export const setWorkday = payload => api.post("/user/setWorkday", payload);
 // export const searchOpenClass = payload => api.get("/openclass", payload);
 export const searchOpenClass = payload => api.post("/openclass", payload);
 
+export const getAllCourses = () => api.get("/course");
+export const getMyCourses = payload => api.post("/user/getCourses", payload);
+export const setCourses = payload => api.post("/user/setCourses", payload);
+
 const apis = {
     insertUser,
     loginUser,
@@ -68,7 +72,11 @@ const apis = {
     setStatus,
     setWorkday,
 
-    searchOpenClass
+    searchOpenClass,
+    
+    getAllCourses,
+    getMyCourses,
+    setCourses
 }
 
 export default apis;
