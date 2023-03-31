@@ -2,6 +2,7 @@ const router = require('express').Router();
 let Event = require('../models/Event');
 const User = require('../models/User');
 const mongoose = require('mongoose');
+const { ObjectId } = require('mongodb');
 
 router.route('/').get((req, res) => {
     Event.find()
@@ -81,7 +82,7 @@ router.route('/add').post(async (req, res) => {
     reqUser.req_events.push(newEvent._id);
     console.log("here 1");
     reqUser.save()
-      .then(() => res.json('Requested invites Sent!'))
+      .then(() => res.json('Event added!'))
       .catch(err => res.status(400).json({message: 'ReqInv Error: ' + err}));
   }
 });
@@ -140,20 +141,34 @@ router.route('/edit').post(async (req, res) => {
     res.status(401).json({ message: "No Event" });
   }
   if (event) {
-    //event.title = req.body.title; // modify the title property of the event object
-    //event.startTime = req.body.startTime;
-    //event.endTime = req.body.endTime;
-    //event.location = req.body.location;
-    //const users = req.body.users;
-    //event.note = req.body.note;
-    //const repeating = req.body.repeating;
-    //const type = req.body.type;
-    //const days = req.body.days;
+
+    //go through users requested, and make sure they are not users in the event
+    //console.log(req.body.req_users);
+    const req_users_list = req.body.req_users;
+    //const req_users_list = list.map((id) => new ObjectId(id));
+   // console.log(req_users_list);
+   // console.log("here1");
+   // console.log(req_users_list);
+    const userList = event.users.map((objectId) => objectId.toString());
+   // console.log(userList);
+    for (let i = 0; i < req_users_list.length; i++) {
+      //console.log("here2");
+      console.log(userList.includes(req_users_list[i]));
+      if (userList.includes(req_users_list[i])) {
+        //console.log("user alr accepted");
+        req_users_list.splice(i, 1);
+        i--;
+      }
+    }
+    //console.log("here4");
+
+
     const result = await Event.updateOne({ _id: id }, { $set: {
       title: req.body.title,
       startTime: req.body.startTime,
       endTime: req.body.endTime,
       location: req.body.location,
+      req_users: req_users_list,
       //users: req.body.users,
       note: req.body.note,
       //repeating: req.body.repeating,
