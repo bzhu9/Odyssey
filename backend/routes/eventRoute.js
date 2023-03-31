@@ -205,9 +205,21 @@ router.route('/edit').post(async (req, res) => {
           i--;
         }
     }
+
+    //go through every user in the req_users list and add the event id to their req_events
+    for (let i = 0; i < req_users_list.length; i++) {
+      //get the user
+      const user = await User.findOne({_id: req_users_list[i]});
+      if (user) {
+        //add it to the req events
+        console.log("event._id below");
+        console.log(event._id);
+        user.req_events.push(event._id);
+        user.save()
+          .catch(err => res.status(400).json({message: 'accept invite user Error: ' + err}));
+      }
+    }
    }
-    
-    //console.log("here4");
 
 
     const result = await Event.updateOne({ _id: id }, { $set: {
