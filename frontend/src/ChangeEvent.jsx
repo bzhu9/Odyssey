@@ -73,24 +73,24 @@ export const ChangeEvent = (props) => {
     async function userReqObj() {
         //get the user object
         let userReqObj = [];
-        for (let i = 0; i < eventReqList.length; i++) {
-            //convert it to an object
-            //add it to the list
-            let pload = {
-                id: eventReqList[i]
-            };
-            let obj = await api.getUserWithID(pload);
-            userReqObj.push({
-                email: obj.data.user.email,
-                id: obj.data.user._id,
-            })
-
-            //console.log(userReqObj);
-            //console.log(obj.data);
-            //console.log(obj.data.name);
-            //console.log(obj.data.user._id);
-            //console.log(obj.data.user.email);
-
+        if (eventReqList) {
+            for (let i = 0; i < eventReqList.length; i++) {
+                //convert it to an object
+                //add it to the list
+                let pload = {
+                    id: eventReqList[i]
+                };
+                let obj = await api.getUserWithID(pload);
+                userReqObj.push({
+                    email: obj.data.user.email,
+                    id: obj.data.user._id,
+                })
+                //console.log(userReqObj);
+                //console.log(obj.data);
+                //console.log(obj.data.name);
+                //console.log(obj.data.user._id);
+                //console.log(obj.data.user.email);
+            }
         }
         //add it to a list
         //create the pre selected options
@@ -186,12 +186,105 @@ export const ChangeEvent = (props) => {
             endDate.setHours(endTimeSplit[0]);
             endDate.setMinutes(endTimeSplit[1]);
 
+            //go through every accepted user and check if outside of working day
+                //alert + return if there are more users than the owner
+            const obj = await api.getSingleEvent(eventID);
+            const eobj = obj.data;
+
+            //console.log("users:");
+            //console.log(eobj.users);
+            //console.log(eObj);
+
+            const startHr = startTimeSplit[0];
+            const startMin = startTimeSplit[1];
+            const start = `${startHr}:${startMin}`;
+            console.log(start);
+            const endHr = endTimeSplit[0];
+            const endMin = endTimeSplit[1];
+            const end = `${endHr}:${endMin}`;
+            console.log(end);
+
+
+            const [hour1, minute1] = start.split(":");
+            const [hour2, minute2] = end.split(":");
+            const startEvent = new Date(0, 0, 0, hour1, minute1);
+            const endEvent = new Date(0, 0, 0, hour2, minute2);
+            
+            //clear the console for debugging reasons.
+            console.clear();
+            const userList = eobj.users;
+            console.log(userList[0]);
+            for (let i = 0; i < userList.length; i++) {
+                let pload = {
+                    id: userList[i]
+                };
+                let u = await api.getUserWithID(pload);
+                let user = u.data.user;
+                //start of workday
+                let wkdays = user.workdayStart;
+                const [hourStart, minuteEnd] = wkdays.split(":");
+                let workdayStart = new Date(0, 0, 0, hourStart, minuteEnd);
+                //end of workday
+                let wkdaye = user.workdayEnd;
+                const [hourStart2, minuteEnd2] = wkdaye.split(":");
+                let workdayEnd = new Date(0, 0, 0, hourStart2, minuteEnd2);
+                if (startEvent.getTime() < workdayStart.getTime()) {
+                    //starts before the workday, return an alert
+                    window.alert(`The event starts before ${user.name}'s workday starts. Please change the time!`);
+                    return;
+                } else if (startEvent.getTime() > workdayEnd.getTime()) {
+                    window.alert(`The event starts after ${user.name}'s workday ends. Please change the time!`);
+                    return;
+                } else if (endEvent.getTime() > workdayEnd.getTime()) {
+                    window.alert(`The event ends after ${user.name}'s workday ends. Please change the time!`);
+                    return;
+                }
+            }
+            //go through every req user and check if it is outside of working day
+                //alert and not go through
+            const reqList = eobj.req_users;
+            if (reqList) {
+                for (let i = 0; i < reqList.length; i++) {
+                    let pload = {
+                        id: reqList[i]
+                    };
+                    let u = await api.getUserWithID(pload);
+                    let user = u.data.user;
+                    //start of workday
+                    let wkdays = user.workdayStart;
+                    const [hourStart, minuteEnd] = wkdays.split(":");
+                    let workdayStart = new Date(0, 0, 0, hourStart, minuteEnd);
+                    //end of workday
+                    let wkdaye = user.workdayEnd;
+                    const [hourStart2, minuteEnd2] = wkdaye.split(":");
+                    let workdayEnd = new Date(0, 0, 0, hourStart2, minuteEnd2);
+                    if (startEvent.getTime() < workdayStart.getTime()) {
+                        //starts before the workday, return an alert
+                        window.alert(`The event starts before ${user.name}'s workday starts. Please change the time!`);
+                        return;
+                    } else if (startEvent.getTime() > workdayEnd.getTime()) {
+                        window.alert(`The event starts after ${user.name}'s workday ends. Please change the time!`);
+                        return;
+                    } else if (endEvent.getTime() > workdayEnd.getTime()) {
+                        window.alert(`The event ends after ${user.name}'s workday ends. Please change the time!`);
+                        return;
+                    }
+                }
+
+            }
+
+            //console.log(selectedOptions);
+            const values = selectedOptions.map(obj => obj.value);
+            // console.log("after selected");
+            // console.log(values);
+
             const payload = {
                 _id: eventObj._id,
                 title: title,
                 startTime: startDate.toISOString(),
                 endTime: endDate.toISOString(),
                 location: location,
+                req_users: values,
                 note: note
             };
             const response = await api.editEvent(payload);

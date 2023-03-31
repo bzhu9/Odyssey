@@ -82,9 +82,11 @@ router.route('/add').post(async (req, res) => {
     reqUser.req_events.push(newEvent._id);
     console.log("here 1");
     reqUser.save()
-      .then(() => res.json('Event added!'))
       .catch(err => res.status(400).json({message: 'ReqInv Error: ' + err}));
   }
+
+  //send the res message
+  return res.status(200).json("Event added!");
 });
 
 
@@ -193,15 +195,18 @@ router.route('/edit').post(async (req, res) => {
    // console.log(req_users_list);
     const userList = event.users.map((objectId) => objectId.toString());
    // console.log(userList);
-    for (let i = 0; i < req_users_list.length; i++) {
-      //console.log("here2");
-      console.log(userList.includes(req_users_list[i]));
-      if (userList.includes(req_users_list[i])) {
-        //console.log("user alr accepted");
-        req_users_list.splice(i, 1);
-        i--;
-      }
+    if (req_users_list) {
+      for (let i = 0; i < req_users_list.length; i++) {
+        //console.log("here2");
+        console.log(userList.includes(req_users_list[i]));
+        if (userList.includes(req_users_list[i])) {
+          //console.log("user alr accepted");
+          req_users_list.splice(i, 1);
+          i--;
+        }
     }
+   }
+    
     //console.log("here4");
 
 

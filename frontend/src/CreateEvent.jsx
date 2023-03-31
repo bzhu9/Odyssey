@@ -112,14 +112,58 @@ export const CreateEvent = (props) => {
             //contains the userID of the user who created the new event
             const userData= await api.getUserID(pl);
             const userID = userData.data.id;
-            //console.log(userID);
+            const u = await api.getUser(pl);
+            //console.log(u.data);
+            const user = u.data.user;
+            //console.log("data.user?");
+            //console.log(u.data.user);
 
             //creating the list of users
             const userList = [];
             userList.push(userID);
 
+            //go through the user and make sure it is in the work time
+            const startHr = startTimeSplit[0];
+            const startMin = startTimeSplit[1];
+            const start = `${startHr}:${startMin}`;
+            //console.log(start);
+            const endHr = endTimeSplit[0];
+            const endMin = endTimeSplit[1];
+            const end = `${endHr}:${endMin}`;
+            //console.log(end);
+
+        
+            const [hour1, minute1] = start.split(":");
+            const [hour2, minute2] = end.split(":");
+            const startEvent = new Date(0, 0, 0, hour1, minute1);
+            const endEvent = new Date(0, 0, 0, hour2, minute2);
+
+            //clear the console for debugging reasons.
+            //console.clear();
+
+            let wkdays = user.workdayStart;
+            const [hourStart, minuteEnd] = wkdays.split(":");
+            let workdayStart = new Date(0, 0, 0, hourStart, minuteEnd);
+                //end of workday
+            let wkdaye = user.workdayEnd;
+            const [hourStart2, minuteEnd2] = wkdaye.split(":");
+            let workdayEnd = new Date(0, 0, 0, hourStart2, minuteEnd2);
+
+            if (startEvent.getTime() < workdayStart.getTime()) {
+                //starts before the workday, return an alert
+                window.alert(`The event starts before ${user.name}'s workday starts. Please change the time!`);
+                return;
+            } else if (startEvent.getTime() > workdayEnd.getTime()) {
+                window.alert(`The event starts after ${user.name}'s workday ends. Please change the time!`);
+                return;
+            } else if (endEvent.getTime() > workdayEnd.getTime()) {
+                window.alert(`The event ends after ${user.name}'s workday ends. Please change the time!`);
+                return;
+            }
             //creating the list of requested users
-            const reqUserList = [];
+            const reqUserList = selectedOptions;
+
+            //go through the reqLIst and make sure it is in the work time
 
             //selectedOptions
             // is a list of user objects
@@ -134,10 +178,12 @@ export const CreateEvent = (props) => {
                 req_users: selectedOptions,
                 note: note
             };
-            //console.log("there");
+            console.log("there");
 
             await api.insertEvent(payload).then(res => {
+                console.log("BEFORE FJDLFJDKLSJF")
                 window.alert("Event created successfully");
+                console.log("BRUH WHY U NO PRINT");
                 navigate("../cal");
 
             }).catch (err => {
