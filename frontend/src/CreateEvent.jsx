@@ -161,7 +161,37 @@ export const CreateEvent = (props) => {
                 return;
             }
             //creating the list of requested users
-            const reqUserList = selectedOptions;
+            const reqList = selectedOptions;
+            if (reqList) {
+                for (let i = 0; i < reqList.length; i++) {
+                    let pload = {
+                        id: reqList[i]
+                    };
+                    let u = await api.getUserWithID(pload);
+                    let user = u.data.user;
+                    //start of workday
+                    let wkdays = user.workdayStart;
+                    const [hourStart, minuteEnd] = wkdays.split(":");
+                    let workdayStart = new Date(0, 0, 0, hourStart, minuteEnd);
+                    //end of workday
+                    let wkdaye = user.workdayEnd;
+                    const [hourStart2, minuteEnd2] = wkdaye.split(":");
+                    let workdayEnd = new Date(0, 0, 0, hourStart2, minuteEnd2);
+                    if (startEvent.getTime() < workdayStart.getTime()) {
+                        //starts before the workday, return an alert
+                        window.alert(`The event starts before ${user.name}'s workday starts. Please change the time!`);
+                        return;
+                    } else if (startEvent.getTime() > workdayEnd.getTime()) {
+                        window.alert(`The event starts after ${user.name}'s workday ends. Please change the time!`);
+                        return;
+                    } else if (endEvent.getTime() > workdayEnd.getTime()) {
+                        window.alert(`The event ends after ${user.name}'s workday ends. Please change the time!`);
+                        return;
+                    }
+                }
+
+            }
+
 
             //go through the reqLIst and make sure it is in the work time
 
@@ -181,9 +211,7 @@ export const CreateEvent = (props) => {
             console.log("there");
 
             await api.insertEvent(payload).then(res => {
-                console.log("BEFORE FJDLFJDKLSJF")
                 window.alert("Event created successfully");
-                console.log("BRUH WHY U NO PRINT");
                 navigate("../cal");
 
             }).catch (err => {
