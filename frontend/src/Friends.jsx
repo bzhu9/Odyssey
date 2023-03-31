@@ -205,7 +205,7 @@ export const Friends = (props) => {
                 <li key={item.id} ref={ref} >
                 {/* <a href="localhost:3500/login">{item.name} {item.status} {item.privacy}</a> */}
                 <button onClick={() => redirectToProfile(item)}>
-                    {item.name} {item.status} {item.privacy}
+                    {item.name} {item.privacy}
                 </button>
                 </li>
                 );
