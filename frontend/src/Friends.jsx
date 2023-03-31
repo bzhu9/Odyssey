@@ -36,15 +36,20 @@ export const Friends = (props) => {
     }
 
     async function getRecs() {
+      console.log("start")
       const user = sessionStorage.getItem("user")
       if (!user) {
         return;
       }
       let allUsers = await api.getAllUsers();
+      let friends = (await api.getFriends({email: user})).data;
+      let friendsId = []
+      for (let i  = 0; i < friends.length; i++) {
+        friendsId.push(friends[i].id);
+      }
       let notFriends = [];
       for (let i = 0; i < allUsers.data.length; i++) {
-        const friendBool = await api.isFriend({email: user, friendEmail: allUsers.data[i].email})
-        if (!friendBool.data && allUsers.data[i].email !== user) {
+        if (!friendsId.includes(allUsers.data[i]._id) && allUsers.data[i].email !== user) {
           notFriends.push(allUsers.data[i]);
         }
       }
@@ -92,7 +97,6 @@ export const Friends = (props) => {
         }
       }
       setRecList(processedRecList);
-      console.log(processedRecList);
     }
 
     async function getFriendRequests() {
