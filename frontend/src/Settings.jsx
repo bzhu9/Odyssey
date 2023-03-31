@@ -136,7 +136,10 @@ export const Settings = (props) => {
             <button size="45" className="reset-btn2">Change Workday</button>
         </Link>
         <Link to="/login">
-            <button size="45" className="reset-btn2">Log out</button>
+            <button size="45" className="reset-btn2" onClick={() => (sessionStorage.removeItem("user"))}>Log out</button>
+        </Link>
+        <Link to="/addClass">
+            <button size="45" className="reset-btn2">Add classes</button>
         </Link>
         <Link to="/cal">
             <button size="45" className="reset-btn2" type="submit">Weekly View</button>
