@@ -23,11 +23,16 @@ export const ChangeWorkday = (props) => {
         }
 
         const payload = { email: user, startTime: startTime, endTime: endTime};
-        await api.setWorkday(payload)
-            .then(res => {
-                alert(`Changed your workday successfully`);
-                navigate("../settings");
-            });
+        if (payload.startTime > payload.endTime) {
+            alert("Start time cannot be after end time")
+        }
+        else {
+            await api.setWorkday(payload)
+                .then(res => {
+                    alert(`Changed your workday successfully`);
+                    navigate("../settings");
+                });
+        }
     }
 
     return (
