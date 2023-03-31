@@ -12,6 +12,8 @@ export const Settings = (props) => {
     const [name, setName] = useState('');
     const [status, setStatus] = useState('');
     const [privacy, setPrivacy] = useState('');
+    const [workdayStart, setWorkdayStart] = useState("");
+    const [workdayEnd, setWorkdayEnd] = useState("");
     const navigate = useNavigate();
 
     const handleSubmit = (e) => {
@@ -26,6 +28,8 @@ export const Settings = (props) => {
         setName(user.data.user.name);
         setStatus(user.data.user.status);
         setPrivacy(user.data.user.privacy);
+        setWorkdayStart(user.data.user.workdayStart);
+        setWorkdayEnd(user.data.user.workdayEnd);
         console.log(user);
     }
 
@@ -154,6 +158,13 @@ export const Settings = (props) => {
         <p> <b>Email:</b> {email}</p>
         <p> <b>Privacy:</b> {privacy}</p>
         <p> <b>Status:</b> {status}</p>
+        { workdayStart && workdayStart.length > 0 ? 
+        <>
+        <p> <b>Workday Start:</b> {workdayStart}</p>
+        <p> <b>Workday End:</b> {workdayEnd}</p>
+        </> :
+        <> </>
+        }
         </>
         }
         </div>

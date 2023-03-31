@@ -66,14 +66,12 @@ const userSchema = new Schema({
     }],
 
     // Stored in 24hr format hh:mm
-    startTime: {
+    workdayStart: {
         //mongo will format it in its own way
-        type: String,
-        default: "08:00"
+        type: String
     },
-    endTime: {
-        type: String,
-        default: "17:00"
+    workdayEnd: {
+        type: String
     }
     // add nutritional preferences: list of enums
         // vegetarian

@@ -55,6 +55,7 @@ function FullCalendarApp(props) {
     for (let i = 0; i < friendList.data.length; i++) {
       let rawEvents = await api.getUsersEvents({ userEmail: friendList.data[i].email });
       let processedEvents = []
+      let friendColor = "#" + Math.floor(Math.random()*16777215*(i + 1)).toString(16)
       for (let j = 0; j < rawEvents.data.length; j++) {
         let e = rawEvents.data[j];
         processedEvents.push({
@@ -64,7 +65,7 @@ function FullCalendarApp(props) {
           start: e.startTime,
           end: e.endTime,
           // eventColor: "red",
-          backgroundColor: "#" + Math.floor(Math.random()*16777215*(i + 1)).toString(16),
+          backgroundColor: friendColor,
           editable: true
         })
       }
