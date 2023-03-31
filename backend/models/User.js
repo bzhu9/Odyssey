@@ -60,7 +60,21 @@ const userSchema = new Schema({
     req_events: [{
         //not required for now
         type: Schema.Types.ObjectId,
-    }]
+    }],
+    courses: [{
+        type: Schema.Types.ObjectId
+    }],
+
+    // Stored in 24hr format hh:mm
+    startTime: {
+        //mongo will format it in its own way
+        type: String,
+        default: "08:00"
+    },
+    endTime: {
+        type: String,
+        default: "17:00"
+    }
     // add nutritional preferences: list of enums
         // vegetarian
         // vegan

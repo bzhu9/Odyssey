@@ -15,16 +15,16 @@ export const OpenClass = (props) => {
             alert("Invalid classroom")
         }
         else {
-            // const now = new Date()
+            const now = new Date()/1000
             // const hour = Number(now.getHours())
-            // const nextHour = hour + 1
+            const nextHour = now + 3600
             // const minute = Number(now.getMinutes())
             // const startTime = `${zeroPad(hour, 2)}:${zeroPad(minute, 2)}`
             // const endTime = `${zeroPad(nextHour, 2)}:${zeroPad(minute, 2)}`
             // const now = (new Date().getTime()) / 1000
             // const nextHour = (new Date().getTime() + 60*60*1000) / 1000
-            const now = 1680099600
-            const nextHour = 1680103200
+            // const now = 1680099600
+            // const nextHour = 1680103200
             
             const building = (classroom.split(' ')[0]).toUpperCase()
             const room = classroom.split(' ')[1]
@@ -32,6 +32,8 @@ export const OpenClass = (props) => {
             // console.log(endTime)
             // console.log(building)
             // console.log(room)
+            // console.log(now)
+            // console.log(nextHour)
             const payload = {
                 startTime: now,
                 endTime: nextHour,
@@ -40,15 +42,15 @@ export const OpenClass = (props) => {
             }
             // console.log(payload)
             const openClasses = await api.searchOpenClass(payload);
-            console.log(openClasses)
+            // console.log(openClasses)
             var processedClassrooms = [];
             var classes = [];
             var set = new Set();
             
             
             const zeroPad = (num, places) => String(num).padStart(places, '0')
-            // for (let i = 0; i < openClasses.data.length; i++) {
-                for (let i = 0; i < 3; i++) {
+            for (let i = 0; i < openClasses.data.length; i++) {
+                // for (let i = 0; i < 3; i++) {
                 if (!set.has(`${openClasses.data[i].building} ${openClasses.data[i].room}`)) {
                     set.add(`${openClasses.data[i].building} ${openClasses.data[i].room}`);
                     var d = new Date(0);

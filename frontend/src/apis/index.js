@@ -16,6 +16,7 @@ export const changeEmail = payload => api.post("/user/email", payload);
 
 export const insertEvent = payload => api.post("/event/add", payload);
 export const getAllEvents = () => api.get("/event");
+export const getUsersEvents = payload => api.post("/event/getUsersEvents", payload);
 export const deleteEvent = payload => api.post("/event/delete", payload);
 export const editEvent = payload => api.post("/event/edit", payload);
 export const getSingleEvent = id => api.get(`/event/single/${id}`);
@@ -29,6 +30,8 @@ export const isFriend = payload => api.post("/friend/isFriend", payload);
 
 export const getPrivacy = payload => api.post("/user/getPrivacy", payload);
 export const setPrivacy = payload => api.post("/user/setPrivacy", payload);
+export const getStatus = payload => api.post("/user/getStatus", payload);
+export const setStatus = payload => api.post("/user/setStatus", payload);
 
 // export const searchOpenClass = payload => api.get("/openclass", payload);
 export const searchOpenClass = payload => api.post("/openclass", payload);
@@ -46,6 +49,7 @@ const apis = {
 
     insertEvent,
     getAllEvents,
+    getUsersEvents,
     deleteEvent,
     editEvent,
     getSingleEvent,
@@ -59,6 +63,8 @@ const apis = {
 
     getPrivacy,
     setPrivacy,
+    getStatus,
+    setStatus,
 
     searchOpenClass
 }

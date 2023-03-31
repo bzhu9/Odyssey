@@ -14,23 +14,22 @@ export const FriendProfile = (props) => {
         const email = sessionStorage.getItem("user");
         if (state.email.length === 0) {
           alert("Please enter a value!");
-          return;
         }
-        if (!email) {
+        else if (!email) {
           alert("You must be logged in to send a friend request!");
-          return;
         }
-        const payload = {email: email, friend: state.email};
-        await api.sendFriendRequest(payload)
-        .then(res => {
-            alert("Friend request sent successfully");
-        })
-        .catch (err => {
-          if (err.response) {
-            alert(err.response.data);
-          }
-          return;
-        });
+        else {
+            const payload = {email: email, friend: state.email};
+            await api.sendFriendRequest(payload)
+            .then(res => {
+                alert("Friend request sent successfully");
+            })
+            .catch (err => {
+            if (err.response) {
+                alert(err.response.data);
+            }
+            });
+        }
       }
     
 
@@ -48,14 +47,14 @@ export const FriendProfile = (props) => {
         }
         return () => {ignore = true;}
     }, []);
-
+    
     return (
         <div className="auth-form-container">
             <h2>User's Profile</h2>
             <form  >
                 <h4 className="friendProfile">User's Name: </h4><p>{state.name}</p>
                 <h4 className="friendProfile">User's Email: </h4> <p>{state.email}</p>
-                { isFriend ?
+                { state.privacy === "Public" || (isFriend && state.privacy === "Friends-Only") ?
                 <>
                 <h4 className="friendProfile">User's Status: </h4> <p>{state.status}</p>
                 <h4 className="friendProfile">User's Privacy: </h4> <p>{state.privacy}</p>
@@ -64,8 +63,8 @@ export const FriendProfile = (props) => {
                 <>
                 </>
                 }
-                <button onClick={sendFriendRequest}>Send Friend Request</button> 
             </form>
+            <button onClick={sendFriendRequest}>Send Friend Request</button> 
             {/* <button type="submit" onClick={() => props.onFormSwitch('calender')}>Weekly View</button>
             <button className="reg-btn" onClick={() => props.onFormSwitch('register')}>Create an account</button>
             <button className="reset-btn" onClick={() => props.onFormSwitch('reset')}>Reset Password</button> */}

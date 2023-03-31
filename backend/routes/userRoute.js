@@ -271,4 +271,33 @@ router.route("/setPrivacy").post(async (req, res) => {
     }
 });
 
+
+// Get user's status ---------------
+router.route("/getStatus").post(async (req, res) => {
+    const email = req.body.email;
+    const user = await User.findOne({ email: email }).select("status").lean();
+
+    if (user) {
+        res.status(200).json({status: user.status});
+    }
+    else {
+        res.status(401).json({ message: "Email does not exist" });
+    }
+});
+
+// Set user's status ---------------
+router.route("/setStatus").post(async (req, res) => {
+    const email = req.body.email;
+    const status = req.body.status;
+    const user = await User.findOne({ email: email }).select("status").lean();
+
+    if (user) {
+        await User.findOneAndUpdate({ email }, { status: status }).lean();
+        res.status(200).json({status: status});
+    }
+    else {
+        res.status(401).json({ message: "Email does not exist" });
+    }
+});
+
 module.exports = router;
