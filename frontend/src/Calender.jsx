@@ -113,8 +113,10 @@ function FullCalendarApp(props) {
 
   async function genClass() {
     const todayList = []
-    const today = new Date()
-    console.log(Date.parse(ownEvents[0].end))
+    let timeInput = 1680177600
+    let today = new Date(0)
+    today.setUTCSeconds(timeInput)
+    console.log(today)
     // console.log(new Date(ownEvents[0]))
     for (let i = 0; i < ownEvents.length; i++) {
       let year = Number(ownEvents[i].end.substring(0, 4))
@@ -125,7 +127,9 @@ function FullCalendarApp(props) {
         todayList.push(ownEvents[i])
       }
     }
-    console.log(todayList)
+    todayList.sort(function(a,b) {
+      return a.start.localeCompare(b.start)
+    })
     const user = sessionStorage.getItem("user");
     const payload = { email: user};
     const workday = await api.getWorkday(payload);
@@ -135,15 +139,101 @@ function FullCalendarApp(props) {
     workdayEnd = today.setMinutes(workday.data.workdayEnd.split(':')[1])
     const epochList = []
     epochList.push([workdayStart, workdayStart])
-    epochList.push([workdayEnd, workdayEnd])
     for (let i = 0; i < todayList.length; i++) {
       epochList.push([Date.parse(todayList[i].start), Date.parse(todayList[i].end)])
     }
-    console.log(epochList)
-    epochList.sort(function(x,y) {
-      return x[0] - y[0]
-    })
-    console.log(epochList)
+    epochList.push([workdayEnd, workdayEnd])
+    // console.log(epochList)
+    for (let i = 0; i <epochList.length; i++) {
+      epochList[i] = [epochList[i][0] / 1000, epochList[i][1] / 1000]
+    }
+    const openClassList = []
+    // console.log(epochList)
+    for (let i = 1; i < epochList.length; i++) {
+      if (i == epochList.length - 1) {
+        if (!todayList[i - 2].title.split('\n')[1].match(/[A-z]+ B*[0-9]+/)) {
+          continue;
+        }
+        const payload = {
+          startTime: epochList[i - 1][1],
+          endTime: epochList[i][0],
+          building: todayList[i - 2].title.split('\n')[1].split(' ')[0],
+          room: todayList[i - 2].title.split('\n')[1].split(' ')[1]
+        }
+        if (payload.startTime >= payload.endTime) {
+          continue;
+        }
+        const openClasses = await api.searchOpenClass(payload);
+        if (openClasses.data.length == 0) {
+          continue;
+        }
+        // console.log(openClasses.data[0])
+        openClasses.data[0].startTime = epochList[i - 1][1]
+        openClasses.data[0].endTime = epochList[i][0]
+        openClassList.push(openClasses.data[0])
+      }
+      else {
+        if (!todayList[i - 1].title.split('\n')[1].match(/[A-z]+ B*[0-9]+/)) {
+          continue;
+        }
+        const payload = {
+          startTime: epochList[i - 1][1],
+          endTime: epochList[i][0],
+          building: todayList[i - 1].title.split('\n')[1].split(' ')[0],
+          room: todayList[i - 1].title.split('\n')[1].split(' ')[1]
+        }
+        if (payload.startTime >= payload.endTime) {
+          continue;
+        }
+        const openClasses = await api.searchOpenClass(payload);
+        // console.log(openClasses)
+        if (openClasses.data.length == 0) {
+          continue;
+        }
+        // console.log(openClasses.data[0])
+        openClasses.data[0].startTime = epochList[i - 1][1]
+        openClasses.data[0].endTime = epochList[i][0]
+        openClassList.push(openClasses.data[0])
+      }
+    }
+    console.log(openClassList)
+    if (sessionStorage.getItem("user") == null) {
+      alert("User not logged in")
+    }
+    const pl = {
+      email: sessionStorage.getItem("user")
+    }
+    const userData = await api.getUserID(pl);
+    const userID = userData.data.id;
+    console.log(userID)
+    const userList = [];
+    userList.push(userID)
+    const payloadList = []
+    for (let i = 0; i < openClassList.length; i++) {
+      const payload = {
+        title: "Open Classroom at " + openClassList[i].building + " " + openClassList[i].room,
+        startTime: new Date(openClassList[i].startTime * 1000).toISOString(),
+        endTime: new Date(openClassList[i].endTime * 1000).toISOString(),
+        location: openClassList[i].building + " " + openClassList[i].room,
+        users: userList,
+        req_users: [],
+        note: ""
+      }
+      payloadList.push(payload)
+    }
+    console.log(payloadList)
+    for (let i = 0; i < payloadList.length; i++) {
+      await api.insertEvent(payloadList[i])
+				.then(res => {
+					console.log(res)
+				}).catch (err => {
+					if (err.response) {
+						console.log(err.response.data);
+					}
+				})
+        console.log(i)
+    }
+    window.location.reload()
   }
 
 
