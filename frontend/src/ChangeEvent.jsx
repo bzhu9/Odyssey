@@ -198,11 +198,11 @@ export const ChangeEvent = (props) => {
             const startHr = startTimeSplit[0];
             const startMin = startTimeSplit[1];
             const start = `${startHr}:${startMin}`;
-            console.log(start);
+            //console.log(start);
             const endHr = endTimeSplit[0];
             const endMin = endTimeSplit[1];
             const end = `${endHr}:${endMin}`;
-            console.log(end);
+            //console.log(end);
 
 
             const [hour1, minute1] = start.split(":");
