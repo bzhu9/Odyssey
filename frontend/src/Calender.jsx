@@ -113,9 +113,10 @@ function FullCalendarApp(props) {
 
   async function genClass() {
     const todayList = []
-    let timeInput = 1680177600
-    let today = new Date(0)
-    today.setUTCSeconds(timeInput)
+    // let timeInput = 1680177600
+    // let today = new Date(0)
+    let today = new Date()
+    // today.setUTCSeconds(timeInput)
     console.log(today)
     // console.log(new Date(ownEvents[0]))
     for (let i = 0; i < ownEvents.length; i++) {
