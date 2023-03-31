@@ -106,9 +106,59 @@ router.route('/delete').post(async (req, res) => {
     }
     //delete the event object
     //does this work or do i need to call the class
+
+    //go through and delete all the users from the event
+
+    //remove it from the event list
+        //console.log(user.events);
+        // const eventList = user.events.map((objectId) => objectId.toString());
+        // for (let x = 0; x < eventList.length; x++) {
+        //   //remove from eventList adn user.events
+        //   if (eventList.includes(id)) {
+          
+        // }
+    let userList = event.users;
+    
+
+
+    for (let i = 0; i < userList.length; i++) {
+      const user = await User.findOne({_id: userList[i]});
+      if (!user) {
+        console.log("wtf user not found");
+      } else {
+        console.log("user exists");
+        if( user.events.includes(event._id)) {
+          user.events.splice(user.events.indexOf(event._id),1);
+          user.save()
+            .catch(err => res.status(400).json({message: 'User Delete Event Error: ' + err}));
+        }
+      }
+
+    }
+
+
+    //go through and delete all the req_users from the event
+    let reqList = event.req_users;
+    
+
+    for (let i = 0; i < reqList.length; i++) {
+      const reqUser = await User.findOne({_id: reqList[i]});
+      if (!reqUser) {
+        console.log("wtf req_user not found");
+      } else {
+        console.log("req_user exists");
+        if( reqUser.req_events.includes(event._id)) {
+          reqUser.req_events.splice(reqUser.req_events.indexOf(event._id),1);
+          reqUser.save()
+            .catch(err => res.status(400).json({message: 'Req Delete Event Error: ' + err}));
+        }
+      }
+
+    }
     const result = await event.deleteOne();
 
     res.status(200).json({ message: `Event, ${result.title}, was deleted successfully` })
+    //res.status(200).json({ message: `Event, was deleted successfully` })
 
 });
 
