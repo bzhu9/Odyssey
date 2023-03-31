@@ -265,5 +265,45 @@ router.route("/acceptEventRequest").post(async (req, res) => {
   return res.status(200).json({ message: `Event: ${event.title} sucessfully accepted`});
 });
 
+router.route("/deleteEventRequest").post(async (req, res) => {
+  const email = req.body.email;
+  const eventID = req.body.id;
+
+  //delete it from req_user in event
+  //delete it from req_event in user
+
+  //get the user
+  const user = await User.findOne({ email: email }).select("-password -seq1 -seq2 -seq3")
+      .catch(err => res.status(400).json("Error: " + err));
+  //get event
+  const event = await Event.findOne({_id: eventID})
+      .catch(err => res.status(400).json("Error: " + err));
+  
+  //remove from req_event in user object
+  console.log(user.req_events);
+  user.req_events.splice(user.req_events.indexOf(event._id), 1)
+  console.log(user.req_events);
+
+  console.log("============");
+  
+  //remove it from the req user list in event object
+  console.log(event.req_users);
+  event.req_users.splice(event.req_users.indexOf(user._id), 1);
+  console.log(event.req_users);
+
+
+  //save the user and event
+  /*
+  user.save()
+      .catch(err => res.status(400).json({message: 'accept invite user Error: ' + err}));
+  event.save()
+      .catch(err => res.status(400).json({message: 'accept invite event Error: ' + err}));
+
+  */
+
+  return res.status(200).json({ message: `Event: ${event.title} deleted!`});
+});
+
+
 
 module.exports = router;

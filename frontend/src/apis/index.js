@@ -30,6 +30,7 @@ export const isFriend = payload => api.post("/friend/isFriend", payload);
 
 export const getEventRequests = payload => api.post("/user/getEventRequests", payload);
 export const acceptEventRequest = payload => api.post("/event/acceptEventRequest", payload);
+export const deleteEventRequest = payload => api.post("/event/deleteEventRequest", payload);
 
 export const getPrivacy = payload => api.post("/user/getPrivacy", payload);
 export const setPrivacy = payload => api.post("/user/setPrivacy", payload);
@@ -72,6 +73,7 @@ const apis = {
 
     getEventRequests,
     acceptEventRequest,
+    deleteEventRequest,
 
     getPrivacy,
     setPrivacy,
