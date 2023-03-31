@@ -212,7 +212,7 @@ function FullCalendarApp(props) {
     const payloadList = []
     for (let i = 0; i < openClassList.length; i++) {
       const payload = {
-        title: "Open Classroom at " + openClassList[i].building + " " + openClassList[i].room,
+        title: "Open Classroom near " + openClassList[i].building + " " + openClassList[i].room,
         startTime: new Date(openClassList[i].startTime * 1000).toISOString(),
         endTime: new Date(openClassList[i].endTime * 1000).toISOString(),
         location: openClassList[i].building + " " + openClassList[i].room,
