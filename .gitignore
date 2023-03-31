@@ -27,9 +27,11 @@ yarn-debug.log*
 yarn-error.log*
 
 # data
-.csv
-/__pycache__/
-.pyc
+*.csv
+*.pyc
+*/*/*/__pycache__/
+*/*/__pycache__/
+*/__pycache__/
 
 # jupyter
 .ipynb
