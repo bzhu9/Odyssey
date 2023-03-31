@@ -109,14 +109,6 @@ router.route('/delete').post(async (req, res) => {
 
     //go through and delete all the users from the event
 
-    //remove it from the event list
-        //console.log(user.events);
-        // const eventList = user.events.map((objectId) => objectId.toString());
-        // for (let x = 0; x < eventList.length; x++) {
-        //   //remove from eventList adn user.events
-        //   if (eventList.includes(id)) {
-          
-        // }
     let userList = event.users;
     
 
