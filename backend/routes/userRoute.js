@@ -305,17 +305,30 @@ router.route("/setWorkday").post(async (req, res) => {
     const startTime = req.body.startTime;
     const endTime = req.body.endTime;
 
-    const user = await User.findOne({ email: email }).select("status").lean();
+    const user = await User.findOne({ email: email }).select("workdayStart workdayEnd").lean();
 
     if (user) {
-        await User.findOneAndUpdate({ email }, { workdayStart: startTime, workdayEnd: endTime }).lean();
+        await User.findOneAndUpdate({ email: email }, { workdayStart: startTime, workdayEnd: endTime }).lean();
         res.status(200).json({message: "Success"});
     }
     else {
         res.status(401).json({ message: "Email does not exist" });
     }
-
 })
+router.route("/getWorkday").post(async (req, res) => {
+    const email = req.body.email;
+    const user = await User.findOne({ email: email }).select("workdayStart workdayEnd").lean();
+
+    if (user) {
+        res.status(200).json({workdayStart: user.workdayStart, workdayEnd: user.workdayEnd});
+    }
+    else {
+        res.status(401).json({ message: "Email does not exist" });
+    }
+});
+
+
+
 
 
 module.exports = router;
