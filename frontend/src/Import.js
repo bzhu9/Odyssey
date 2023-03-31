@@ -104,7 +104,9 @@ function FileUploadPage(){
 			}
 			const userData = await api.getUserID(pl);
 			const userID = userData.data.id;
+			console.log(userID)
 			const userList = [];
+			userList.push(userID)
 			const selectedOptions = [];
 			for (let i = 0; i < events.length; i++) {
 				const payload = {
@@ -112,8 +114,9 @@ function FileUploadPage(){
 					startTime: events[i].startTime,
 					endTime: events[i].endTime,
 					location: events[i].location,
-					objectId: userID,
-					users: selectedOptions,
+					// objectId: userID,
+					users: userList,
+					req_users: [],
 					note: events[i].note
 				}
 				await api.insertEvent(payload)
@@ -125,6 +128,7 @@ function FileUploadPage(){
 					}
 				})
 			}
+			alert("Imported!")
 		}
 	}
 
