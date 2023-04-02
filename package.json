@@ -2,7 +2,13 @@
   "dependencies": {
     "i": "^0.3.7",
     "ical.js": "^1.5.0",
+<<<<<<< Updated upstream
     "multiselect-react-dropdown": "^2.0.25"
+=======
+    "multiselect-react-dropdown": "^2.0.25",
+    "react-icons": "^4.8.0",
+    "react-select": "^5.7.2"
+>>>>>>> Stashed changes
   },
   "devDependencies": {
     "concurrently": "^7.6.0"

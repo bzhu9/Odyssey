@@ -134,6 +134,7 @@ function FullCalendarApp(props) {
     const user = sessionStorage.getItem("user");
     const payload = { email: user};
     const workday = await api.getWorkday(payload);
+    console.log(workday)
     let workdayStart = today.setHours(workday.data.workdayStart.split(':')[0])
     workdayStart = today.setMinutes(workday.data.workdayStart.split(':')[1])
     workdayStart = today.setSeconds(0)
@@ -200,7 +201,7 @@ function FullCalendarApp(props) {
         openClasses.data[0].endTime = epochList[i][0]
         openClassList.push(openClasses.data[0])
       }
-      window.location.reload()
+      // window.location.reload()
     }
     console.log(openClassList)
     if (sessionStorage.getItem("user") == null) {
@@ -240,7 +241,7 @@ function FullCalendarApp(props) {
         console.log(i)
     }
     console.log(workdayEnd)
-    // window.location.reload()
+    window.location.reload()
   }
 
 

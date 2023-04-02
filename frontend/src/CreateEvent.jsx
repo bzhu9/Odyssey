@@ -140,25 +140,29 @@ export const CreateEvent = (props) => {
 
             //clear the console for debugging reasons.
             //console.clear();
+            if (user.workdayStart) {
+                let wkdays = user.workdayStart;
+                const [hourStart, minuteEnd] = wkdays.split(":");
+                let workdayStart = new Date(0, 0, 0, hourStart, minuteEnd);
+                    //end of workday
+                let wkdaye = user.workdayEnd;
+                const [hourStart2, minuteEnd2] = wkdaye.split(":");
+                let workdayEnd = new Date(0, 0, 0, hourStart2, minuteEnd2);
 
-            let wkdays = user.workdayStart;
-            const [hourStart, minuteEnd] = wkdays.split(":");
-            let workdayStart = new Date(0, 0, 0, hourStart, minuteEnd);
-                //end of workday
-            let wkdaye = user.workdayEnd;
-            const [hourStart2, minuteEnd2] = wkdaye.split(":");
-            let workdayEnd = new Date(0, 0, 0, hourStart2, minuteEnd2);
-
-            if (startEvent.getTime() < workdayStart.getTime()) {
-                //starts before the workday, return an alert
-                window.alert(`The event starts before ${user.name}'s workday starts. Please change the time!`);
-                return;
-            } else if (startEvent.getTime() > workdayEnd.getTime()) {
-                window.alert(`The event starts after ${user.name}'s workday ends. Please change the time!`);
-                return;
-            } else if (endEvent.getTime() > workdayEnd.getTime()) {
-                window.alert(`The event ends after ${user.name}'s workday ends. Please change the time!`);
-                return;
+                if (startEvent.getTime() < workdayStart.getTime()) {
+                    //starts before the workday, return an alert
+                    if (!window.confirm(`The event starts before your workday starts.`)) {
+                        return;
+                    }
+                } else if (startEvent.getTime() > workdayEnd.getTime()) {
+                    if (!window.confirm(`The event starts after your workday ends.`)) {
+                        return;
+                    }
+                } else if (endEvent.getTime() > workdayEnd.getTime()) {
+                    if (!window.confirm(`The event ends after your workday ends.`)) {
+                        return;
+                    }
+                }
             }
             //creating the list of requested users
             const reqList = selectedOptions;
@@ -169,24 +173,26 @@ export const CreateEvent = (props) => {
                     };
                     let u = await api.getUserWithID(pload);
                     let user = u.data.user;
-                    //start of workday
-                    let wkdays = user.workdayStart;
-                    const [hourStart, minuteEnd] = wkdays.split(":");
-                    let workdayStart = new Date(0, 0, 0, hourStart, minuteEnd);
-                    //end of workday
-                    let wkdaye = user.workdayEnd;
-                    const [hourStart2, minuteEnd2] = wkdaye.split(":");
-                    let workdayEnd = new Date(0, 0, 0, hourStart2, minuteEnd2);
-                    if (startEvent.getTime() < workdayStart.getTime()) {
-                        //starts before the workday, return an alert
-                        window.alert(`The event starts before ${user.name}'s workday starts. Please change the time!`);
-                        return;
-                    } else if (startEvent.getTime() > workdayEnd.getTime()) {
-                        window.alert(`The event starts after ${user.name}'s workday ends. Please change the time!`);
-                        return;
-                    } else if (endEvent.getTime() > workdayEnd.getTime()) {
-                        window.alert(`The event ends after ${user.name}'s workday ends. Please change the time!`);
-                        return;
+                    if (user.workdayStart) {
+                        //start of workday
+                        let wkdays = user.workdayStart;
+                        const [hourStart, minuteEnd] = wkdays.split(":");
+                        let workdayStart = new Date(0, 0, 0, hourStart, minuteEnd);
+                        //end of workday
+                        let wkdaye = user.workdayEnd;
+                        const [hourStart2, minuteEnd2] = wkdaye.split(":");
+                        let workdayEnd = new Date(0, 0, 0, hourStart2, minuteEnd2);
+                        if (startEvent.getTime() < workdayStart.getTime()) {
+                            //starts before the workday, return an alert
+                            window.alert(`The event starts before ${user.name}'s workday starts. Please change the time!`);
+                            return;
+                        } else if (startEvent.getTime() > workdayEnd.getTime()) {
+                            window.alert(`The event starts after ${user.name}'s workday ends. Please change the time!`);
+                            return;
+                        } else if (endEvent.getTime() > workdayEnd.getTime()) {
+                            window.alert(`The event ends after ${user.name}'s workday ends. Please change the time!`);
+                            return;
+                        }
                     }
                 }
 
