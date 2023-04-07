@@ -40,6 +40,14 @@ const userSchema = new Schema({
         // list of _id's
         type: Schema.Types.ObjectId
     }],
+    friend_reqs: [{
+        //list of _id's
+        type: Schema.Types.ObjectId
+    }],
+    sent_reqs: [{
+        //list of _id's
+        type: Schema.Types.ObjectId
+    }],
     privacy: {
         type: String,
         default: "Public"
