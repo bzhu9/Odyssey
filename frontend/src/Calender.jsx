@@ -362,5 +362,4 @@ function FullCalendarApp(props) {
 }
 
 
-
 export default FullCalendarApp;

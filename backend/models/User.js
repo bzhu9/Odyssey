@@ -38,16 +38,7 @@ const userSchema = new Schema({
     },
     friends: [{
         // list of _id's
-        type: Schema.Types.ObjectId
-        // user.friends.push(newFriend._id);
-    }],
-    friend_reqs: [{
-        //list of _id's
-        type: Schema.Types.ObjectId
-    }],
-    sent_reqs: [{
-        //list of _id's
-        type: Schema.Types.ObjectId
+        type: ObjectId
     }],
     privacy: {
         type: String,
