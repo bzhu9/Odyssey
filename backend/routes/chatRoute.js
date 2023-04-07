@@ -51,7 +51,7 @@ router.route("/addUser").post(async (req, res) => {
 })
 
 
-router.route("/getMessages").post(async (req, res) => {
+router.route("/loadMessages").post(async (req, res) => {
     const chatId = req.body.chatId;
     const chat = await Chat.findById(chatId);
     const rawMessages = chat.messages;
@@ -73,6 +73,18 @@ router.route("/getMessages").post(async (req, res) => {
 })
 
 router.route("/getUsers").post(async (req, res) => {
-
+    const chatId = req.body.chatId;
+    const chat = await Chat.findById(chatId);
+    const rawUsers = chat.users;
+    const processedUsers = [];
+    for (let i = 0; i < rawUsers.length; i++) {
+        const u = await User.findById(rawUsers[i]);
+        processedUsers.push({
+            name: u.name,
+            email: u.email,
+            _id: u._id
+        });
+    }
+    return res.status(200).json({users: processedUsers });
 })
 module.exports = router;

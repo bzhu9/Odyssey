@@ -46,6 +46,11 @@ export const getAllCourses = () => api.get("/course");
 export const getMyCourses = payload => api.post("/user/getCourses", payload);
 export const setCourses = payload => api.post("/user/setCourses", payload);
 
+export const sendMessage = payload => api.post("/message/send", payload);
+export const createChat = payload => api.post("/chat/create", payload);
+export const addUserToChat = payload => api.post("/chat/addUser", payload);
+export const loadMessages = payload => api.post("/chat/loadMessages", payload);
+
 const apis = {
     insertUser,
     loginUser,
@@ -86,7 +91,12 @@ const apis = {
     
     getAllCourses,
     getMyCourses,
-    setCourses
+    setCourses,
+
+    sendMessage,
+    createChat,
+    addUserToChat,
+    loadMessages
 }
 
 export default apis;
