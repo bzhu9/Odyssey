@@ -23,3 +23,4 @@ def clean_time(df):
             hour += 12
             rest = end.split(':')[1]
             df.at[i, 'Published End'] = '%d:%s' %(hour,rest[0:2])
+    return df
