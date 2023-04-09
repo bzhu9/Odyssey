@@ -98,6 +98,38 @@ export const ChangeEvent = (props) => {
         setPreSelectedOptions(userReqObj);
     }
 
+    const fetchEvent = async () => {
+        try {
+          //get event
+          const eventID = localStorage.getItem('eventID');
+          const response = await api.getSingleEvent(eventID);
+          const eObj = response.data;
+          //get the list of all the users by combining the req users and actual usrs
+          let allUsers = eObj.req_users.concat(eObj.users);
+          //get the current user and remove (we do not want to show this user)
+          let currentUser = sessionStorage.getItem("user");
+          allUsers.splice(allUsers.indexOf(currentUser), 1);
+          //value checking
+          console.log("ALL USERS");
+          console.log(allUsers);
+          //set the list
+          setEventReqList(allUsers);
+        } catch (error) {
+          console.log(error);
+        }
+    };
+
+    useEffect(() => {
+        //sets the events
+        fetchEvent();
+      }, []);
+    
+      useEffect(() => {
+        //value checking
+        console.log("eventReqList");
+        console.log(eventReqList);
+    }, [eventReqList]);
+
     useEffect(() => {
         console.log(eventReqList); //convert this to objects with ID and email
         userReqObj();
@@ -159,6 +191,9 @@ export const ChangeEvent = (props) => {
         const end = new Date(`${date}T${endTime}:00`);
         setIsValidTime(start <= end);
     }, [date, startTime, endTime]);
+
+
+
     
     const update = async () => {
         try {
