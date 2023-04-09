@@ -18,6 +18,7 @@ import { ChangeEmail } from './ChangeEmail';
 import { Friends } from './Friends';
 import { ChangePrivacy } from './ChangePrivacy'
 import ChangeStatus from './ChangeStatus';
+import { ChangeMealTime } from './ChangeMealTime';
 import { ChangeWorkday } from './ChangeWorkday';
 import { FriendProfile } from './FriendProfile';
 import FileUploadPage from './Import';
@@ -69,6 +70,8 @@ function App() {
           <Route path ="import" element={<FileUploadPage />}/>
           <Route path ="acceptEvent" element={<AcceptEvent />}/>
           <Route path ="addCourse" element={<AddCourse />}/>
+          <Route path ="changeMealTime" element={<ChangeMealTime />}/>
+
 
           
 

@@ -6,7 +6,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 
-export const ChangeWorkday = (props) => {
+export const ChangeMealTime = (props) => {
     const [startTime, setStartTime] = useState('');
     const [endTime, setEndTime] = useState('');
     const [isValidTime, setIsValidTime] = useState(true);
@@ -19,7 +19,7 @@ export const ChangeWorkday = (props) => {
     async function setWorkday() {
         const user = sessionStorage.getItem("user");
         if (!user) {
-            alert("Please sign in to change your workday!")
+            alert("Please sign in to change your meal time!")
         }
 
         const payload = { email: user, startTime: startTime, endTime: endTime};
@@ -29,7 +29,7 @@ export const ChangeWorkday = (props) => {
         else {
             await api.setWorkday(payload)
                 .then(res => {
-                    alert(`Changed your workday successfully`);
+                    alert(`Changed your meal time successfully`);
                     navigate("../settings");
                 });
         }
@@ -37,14 +37,14 @@ export const ChangeWorkday = (props) => {
 
     return (
         <div className="auth-form-container">
-        <h2>Change Workday</h2>
+        <h2>Change Meal Time</h2>
     <form className="login-form" onSubmit={handleSubmit}>
-        <label htmlFor="time">Start Time of Workday</label>
+        <label htmlFor="time">Start Time of Meals</label>
         <input size="45" value={startTime} onChange={(e) => setStartTime(e.target.value)} type="time" placeholder="Start Time" id="time" name="time" />
-        <label htmlFor="time">End Time of Workday</label>
+        <label htmlFor="time">End Time of Meals</label>
         <input size="45" value={endTime} onChange={(e) => setEndTime(e.target.value)} type="time" placeholder="End Time" id="time" name="time" />
         {/* <button type="submit" onClick={() => props.onFormSwitch('calender')}>Submit Changes</button> */}
-        <button type="submit" onClick={setWorkday} >Submit workday change</button>
+        <button type="submit" onClick={setWorkday} >Submit meal time change</button>
     </form>
     {/* <button className="link-btn" onClick={() => props.onFormSwitch('calender')}>Go back to Calender</button> */}
     <Link to="/settings">

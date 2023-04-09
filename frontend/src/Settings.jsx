@@ -141,6 +141,9 @@ export const Settings = (props) => {
         <Link to="/changeWorkday">
             <button size="45" className="reset-btn2">Change Workday</button>
         </Link>
+        <Link to="/changeMealTime">
+            <button size="45" className="reset-btn2">Change Meal Time</button>
+        </Link>
         <Link to="/addCourse">
             <button size="45" className="reset-btn2">Set Courses</button>
         </Link>
