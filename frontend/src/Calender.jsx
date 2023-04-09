@@ -6,6 +6,8 @@ import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
+import { IconButton } from "rsuite";
+import { Admin, Menu, Reload, Resize, Search } from '@rsuite/icons';
 
 
 const checkList = ["friend1", "friend2", "friend3", "friend4", "friend5", "friend6", "friend7",];
@@ -252,7 +254,7 @@ function FullCalendarApp(props) {
         editable
         initialView="dayGridWeek"
         headerToolbar={{
-          center: 'timeGridWeek,dayGridMonth,new,eventReq,classSearch,import,genClass,settings',
+          center: 'timeGridWeek,dayGridMonth,new,eventReq,classSearch,import,genClass,courses,map,settings',
         }}
         //took out timeGridDay
         customButtons={{
@@ -265,6 +267,11 @@ function FullCalendarApp(props) {
             text: 'edit event',
             // click: () => props.onFormSwitch('addEvent'),
             click: () => navigate("../addEvent"),
+          },
+          courses: {
+            text: 'courses',
+            // click: () => props.onFormSwitch('addEvent'),
+            click: () => navigate("../courses"),
           },
           new: {
             text: 'add event',
@@ -279,6 +286,7 @@ function FullCalendarApp(props) {
           },
           settings: {
             text: 'settings',
+            // icon={<Menu/>},
             // click: () => props.onFormSwitch('settings'),
             click: () => navigate("../settings"),
           },
@@ -343,7 +351,9 @@ function FullCalendarApp(props) {
         <button className="importButton">Import</button>
       </Link>   */}
       {/* <button className="genClass" onClick={genClass}>Generate Classes</button> */}
-         
+    
+
+ 
        <div className="viewSchedule">
     <h4 className="friendCheckboxTitle">View Friend(s) schedule:</h4>
     <div className="friendCheckbox">

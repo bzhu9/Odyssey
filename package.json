@@ -1,8 +1,11 @@
 {
   "dependencies": {
+    "@rsuite/icons": "^1.0.2",
+    "google-map-react": "^2.2.0",
     "i": "^0.3.7",
     "ical.js": "^1.5.0",
-    "multiselect-react-dropdown": "^2.0.25"
+    "multiselect-react-dropdown": "^2.0.25",
+    "rsuite": "^5.31.0"
   },
   "devDependencies": {
     "concurrently": "^7.6.0"
