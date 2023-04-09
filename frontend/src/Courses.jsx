@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import api from "./apis"
 import { Link, useNavigate } from "react-router-dom";
 
-export const Settings = (props) => {
+export const Courses = (props) => {
     // const [email, setEmail] = useState('');
     // const [emailNew, setEmailNew] = useState('');
     // const [emailNew2, setEmailNew2] = useState('');
@@ -104,51 +104,9 @@ export const Settings = (props) => {
 
     return (
         <div>
-       <Link to="/settings">
-            <button size="45" className="settingsNav-btn" >Profile</button>
-        </Link>
-        <Link to="/friends">
-            <button size="45" className="friendNav-btn" >Friends</button>
-        </Link>
-        <div className='set-btn'>
-            <h2>Profile Settings</h2>
-        <Link to="/changeEmail">
-            <button size="45" className="reset-btn2" >Change Email</button>
-        </Link>
-         <form className="login-form" onSubmit={handleSubmit}>
-            {/* <label htmlFor="email">Email</label>
-            <input size="45" value={email} onChange={(e) => setEmail(e.target.value)} type="email" placeholder="alexsmith@gmail.com" id="email" name="email" />
-            <label htmlFor="email">New Email</label>
-            <input size="45" value={emailNew} onChange={(e) => setEmailNew(e.target.value)} type="email" placeholder="alexsmith2@gmail.com" id="email" name="email" />
-            <label htmlFor="email">Confirm New Email</label>
-            <input size="45" value={emailNew2} onChange={(e) => setEmailNew2(e.target.value)} type="email" placeholder="alexsmith2@gmail.com" id="email" name="email" /> */}
-            {/* <label htmlFor="password"> Password</label>
-            <input size="45" value={pass} onChange={(e) => setPass(e.target.value)} type="password" placeholder="********" id="password" name="password" /> */}
-            {/* <button type="submit" onClick={changeEmail}>Change Email</button>  */}
-            <button type="submit" className="reset-btn2" onClick={deleteUser}>Delete Account</button>
-        </form>
-        {/* <button className="link-btn" onClick={() => props.onFormSwitch('reset')}>Change Password</button> */}
-        {/* <button className="link-btn" onClick={() => props.onFormSwitch('calender')}>Go back to Calender</button> */}
-        <Link to="/reset">
-            <button size="45" className="reset-btn2">Change Password</button>
-        </Link>
-        <Link to="/changePrivacy">
-            <button size="45" className="reset-btn2">Change Privacy</button>
-        </Link>
-        <Link to="/changeStatus">
-            <button size="45" className="reset-btn2">Change Status</button>
-        </Link>
-        <Link to="/changeWorkday">
-            <button size="45" className="reset-btn2">Change Workday</button>
-        </Link>
-        <Link to="/changeMealTime">
-            <button size="45" className="reset-btn2">Change Meal Time</button>
-        </Link>
-        {/* <Link to="/addCourse">
+    
+        <Link to="/addCourse">
             <button size="45" className="reset-btn2">Set Courses</button>
-        </Link> */}
-        <Link to="/login">
-            <button size="45" className="reset-btn2" onClick={() => (sessionStorage.removeItem("user"))}>Log Out</button>
         </Link>
         <Link to="/cal">
             <button size="45" className="reset-btn2" type="submit">Weekly View</button>
@@ -194,7 +152,6 @@ export const Settings = (props) => {
         }
         </div>
     
-    </div>
     </div>
     )
 }

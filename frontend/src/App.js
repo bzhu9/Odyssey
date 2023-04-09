@@ -7,7 +7,7 @@ import { Login } from "./Login";
 import { Register } from "./Register";
 import { Reset } from './Reset';
 import { Settings } from './Settings';
-import { Map } from './Map';
+import {Map } from './Map';
 import { CreateEvent } from './CreateEvent';
 import { OpenClass } from './OpenClass';
 // import FullCalendarApp, { Calender } from "./Calender";
@@ -24,6 +24,7 @@ import { FriendProfile } from './FriendProfile';
 import FileUploadPage from './Import';
 import { AcceptEvent } from './AcceptEvent';
 import {AddCourse} from './AddCourse';
+import {Courses} from "./Courses"
 
 function App() {
   const [currentForm, setCurrentForm] = useState('login');
@@ -71,6 +72,8 @@ function App() {
           <Route path ="acceptEvent" element={<AcceptEvent />}/>
           <Route path ="addCourse" element={<AddCourse />}/>
           <Route path ="changeMealTime" element={<ChangeMealTime />}/>
+          <Route path ="courses" element={<Courses />}/>
+
 
 
           
