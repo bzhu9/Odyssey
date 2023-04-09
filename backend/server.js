@@ -26,6 +26,7 @@ app.use("/openclass", require("./routes/openClassRoute"));
 app.use("/course", require("./routes/courseRoute"));
 app.use("/message", require("./routes/messageRoute"));
 app.use("/chat", require("./routes/chatRoute"));
+app.use("/review", require("./routes/reviewRoute"));
 
 
 mongoose.connection.once("open", () => {
