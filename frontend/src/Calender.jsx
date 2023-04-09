@@ -252,7 +252,7 @@ function FullCalendarApp(props) {
         editable
         initialView="dayGridWeek"
         headerToolbar={{
-          center: 'timeGridWeek,dayGridMonth,new,eventReq,settings,classSearch',
+          center: 'timeGridWeek,dayGridMonth,new,eventReq,classSearch,import,genClass,settings',
         }}
         //took out timeGridDay
         customButtons={{
@@ -286,6 +286,16 @@ function FullCalendarApp(props) {
             text: 'search',
             // click: () => props.onFormSwitch('class'),
             click: () => navigate("../class"),
+          },
+          import: {
+            text: 'import',
+            // click: () => props.onFormSwitch('class'),
+            click: () => navigate("../import"),
+          },
+          genClass: {
+            text: 'gen class',
+            // click: () => props.onFormSwitch('class'),
+            click: () => genClass,
           },
         }}
         events={events}
@@ -326,13 +336,13 @@ function FullCalendarApp(props) {
         // eventClick={props.onFormSwitch('addEvent')}
       />
       {/* <button type="button" onClick={() => props.onFormSwitch('login')}>Go back to login</button> */}
-      <Link to="/login">
+      {/* <Link to="/login">
         <button>Go back to login screen</button>
-      </Link>
-      <Link to="/import">
+      </Link> */}
+      {/* <Link to="/import">
         <button className="importButton">Import</button>
-      </Link>  
-      <button className="genClass" onClick={genClass}>Generate Classes</button>
+      </Link>   */}
+      {/* <button className="genClass" onClick={genClass}>Generate Classes</button> */}
          
        <div className="viewSchedule">
     <h4 className="friendCheckboxTitle">View Friend(s) schedule:</h4>

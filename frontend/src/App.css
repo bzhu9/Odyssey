@@ -183,7 +183,7 @@ button:hover {
 }
 
 .friendsList {
-  overflow: scroll;
+  overflow: auto;
   height: 300px;
   width: 280px;
   border-radius: 10px;
@@ -206,7 +206,7 @@ button:hover {
 }
 
 .recList {
-  overflow: scroll;
+  overflow: auto;
   position: absolute;
   width: 280px;
   margin-top: -316px;
@@ -230,7 +230,7 @@ button:hover {
 
 #friendReq {
   position: absolute;
-  overflow: scroll;
+  overflow: auto;
   height: 180px;
   border-radius: 10px;
   border: 1px solid #CEB888;
@@ -259,7 +259,7 @@ button:hover {
 
 #eventReq {
   /* position: absolute; */
-  overflow: scroll;
+  overflow: auto;
   padding: 10px;
   align-items: center;
   height: 180px;
@@ -302,7 +302,19 @@ button:hover {
 }
 
 .friendCheckbox{
-  overflow: scroll;
+  overflow: auto;
+  min-height: 20px;
+  border-radius: 10px;
+  border: 2px solid #CEB888;
+  padding: 10px;
+}
+
+.friendCheckboxTitle{
+  border-radius: 10px;
+  border: 2px solid #CEB888;
+  padding: 8px;
+  margin-bottom: 8px;
+
 }
 
 .friendDropdownTitle {
@@ -312,9 +324,13 @@ button:hover {
 }
 
 .viewSchedule {
-  border-radius: 10px;
-  border: 2px solid #CEB888;
+  /* border-radius: 10px;
+  border: 2px solid #CEB888; */
   padding: 5px;
+  margin-left: 35px;
+  margin-right: 2px;
+
+
 }
 
 .importButton {
