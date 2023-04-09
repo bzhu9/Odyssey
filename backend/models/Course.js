@@ -7,6 +7,9 @@ const courseSchema = new Schema({
         type: String,
         required: true,
     },
+    reviews: [{
+        type: Schema.Types.ObjectId
+    }],
     // users: [{
     //     //list of _id's
     //     type: Schema.Types.ObjectId
