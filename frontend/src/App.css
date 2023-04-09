@@ -349,3 +349,8 @@ button:hover {
     left: -20%;
     display: block; }
 
+    ul {
+      list-style-type: none;
+      /* scroll-margin-inline: 100px; */
+      /* padding: 10; */
+    }

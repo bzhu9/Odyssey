@@ -189,7 +189,7 @@ export const Friends = (props) => {
                 <li key={item.id} ref={ref} >
                   {/* <button onClick={() => navigate("../friendProfile", {state: {email: item.email, name: item.name, status: item.status, privacy: item.privacy}})}> */}
                   <button onClick={() => redirectToProfile(item)}>
-                    {item.name} {item.status} {item.privacy}
+                    {item.name} | {item.status} | {item.privacy}
                     </button>
                 {/* <div>{item.firstname} {item.lastname} {item.id}</div> */}
                 </li>
