@@ -18,15 +18,37 @@ router.route('/add').post((req, res) => {
     const user = req.body.user;
     const course = req.body.course;
 
+    //create the new review
     const newReview = new Review({
         "text": text,
         "user": user,
         "course": course
     });
-
     newReview.save()
-        .then(() => res.status(201).json("Review added!"))
         .catch(err => res.status(400).json("Error: " + err));
+
+    //add the review id to the course
+    const courseObj = await Course.findById(course);
+    if (!courseObj) {
+        //course doesnt exist
+        console.log("course doesn't exist????");
+    }
+    courseObj.reviews.push(newReview._id);
+    courseObj.save()
+        .catch(err => res.status(400).json({message: 'Error: ' + err}));
+
+    //add the review id to the user
+    const userObj = await User.findById(user);
+    if (!userObj) {
+        //user doesn't exist
+        console.log("user doesn't exist????");
+    }
+    userObj.reviews.push(newReview._id);
+    userObj.save()
+        .catch(err => res.status(400).json({message: 'Error: ' + err}));
+    
+    
+    return res.status(200).json("Review added!");
 });
 
 // Delete a review --------------------------------
