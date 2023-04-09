@@ -3,7 +3,9 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 
-// Security question not added yet
+// Review Schema
+// each review will be linked to both a user and a course
+// reviews should stay even if an account is deleted
 const reviewSchema = new Schema({
     text: {
         type: String,
@@ -12,6 +14,10 @@ const reviewSchema = new Schema({
     user: {
         type: Schema.Types.ObjectId,
         required: true,
+    },
+    course: {
+        //if empty, then it should be listed as a personal note
+        type: Schema.Types.ObjectId
     }
 }
 );
