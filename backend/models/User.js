@@ -63,7 +63,9 @@ const userSchema = new Schema({
     courses: [{
         type: Schema.Types.ObjectId
     }],
-
+    reviews: [{
+        type: Schema.Types.ObjectId
+    }],
     // Stored in 24hr format hh:mm
     workdayStart: {
         //mongo will format it in its own way
