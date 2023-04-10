@@ -4,13 +4,14 @@ const { ObjectId } = require('mongodb');
 const Review = require('../models/Review');
 const Course = require('../models/Course');
 const User = require('../models/User');
+const { default: apis } = require('../../frontend/src/apis');
 
 // Get all reviews --------------------------------
 router.route("/").get((req, res) => {
     Review.find()
     .then(reviews => res.json(reviews))
     .catch(err => res.status(400).json("Error: " + err));
-});
+});a
 
 // Add a review --------------------------------
 router.route('/add').post((req, res) => {
@@ -88,6 +89,16 @@ router.route('/delete').post((req, res) => {
 
     res.status(200).json({ message: `Review, was deleted successfully` })
 
+});
+
+// Edit a review --------------------------------
+router.route('/edit').post((req, res) => {
+    const text = req.body.text;
+    const reviewID = req.body.reviewID;
+
+    await Review.findOneAndUpdate({_id: reviewID}, {text: text}).lean();
+
+    return res.status(200).json("Review editted!");
 });
 
 module.exports = router;
