@@ -6,8 +6,8 @@ import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
-import { IconButton } from "rsuite";
-import { Admin, Menu, Reload, Resize, Search } from '@rsuite/icons';
+// import { IconButton } from "rsuite";
+// import { Admin, Menu, Reload, Resize, Search } from '@rsuite/icons';
 
 
 const checkList = ["friend1", "friend2", "friend3", "friend4", "friend5", "friend6", "friend7",];

@@ -4,7 +4,7 @@ const { ObjectId } = require('mongodb');
 const Review = require('../models/Review');
 const Course = require('../models/Course');
 const User = require('../models/User');
-const { default: apis } = require('../../frontend/src/apis');
+// const { default: apis } = require('../../frontend/src/apis');
 
 // Get all reviews --------------------------------
 router.route("/").get((req, res) => {
@@ -22,7 +22,7 @@ router.route("/single").post((req, res) => {
 });
 
 // Add a review --------------------------------
-router.route('/add').post((req, res) => {
+router.route('/add').post(async (req, res) => {
     const text = req.body.text;
     const user = req.body.user;
     const course = req.body.course;
@@ -61,7 +61,7 @@ router.route('/add').post((req, res) => {
 });
 
 // Delete a review --------------------------------
-router.route('/delete').post((req, res) => {
+router.route('/delete').post(async (req, res) => {
     const id = req.body._id;
     const review = await Event.findOne({_id: id}).exec();
 
@@ -100,7 +100,7 @@ router.route('/delete').post((req, res) => {
 });
 
 // Edit a review --------------------------------
-router.route('/edit').post((req, res) => {
+router.route('/edit').post(async (req, res) => {
     const text = req.body.text;
     const reviewID = req.body.reviewID;
 
