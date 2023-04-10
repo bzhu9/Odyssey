@@ -11,7 +11,15 @@ router.route("/").get((req, res) => {
     Review.find()
     .then(reviews => res.json(reviews))
     .catch(err => res.status(400).json("Error: " + err));
-});a
+});
+
+// Get a signal review --------------------------------
+router.route("/single").post((req, res) => {
+    const reviewID = req.body.reviewID;
+    Review.findOne({_id: reviewID}).lean()
+    .then(reviews => res.json(reviews))
+    .catch(err => res.status(400).json("Error: " + err));
+});
 
 // Add a review --------------------------------
 router.route('/add').post((req, res) => {
