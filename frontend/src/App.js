@@ -25,6 +25,7 @@ import FileUploadPage from './Import';
 import { AcceptEvent } from './AcceptEvent';
 import {AddCourse} from './AddCourse';
 import {Courses} from "./Courses"
+import { AddReview } from './AddReview';
 
 function App() {
   const [currentForm, setCurrentForm] = useState('login');
@@ -73,6 +74,7 @@ function App() {
           <Route path ="addCourse" element={<AddCourse />}/>
           <Route path ="changeMealTime" element={<ChangeMealTime />}/>
           <Route path ="courses" element={<Courses />}/>
+          <Route path ="addReview" element={<AddReview />}/>
 
 
 

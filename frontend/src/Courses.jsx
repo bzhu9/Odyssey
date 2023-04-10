@@ -108,49 +108,15 @@ export const Courses = (props) => {
         <Link to="/addCourse">
             <button size="45" className="reset-btn2">Set Courses</button>
         </Link>
+        <Link to="/addReview">
+            <button size="45" className="reset-btn2">Add Review</button>
+        </Link>
         <Link to="/cal">
             <button size="45" className="reset-btn2" type="submit">Weekly View</button>
         </Link>
-        <div className="prof" >
-        <br />
-        { sessionStorage.getItem("user") == null ? 
-        <>
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <h3>Please login to see your profile!</h3>
-        </>
-        :
-        <>
-        <p> <b>Name:</b> {name}</p>
-        <p> <b>Email:</b> {email}</p>
-        <p> <b>Privacy:</b> {privacy}</p>
-        <p> <b>Status:</b> {status}</p>
-        { workdayStart && workdayStart.length > 0 ? 
-        <>
-        <p> <b>Workday Start:</b> {workdayStart}</p>
-        <p> <b>Workday End:</b> {workdayEnd}</p>
-        </> :
-        <> </>
-        }
-        { courses.length > 0 ?
-            <>
-            <p> <b>Courses: </b></p>
-            <ul>
-            {courses.map(c => (
-                <li>{c}</li>
-            ))}
-            </ul>
-            </>
-            :
-            <>
-            </>
-        }
-        </>
-        }
-        </div>
+       
+        
+      
     
     </div>
     )

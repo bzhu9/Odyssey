@@ -354,3 +354,11 @@ button:hover {
       /* scroll-margin-inline: 100px; */
       /* padding: 10; */
     }
+
+    .review {
+      min-height: 100px;
+      max-width: 700px;
+      margin-bottom: 5px;
+      padding: 10px;
+      border-radius: 10px;
+    }
