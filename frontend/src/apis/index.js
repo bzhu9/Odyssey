@@ -64,7 +64,7 @@ export const loadMessages = payload => api.post("/chat/loadMessages", payload);
 export const getAllReviews = () => api.get("/review/");
 export const addReview = payload => api.post("/review/add", payload);
 export const editReview = payload => api.post("/review/edit", payload);
-export const getSingleReview = id => api.get("/review/single", payload);
+export const getSingleReview = payload => api.get("/review/single", payload);
 
 
 const apis = {
