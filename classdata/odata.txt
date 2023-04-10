@@ -1,0 +1,3 @@
+query required:
+
+https://api.purdue.io/odata/Terms?$select=Name&$filter=Name eq 'Spring 2023'&$expand=Classes($select=Campus;$expand=Course($select=Title),Sections($select=Type;$expand=Meetings($select=Type;$expand=Instructors($select=Name))))
