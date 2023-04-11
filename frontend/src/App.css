@@ -356,9 +356,38 @@ button:hover {
     }
 
     .review {
-      min-height: 100px;
-      max-width: 700px;
+      height: 150px;
+      width: 380px;
       margin-bottom: 5px;
       padding: 10px;
       border-radius: 10px;
     }
+
+    .on {
+      color: #CEB888;
+    }
+    .off {
+      color: #ccc;
+    }
+
+    #rating-btn {
+      border: none;
+      font-size: 40px;
+      background: none;
+      border-radius:none;
+      cursor: pointer;
+      margin-bottom: none;
+      margin-top: none;
+      color:none;
+      
+      
+      /* width:400px; */
+    
+    }
+    .rating-btn {
+      background-color: transparent;
+      border: none;
+      outline: none;
+      cursor: pointer;
+    }
+    
