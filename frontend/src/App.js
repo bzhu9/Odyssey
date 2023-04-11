@@ -26,7 +26,7 @@ import { AcceptEvent } from './AcceptEvent';
 import {AddCourse} from './AddCourse';
 import {Courses} from "./Courses"
 import { AddReview } from './AddReview';
-
+import { ChangeReview } from './ChangeReview';
 function App() {
   const [currentForm, setCurrentForm] = useState('login');
 
@@ -75,6 +75,9 @@ function App() {
           <Route path ="changeMealTime" element={<ChangeMealTime />}/>
           <Route path ="courses" element={<Courses />}/>
           <Route path ="addReview" element={<AddReview />}/>
+          <Route path ="changeReview" element={<ChangeReview />}/>
+
+
 
 
 
