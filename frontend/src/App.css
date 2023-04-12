@@ -327,7 +327,7 @@ button:hover {
   /* border-radius: 10px;
   border: 2px solid #CEB888; */
   padding: 5px;
-  margin-left: 35px;
+  margin-left: -80px;
   margin-right: 2px;
 
 
@@ -378,16 +378,28 @@ button:hover {
       cursor: pointer;
       margin-bottom: none;
       margin-top: -10px;
-      color:none;
+
       
       
       /* width:400px; */
     
     }
-    .rating-btn {
-      background-color: transparent;
+
+    #settings-button {
       border: none;
-      outline: none;
+      font-size: 60px;
+      background: none;
+      border-radius:none;
       cursor: pointer;
+      margin-bottom: none;
+      color: #CEB888;
+      position: relative;
+      margin-left: 150%;
+      margin-bottom: 700%; 
+      margin-top: -80%;
+      
+    
     }
+
+ 
     
