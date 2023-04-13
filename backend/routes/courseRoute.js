@@ -11,6 +11,31 @@ router.route("/").get((req, res) => {
     .catch(err => res.status(400).json("Error: " + err));
 });
 
+router.route("/subject").get((req, res) => {
+    Course.find({
+        subject: req.body.subject
+    })
+    .then(courses => res.json(courses))
+    .catch(err => console.err(err))
+})
+
+router.route("/subjectnumber").get((req, res) => {
+    Course.find({
+        subject: req.body.subject,
+        number: req.body.number
+    })
+    .then(courses => res.json(courses))
+    .catch(err => console.err(err))
+})
+
+router.route("/professor").get((req,res) => {
+    Course.find({
+        professor: req.body.professor
+    })
+    .then(courses => res.json(courses))
+    .catch(err => console.err(err))
+})
+
 router.route('/add').post((req, res) => {
     const name = req.body.name;
 
@@ -33,11 +58,23 @@ router.route('/fixformat').post(async (req, res) => {
         {
             $set: {
                 reviews: [],
-                users: []
-            }
+                users: [],
+            }   
         }
     );
     res.status(200).json({message: 'fixed'})
+})
+
+router.route('/addscore').post(async (req, res) => {
+    const status = await Course.updateMany(
+        {
+            $set: {
+                totalscore: 0,
+                reviewcount: 0
+            }   
+        }
+    );
+    res.status(200).json({message: 'added'})
 })
 
 module.exports = router;
