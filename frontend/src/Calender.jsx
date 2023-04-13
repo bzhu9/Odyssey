@@ -6,9 +6,9 @@ import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
-import { IconButton } from "rsuite";
-import GearIcon from '@rsuite/icons/Gear';
-import SpinnerIcon from '@rsuite/icons/legacy/Spinner';
+// import { IconButton } from "rsuite";
+// import GearIcon from '@rsuite/icons/Gear';
+// import SpinnerIcon from '@rsuite/icons/legacy/Spinner';
 import { FaCog, FaCogs } from "react-icons/fa";
 
 // import {IconButton} from '@primer/react'
