@@ -7,6 +7,10 @@ const Schema = mongoose.Schema;
 // each review will be linked to both a user and a course
 // reviews should stay even if an account is deleted
 const reviewSchema = new Schema({
+    stars: {
+        type: Number,
+        requred: true
+    },
     text: {
         type: String,
         required: true,
