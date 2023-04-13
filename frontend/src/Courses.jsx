@@ -116,7 +116,10 @@ export const Courses = (props) => {
         <Link to="/addReview">
             <button size="45" className="reset-btn2">Add Review</button>
         </Link>
-        
+        <Link to="/search">
+            <button size="45" className="reset-btn2">Search Course</button>
+        </Link>
+
         <Link to="/addNote">
             <button size="45" className="reset-btn2">Add note to course</button>
         </Link>
