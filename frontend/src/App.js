@@ -30,7 +30,7 @@ import { ChangeReview } from './ChangeReview';
 import { AddNote } from './AddNote';
 import { ChangeNote } from './ChangeNote';
 import { Chat } from "./Chat"
-import  Search   from './Search';
+import {Search}  from './Search';
 function App() {
   const [currentForm, setCurrentForm] = useState('login');
 
