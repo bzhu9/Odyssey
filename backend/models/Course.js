@@ -10,10 +10,10 @@ const courseSchema = new Schema({
     reviews: [{
         type: Schema.Types.ObjectId
     }],
-    // users: [{
-    //     //list of _id's
-    //     type: Schema.Types.ObjectId
-    // }]
+    users: [{
+        //list of _id's
+        type: Schema.Types.ObjectId
+    }]
 })
 
 
