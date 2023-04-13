@@ -2,6 +2,7 @@ const router = require('express').Router();
 let Course = require('../models/Course');
 const mongoose = require('mongoose');
 const { ObjectId } = require('mongodb');
+const { RestartProcess } = require('concurrently');
 
 // Get all courses --------------------------------
 router.route("/").get((req, res) => {
@@ -25,6 +26,18 @@ router.route('/add').post((req, res) => {
 router.route('/clear').post(async (req, res) => {
     const status = await Course.deleteMany({});
     res.status(200).json({message: 'cleared'})
+})
+
+router.route('/fixformat').post(async (req, res) => {
+    const status = await Course.updateMany(
+        {
+            $set: {
+                reviews: [],
+                users: []
+            }
+        }
+    );
+    res.status(200).json({message: 'fixed'})
 })
 
 module.exports = router;
