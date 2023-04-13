@@ -3,9 +3,13 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const courseSchema = new Schema({
-    name: {
+    subject: {
         type: String,
         required: true,
+    },
+    number: {
+        type: Number,
+        required: true
     },
     professor: {
         type: String,
