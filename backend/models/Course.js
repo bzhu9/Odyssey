@@ -7,6 +7,10 @@ const courseSchema = new Schema({
         type: String,
         required: true,
     },
+    professor: {
+        type: String,
+        required: true
+    },
     reviews: [{
         type: Schema.Types.ObjectId
     }],
