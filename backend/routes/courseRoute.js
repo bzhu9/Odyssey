@@ -33,11 +33,22 @@ router.route('/fixformat').post(async (req, res) => {
         {
             $set: {
                 reviews: [],
-                users: []
-            }
+                users: [],
+            }   
         }
     );
     res.status(200).json({message: 'fixed'})
+})
+
+router.route('/addscore').post(async (req, res) => {
+    const status = await Course.updateMany(
+        {
+            $set: {
+                totalscore: 0
+            }   
+        }
+    );
+    res.status(200).json({message: 'added'})
 })
 
 module.exports = router;

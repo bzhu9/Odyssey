@@ -21,7 +21,10 @@ const courseSchema = new Schema({
     users: [{
         //list of _id's
         type: Schema.Types.ObjectId
-    }]
+    }],
+    totalscore: {
+        type: Number
+    }
 })
 
 
