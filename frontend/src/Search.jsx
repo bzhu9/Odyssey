@@ -43,7 +43,7 @@ export const Search = (props) => {
   };
   return (
     <div>
-      <h2>Create Review</h2>
+      <h2>Search for course</h2>
       <div>
         
         <form  onSubmit={handleSubmit}>
