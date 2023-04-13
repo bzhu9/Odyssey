@@ -37,9 +37,10 @@ export const AddReview = (props) => {
         
         <form  onSubmit={handleSubmit}>
           <label htmlFor="text">Select course you want to review</label>
-
+          <p>
+           {'\n'} 
+        </p>
           <Select
-            className="friendDropdown"
             defaultValue={[]}
             isMulti={false}
             closeMenuOnSelect={true}
@@ -51,9 +52,14 @@ export const AddReview = (props) => {
             }}
             options={allOptions}
           />
+          <p>
+           {'\n'} 
+        </p>
           <label htmlFor="text">Select professor for that course</label>
+          <p>
+           {'\n'} 
+        </p>
           <Select
-            className="friendDropdown"
             defaultValue={[]}
             isMulti={false}
             closeMenuOnSelect={true}
@@ -93,6 +99,12 @@ export const AddReview = (props) => {
 
 <div>
           </div>
+          <label htmlFor="text">Write Review</label>
+
+          <p>
+           {'\n'} 
+        </p>
+
           <textarea value={review}
             onChange={(e) => setReview(e.target.value)} size="9000" className="review">
           </textarea>

@@ -75,10 +75,16 @@ input {
 }
 
 .friendDropdown {
+  
+  border-radius:36px;
+  display:inline-block;
+  overflow:hidden;
+  height: 40px;
+  background:#cccccc;
+  border:1px solid #cccccc;
   margin: 0.5rem 0;
   /* padding: 1rem; */
-  border: none;
-  border-radius: 100px;
+ 
 }
 
 button {
@@ -286,7 +292,8 @@ button:hover {
   justify-content: center;
   border: solid 5px #CEB888;
   padding: 0.5rem;
-  border-radius: 1rem;
+  border-radius: 20px;
+
 }
 
 .friendProfile {
@@ -327,7 +334,7 @@ button:hover {
   /* border-radius: 10px;
   border: 2px solid #CEB888; */
   padding: 5px;
-  margin-left: 35px;
+  margin-left: -80px;
   margin-right: 2px;
 
 
@@ -378,16 +385,39 @@ button:hover {
       cursor: pointer;
       margin-bottom: none;
       margin-top: -10px;
-      color:none;
+
       
       
       /* width:400px; */
     
     }
-    .rating-btn {
-      background-color: transparent;
+
+    #settings-button {
       border: none;
-      outline: none;
+      font-size: 60px;
+      background: none;
+      border-radius:none;
       cursor: pointer;
+      margin-bottom: none;
+      color: #CEB888;
+      position: relative;
+      margin-left: 150%;
+      margin-bottom: 700%; 
+      margin-top: -80%;
+      
+    
     }
+
+    .notif-dropdown {
+      max-width: 100%;
+      height: 45px;
+      display: flex;
+      color: black;
+      justify-content: center;
+      padding: 0.5rem;
+      border-radius: 20px;
+      
+      
+    }
+ 
     

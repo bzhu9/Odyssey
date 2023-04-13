@@ -24,6 +24,13 @@ const allOptions = [
     { value: "option 4", label: "option 4" }
   ];
 
+  const timeOptions  = [
+    { value: "5", label: "5 minutes before" },
+    { value: "10", label: "10 minutes before" },
+    { value: "30", label: "30 minutes before" },
+    { value: "60", label: "1 hour before" }
+  ]
+
 export const ChangeEvent = (props) => {
     //get the object ID from local storage
     const eventID = localStorage.getItem('eventID');
@@ -49,6 +56,7 @@ export const ChangeEvent = (props) => {
     const [friendList, setFriendList] = useState([]);
     const [eventReqList, setEventReqList] = useState([]);
     const [preSelectedOptions, setPreSelectedOptions] = useState([]);
+    const [notifTime, setNotifTime] = useState('');
 
 
 
@@ -363,8 +371,8 @@ export const ChangeEvent = (props) => {
         <label htmlFor="text">Location</label>
         <input size="45" value={location} onChange={(e) => setLocation(e.target.value)} type="text" placeholder="Location" id="text" name="text" />
         <label htmlFor="text">Share Event</label>
-
-        <Select className="friendDropdown"
+        <div className="friendDropdown">
+        <Select 
         value={selectedOptions}
         isMulti={true}
         closeMenuOnSelect={false}
@@ -387,6 +395,43 @@ export const ChangeEvent = (props) => {
             label: friend.email
         }))}
         /> 
+
+<label htmlFor="time">Set notification time prior to event</label>
+        <select
+          className="notif-dropdown"
+          onChange={(e) => setNotifTime(e.target.value)}
+          id="colours"
+        >
+            <option className="dropdown" value="0">
+            Don't notify me
+          </option>
+          <option className="dropdown" value="5">
+            5 minutes before event
+          </option>
+          <option className="dropdown" value="10">
+            10 minutes before event
+          </option>
+          <option className="dropdown" value="15">
+            15 minutes before event
+          </option>
+          <option className="dropdown" selected="selected" value="30">
+            30 minutes before event
+          </option>
+          <option className="dropdown" value="60">
+            1 hour before event
+          </option>
+        </select>
+        <label htmlFor="text">Event Notes</label>
+        <input
+          size="40"
+          value={note}
+          onChange={(e) => setNote(e.target.value)}
+          type="text"
+          placeholder="Notes"
+          id="text"
+          name="text"
+        />
+        </div>
         <label htmlFor="text">Event Notes</label>
         
         <input size="65" value={note} onChange={(e) => setNote(e.target.value)} type="text" placeholder="Notes" id="text" name="text" />

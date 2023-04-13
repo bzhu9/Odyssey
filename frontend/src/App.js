@@ -27,6 +27,9 @@ import {AddCourse} from './AddCourse';
 import {Courses} from "./Courses"
 import { AddReview } from './AddReview';
 import { ChangeReview } from './ChangeReview';
+import { AddNote } from './AddNote';
+import { ChangeNote } from './ChangeNote';
+import { Chat } from "./Chat"
 function App() {
   const [currentForm, setCurrentForm] = useState('login');
 
@@ -76,7 +79,11 @@ function App() {
           <Route path ="courses" element={<Courses />}/>
           <Route path ="addReview" element={<AddReview />}/>
           <Route path ="changeReview" element={<ChangeReview />}/>
+          <Route path ="addNote" element={<AddNote />}/>
+          <Route path ="changeNote" element={<ChangeNote />}/>
 
+
+          <Route path ="chat" element={<Chat />}/>
 
 
 

@@ -6,6 +6,7 @@
     "ical.js": "^1.5.0",
     "multiselect-react-dropdown": "^2.0.25",
     "payload-react": "^0.2.1",
+    "react-time-duration-input": "^1.1.1",
     "rsuite": "^5.31.0"
   },
   "devDependencies": {

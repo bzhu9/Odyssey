@@ -17,13 +17,11 @@ const profOptions = [
   { value: "prof 4", label: "prof 4" },
 ];
 
-export const ChangeReview = (props) => {
+export const AddNote = (props) => {
   const navigate = useNavigate();
 
   const [selectedOptions, setSelectedOptions] = useState([]);
-  const [review, setReview] = useState("");
-  const [hover, setHover] = useState(0);
-  const [rating, setRating] = useState(0);
+  const [note, setNote] = useState("");
 
 
 
@@ -32,56 +30,72 @@ export const ChangeReview = (props) => {
   };
   return (
     <div>
-      <h2>Change Review</h2>
+      <h2>Add Note to Class</h2>
       <div>
         
         <form  onSubmit={handleSubmit}>
-
-          
+          <label htmlFor="text">Select course you want to add note for</label>
+          <p>
+ {'\n'} 
+</p>
+          <Select
+            defaultValue={[]}
+            isMulti={false}
+            closeMenuOnSelect={true}
+            hideSelectedOptions={false}
+            onChange={(options) => {
+              if (Array.isArray(options)) {
+                setSelectedOptions(options.map((opt) => opt.value));
+              }
+            }}
+            options={allOptions}
+          />
+          <p>
+ {'\n'} 
+</p>
+          <label htmlFor="text">Select professor for that course</label>
+          <p>
+ {'\n'} 
+</p>
+          <Select
+            defaultValue={[]}
+            isMulti={false}
+            closeMenuOnSelect={true}
+            hideSelectedOptions={false}
+            onChange={(options) => {
+              if (Array.isArray(options)) {
+                setSelectedOptions(options.map((opt) => opt.value));
+              }
+            }}
+            options={profOptions}
+          />
 
 {/* <label htmlFor="text">Create review</label> */}
 
-        <div>
-        <p>Change Review for CS 307 with prof Turkstra </p>
-
-
-  {[...Array(5)].map((star, index) => {
-        index += 1;
-        return (
-          <button 
-            id ="rating-btn"
-            key={index}
-            className={index <= ((rating && hover) || hover) ? "on" : "off"}
-            onClick={() => setRating(index)}
-            onDoubleClick={() => {
-              setRating(0);
-              setHover(0);
-              }}
-            onMouseEnter={() => setHover(index)}
-            onMouseLeave={() => setHover(rating)}
-          >
-            <span className="star">&#9733;</span>
-          </button>
-        );
-      })}
-      </div>
+<p>
+ {'\n'} 
+</p>
 
 <div>
+<label htmlFor="text">Write Review</label>
+
+<p>
+ {'\n'} 
+</p>
           </div>
-          
-          <textarea value={review}
-            onChange={(e) => setReview(e.target.value)} size="9000" className="review">
+          <textarea value={note}
+            onChange={(e) => setNote(e.target.value)} size="9000" className="review">
           </textarea>
         </form>
         {/* <button type="submit" onClick={() => props.onFormSwitch('calender')}>Weekly View</button>
             <button className="reg-btn" onClick={() => props.onFormSwitch('register')}>Create an account</button>
             <button className="reset-btn" onClick={() => props.onFormSwitch('reset')}>Reset Password</button> */}
         {/* not sure why the buttons are small */}
-        <button type="submit" className="reset-btn">Submit change</button>
+        <button type="submit" className="reset-btn">Submit Note</button>
         <div>
         <Link to="/courses">
           <button size="45" className="reset-btn">
-           Cancel change
+           Cancel Note
           </button>
         </Link>
         </div> 

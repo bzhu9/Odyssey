@@ -7,7 +7,12 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 // import { IconButton } from "rsuite";
-// import { Admin, Menu, Reload, Resize, Search } from '@rsuite/icons';
+// import GearIcon from '@rsuite/icons/Gear';
+// import SpinnerIcon from '@rsuite/icons/legacy/Spinner';
+import { FaCog, FaCogs } from "react-icons/fa";
+
+// import {IconButton} from '@primer/react'
+
 
 
 const checkList = ["friend1", "friend2", "friend3", "friend4", "friend5", "friend6", "friend7",];
@@ -254,7 +259,7 @@ function FullCalendarApp(props) {
         editable
         initialView="dayGridWeek"
         headerToolbar={{
-          center: 'timeGridWeek,dayGridMonth,new,eventReq,classSearch,import,genClass,courses,map,social,settings',
+          center: 'timeGridWeek,dayGridMonth,new,eventReq,classSearch,import,genClass,courses,chat',
         }}
         //took out timeGridDay
         customButtons={{
@@ -311,6 +316,11 @@ function FullCalendarApp(props) {
             // click: () => props.onFormSwitch('class'),
             click: () => genClass,
           },
+          chat: {
+            text: 'chat',
+            // click: () => props.onFormSwitch('class'),
+            click: () => navigate("../chat"),
+          },
         }}
         events={events}
         eventDurationEditable
@@ -350,9 +360,9 @@ function FullCalendarApp(props) {
         // eventClick={props.onFormSwitch('addEvent')}
       />
       {/* <button type="button" onClick={() => props.onFormSwitch('login')}>Go back to login</button> */}
-      {/* <Link to="/login">
-        <button>Go back to login screen</button>
-      </Link> */}
+      <Link to="/settings">
+      <button id = "settings-button"><FaCogs/> </button>
+    </Link>
       {/* <Link to="/import">
         <button className="importButton">Import</button>
       </Link>   */}
