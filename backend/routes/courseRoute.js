@@ -22,4 +22,9 @@ router.route('/add').post((req, res) => {
         .catch(err => res.status(400).json("Error: " + err));
 });
 
+router.route('/clear').post(async (req, res) => {
+    const status = await Course.deleteMany({});
+    res.status(200).json({message: 'cleared'})
+})
+
 module.exports = router;
