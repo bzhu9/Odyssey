@@ -234,6 +234,7 @@ button:hover {
 
 }
 
+
 #friendReq {
   position: absolute;
   overflow: auto;
@@ -419,5 +420,12 @@ button:hover {
       
       
     }
+
+    .cardflex {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+   
  
     

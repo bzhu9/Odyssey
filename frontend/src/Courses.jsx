@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import api from "./apis"
 import { Link, useNavigate } from "react-router-dom";
+import { FaPlus } from "react-icons/fa";
+
 
 export const Courses = (props) => {
     // const [email, setEmail] = useState('');
@@ -104,13 +106,17 @@ export const Courses = (props) => {
 
     return (
         <div>
-    
         <Link to="/addCourse">
-            <button size="45" className="reset-btn2">Set Courses</button>
-        </Link>
+        <button id = "addCourse-button"><FaPlus/> </button>
+      </Link>
+        <div>
+      
+    
+        
         <Link to="/addReview">
             <button size="45" className="reset-btn2">Add Review</button>
         </Link>
+        
         <Link to="/addNote">
             <button size="45" className="reset-btn2">Add note to course</button>
         </Link>
@@ -118,7 +124,7 @@ export const Courses = (props) => {
             <button size="45" className="reset-btn2" type="submit">Weekly View</button>
         </Link>
        
-        
+        </div>
       
     
     </div>

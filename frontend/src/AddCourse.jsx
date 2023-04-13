@@ -87,7 +87,7 @@ export const AddCourse = (props) => {
     return (
         <div>
         <h3> Set Courses </h3>
-        <Select className="friendDropdown"
+        <Select 
         defaultValue={[]}
         value={selectedOptions}
         isMulti
@@ -98,7 +98,7 @@ export const AddCourse = (props) => {
         /> 
         <button className="reset-btn" type="submit" onClick={() => setMyCourses()}>Set Courses</button>
         <div></div>
-        <Link to="/cal">
+        <Link to="/courses">
             <button size="45" className="reset-btn" >Cancel</button>
         </Link>
 

@@ -30,6 +30,7 @@ import { ChangeReview } from './ChangeReview';
 import { AddNote } from './AddNote';
 import { ChangeNote } from './ChangeNote';
 import { Chat } from "./Chat"
+import  Search   from './Search';
 function App() {
   const [currentForm, setCurrentForm] = useState('login');
 
@@ -81,6 +82,8 @@ function App() {
           <Route path ="changeReview" element={<ChangeReview />}/>
           <Route path ="addNote" element={<AddNote />}/>
           <Route path ="changeNote" element={<ChangeNote />}/>
+          <Route path ="search" element={<Search />}/>
+
 
 
           <Route path ="chat" element={<Chat />}/>
