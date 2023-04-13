@@ -24,6 +24,9 @@ const courseSchema = new Schema({
     }],
     totalscore: {
         type: Number
+    },
+    reviewcount: {
+        type: Number
     }
 })
 

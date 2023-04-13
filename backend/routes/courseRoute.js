@@ -44,7 +44,8 @@ router.route('/addscore').post(async (req, res) => {
     const status = await Course.updateMany(
         {
             $set: {
-                totalscore: 0
+                totalscore: 0,
+                reviewcount: 0
             }   
         }
     );
