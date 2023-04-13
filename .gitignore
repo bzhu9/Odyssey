@@ -27,7 +27,6 @@ yarn-debug.log*
 yarn-error.log*
 
 # data
-*.csv
 *.pyc
 */*/*/__pycache__/
 */*/__pycache__/
