@@ -7,7 +7,7 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import Select, { components } from "react-select";
 import { array } from "i/lib/util";
-import { TimeDurationInput } from "react-time-duration-input";
+// import { TimeDurationInput } from "react-time-duration-input";
 
 const allOptions = [
   { value: "option 1", label: "option 1" },

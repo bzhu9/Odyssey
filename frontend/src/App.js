@@ -29,6 +29,7 @@ import { AddReview } from './AddReview';
 import { ChangeReview } from './ChangeReview';
 import { AddNote } from './AddNote';
 import { ChangeNote } from './ChangeNote';
+import { Chat } from "./Chat"
 function App() {
   const [currentForm, setCurrentForm] = useState('login');
 
@@ -82,6 +83,7 @@ function App() {
           <Route path ="changeNote" element={<ChangeNote />}/>
 
 
+          <Route path ="chat" element={<Chat />}/>
 
 
 

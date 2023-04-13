@@ -259,7 +259,7 @@ function FullCalendarApp(props) {
         editable
         initialView="dayGridWeek"
         headerToolbar={{
-          center: 'timeGridWeek,dayGridMonth,new,eventReq,classSearch,import,genClass,courses',
+          center: 'timeGridWeek,dayGridMonth,new,eventReq,classSearch,import,genClass,courses,chat',
         }}
         //took out timeGridDay
         customButtons={{
@@ -315,6 +315,11 @@ function FullCalendarApp(props) {
             text: 'gen class',
             // click: () => props.onFormSwitch('class'),
             click: () => genClass,
+          },
+          chat: {
+            text: 'chat',
+            // click: () => props.onFormSwitch('class'),
+            click: () => navigate("../chat"),
           },
         }}
         events={events}
