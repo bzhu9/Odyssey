@@ -10,9 +10,11 @@ import {
   Sidebar,
   Conversation,
   ConversationList,
-  Avatar,
+  Avatar as Ava,
+  ConversationHeader
 
 } from "@chatscope/chat-ui-kit-react";
+import Avatar from "react-avatar";
 
 export const Chat = (props) => {
   const location = useLocation();
@@ -30,50 +32,69 @@ export const Chat = (props) => {
     setMsgInput("");
   }
 
+  useEffect (() => {
+    // let ignore = false;
+    // if (!ignore) {
+    //   getFriends();
+    //   getFriendRequests();
+    //   getRecs();
+    // }
+    // return () => {ignore = true;}
+    console.log("hello");
+  }, []);
+
   return (
   // <div style={{ position: "relative", height: "500px" }}>
   // <div style={{height: "80vh", width: "80vw"}}>
-  <div style={{height: "100%", width: "100%"}}>
-    <MainContainer>
+  <div style={{width: "100%", position: "relative", height: "100vh"}} id="poop">
+    <MainContainer >
       <Sidebar position="left" scrollable={false}>
        <ConversationList>                                                     
-          <Conversation name="Lilly" lastSenderName="Lilly" info="Yes i can do it for you">
-            <Avatar  name="Lilly" status="available" />
+          <Conversation name="Lilly" active>
+            <Ava><Avatar name="Lilly" size="40"round/></Ava>
+            {/* <Avatar  name="Lilly" status="available" /> */}
           </Conversation>
           
           <Conversation name="Joe" lastSenderName="Joe" info="Yes i can do it for you">
-            <Avatar name="Joe" status="dnd" />
+            <Ava name="Joe" status="dnd" />
           </Conversation>
           
           <Conversation name="Emily" lastSenderName="Emily" info="Yes i can do it for you" unreadCnt={3}>
-            <Avatar name="Emily" status="available" />
+            <Ava name="Emily" status="available" />
           </Conversation>
           
           <Conversation name="Kai" lastSenderName="Kai" info="Yes i can do it for you" unreadDot>
-            <Avatar name="Kai" status="unavailable" />
+            <Ava name="Kai" status="unavailable" />
           </Conversation>
                       
           <Conversation name="Akane" lastSenderName="Akane" info="Yes i can do it for you">
-            <Avatar name="Akane" status="eager" />
+            <Ava name="Akane" status="eager" />
           </Conversation>
                               
           <Conversation name="Eliot" lastSenderName="Eliot" info="Yes i can do it for you">
-            <Avatar name="Eliot" status="away" />
+            <Ava name="Eliot" status="away" />
           </Conversation>
                                               
           <Conversation name="Zoe" lastSenderName="Zoe" info="Yes i can do it for you" active>
-            <Avatar name="Zoe" status="dnd" />
+            <Ava name="Zoe" status="dnd" />
           </Conversation>
           
           <Conversation name="Patrik" lastSenderName="Patrik" info="Yes i can do it for you">
-            <Avatar name="Patrik" status="invisible" />
+            <Ava name="Patrik" status="invisible" />
           </Conversation>
                                                                     
         </ConversationList>
       </Sidebar>
 
       <ChatContainer>
+      <ConversationHeader>
+        {/* <Ava src={<Avatar name = "Emaily" />} name="Emily" /> */}
+        {/* <Ava name = "emily"> <Avatar name="John Green" size="25" round/> </Ava> */}
+        <Ava><Avatar name="John Green" size="40"round/></Ava>
+        <ConversationHeader.Content userName="John Green" info="Active 10 mins ago" />                                   
+      </ConversationHeader>
         <MessageList>
+        {/* <Avatar name="John Green" size="150" round/> */}
           {/* <Message
             model={{
               message: "Hello my friend",
@@ -85,7 +106,7 @@ export const Chat = (props) => {
             <Message.Header sender="Emily" sentTime="just now" />
           </Message> */}
           {messages.map((m, i) => 
-          <Message key={i} model={m}>
+          <Message key={i} model={m} avatarSpacer>
             <Message.Header sender={m.sender} sentTime={m.sentTime} /> {/* not displaying if direction is outgoing */}
           </Message>)}
         </MessageList>

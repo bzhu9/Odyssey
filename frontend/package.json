@@ -21,6 +21,7 @@
     "multiselect-react-dropdown": "^2.0.25",
     "primereact": "^9.2.3",
     "react": "^18.2.0",
+    "react-avatar": "^5.0.3",
     "react-dom": "^18.2.0",
     "react-icons": "^4.8.0",
     "react-scripts": "5.0.1",
