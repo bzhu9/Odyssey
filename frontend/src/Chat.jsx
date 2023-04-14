@@ -40,7 +40,30 @@ export const Chat = (props) => {
     //   getRecs();
     // }
     // return () => {ignore = true;}
-    console.log("hello");
+    const events = new EventSource('http://localhost:3500/updates');
+    events.onmessage = event => {
+      // const parsedData = JSON.parse(event.data);
+      console.log(event)
+      // switch (parsedData.type) {
+      //   case "init-connection":
+      //     setProcess(parsedData.processId);
+      //     break;
+      //   case "message":
+      //     setMessage(parsedData.message);
+      //     break;
+      // }
+    };
+
+    // source.addEventListener('message', (event) => {
+    //   // setUpdates(prevUpdates => [...prevUpdates, event.data]);
+    //   console.log("NEW CHAT!!!");
+    //   console.log(event);
+    // });
+
+    // return () => {
+    //   source.close();
+    // };
+    // console.log("hello");
   }, []);
 
   return (
