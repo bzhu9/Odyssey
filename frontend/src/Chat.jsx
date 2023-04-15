@@ -22,19 +22,43 @@ export const Chat = (props) => {
   const [msgInput, setMsgInput] = useState("");
   const [messages, setMessages] = useState([]);
   const [conversations, setConversations] = useState([]);
+  const [currentChat, setCurrentChat] = useState("");
 
-  function sendMessage() {
+  async function sendMessage() {
     console.log(location.state); // this is to get chat id
-    setMessages([...messages, {
-      message: msgInput,
-      sentTime: "now",
-      sender: "Joe",
-      // direction: 'outgoing'
-    }]);
+    // chat ID: currentChat
+    // setMessages([...messages, {
+    //   message: msgInput,
+    //   sentTime: "nowasdfadfa",
+    //   sender: "Joe",
+    //   direction: 'incoming'
+    // }]);
+    if (!sessionStorage.getItem("user") || !currentChat) {
+      return;
+    }
+    await api.sendMessage({
+      sender: sessionStorage.getItem("user"),
+      chatId: currentChat,
+      text: msgInput
+    })
+    getMessages(currentChat);
     setMsgInput("");
   }
 
-  function getMessages() {
+  async function getMessages(id) {
+    setCurrentChat(id);
+    const rawMessages = (await api.loadMessages({ chatId: id})).data.messages;
+    let proccessedMessages = [];
+    for (let i = 0; i < rawMessages.length; i++) {
+      proccessedMessages.push({
+        message: rawMessages[i].text,
+        sentTime: rawMessages[i].createdAt,
+        sender: rawMessages[i].sender.name,
+        direction: rawMessages[i].sender.email === sessionStorage.getItem("user") ? "outgoing" : ""
+      })
+    }
+    console.log(proccessedMessages);
+    setMessages(proccessedMessages);
     return;
   }
 
@@ -94,7 +118,7 @@ export const Chat = (props) => {
           
           <Conversation name="Joe" lastSenderName="Joe" info="Yes i can do it for you">
             {/* <Ava name="Joe Bob, Lilly Cat, Emily Smith" status="dnd" /> */}
-            <Ava><Avatar name="Joe Bob, Lilly Cat, Emily Smith" maxInitials="3" size="40"round/></Ava>
+            <Ava><Avatar name="Joe Bob, Lilly Cat, Emily Smith" maxInitials={3} size="40"round/></Ava>
           </Conversation>
           
           <Conversation name="Emily" info="Yes i can do it for you" unreadCnt={3}>
@@ -122,8 +146,8 @@ export const Chat = (props) => {
           </Conversation>
 
           { conversations.map(c => 
-          <Conversation name={c.name} key={c.key} onClick={() => console.log(c.key)}>
-            <Ava><Avatar name={c.name} maxInitials="3" size="40"round/></Ava>
+          <Conversation name={c.name} key={c.key} onClick={() => getMessages(c.key)}>
+            <Ava><Avatar name={c.name} maxInitials={3} size="40"round/></Ava>
           </Conversation>
           )}                                        
         </ConversationList>
@@ -150,8 +174,9 @@ export const Chat = (props) => {
             <Message.Header sender="Emily" sentTime="just now" />
           </Message> */}
           {messages.map((m, i) => 
-          <Message key={i} model={m} avatarSpacer>
+          <Message key={i} model={m}>
             <Message.Header sender={m.sender} sentTime={m.sentTime} /> {/* not displaying if direction is outgoing */}
+            <Ava><Avatar name={m.sender} size="40"round/></Ava>
           </Message>)}
         </MessageList>
 
