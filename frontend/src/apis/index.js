@@ -57,6 +57,7 @@ export const setCourses = payload => api.post("/user/setCourses", payload);
 //message api -----------------------------------------------------------------
 export const sendMessage = payload => api.post("/message/send", payload);
 export const createChat = payload => api.post("/chat/create", payload);
+export const getChats = payload => api.post("/user/getChats", payload);
 export const addUserToChat = payload => api.post("/chat/addUser", payload);
 export const loadMessages = payload => api.post("/chat/loadMessages", payload);
 
@@ -111,6 +112,7 @@ const apis = {
 
     sendMessage,
     createChat,
+    getChats,
     addUserToChat,
     loadMessages,
 

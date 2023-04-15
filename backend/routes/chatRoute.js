@@ -17,8 +17,10 @@ router.route("/create").post(async (req, res) => {
     const isGroup = req.body.isGroup;
 
     let userIds = [];
+    let userList = [];
     for (let i = 0; i < users.length; i++) {
-        const u = await User.findOne({email: users[i]}).lean();
+        const u = await User.findOne({email: users[i]});
+        userList.push(u);
         userIds.push(u._id);
     }
 
@@ -27,6 +29,13 @@ router.route("/create").post(async (req, res) => {
         "users": userIds,
         "isGroup": isGroup
     });
+
+    for (let i = 0; i < userList.length; i++) {
+        let u = userList[i];
+
+        u.chats.push(newChat._id);
+        u.save();
+    }
 
     newChat.save()
         .then(() => res.status(201).json("Chat created!"))

@@ -73,7 +73,10 @@ const userSchema = new Schema({
     },
     workdayEnd: {
         type: String
-    }
+    },
+    chats: [{
+        type: Schema.Types.ObjectId  
+    }]
     // add nutritional preferences: list of enums
         // vegetarian
         // vegan

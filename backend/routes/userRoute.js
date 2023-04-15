@@ -2,6 +2,7 @@ const router = require("express").Router();
 let User = require("../models/User");
 let Event = require("../models/Event");
 let Course = require("../models/Course");
+let Chat = require("../models/Chat");
 const bcrypt = require("bcrypt");
 const mongoose = require('mongoose');
 
@@ -424,6 +425,40 @@ router.route("/getCourses").post(async (req, res) => {
     else {
         res.status(401).json({ message: "Email does not exist" });
     }
+})
+
+router.route("/getChats").post(async (req, res) => {
+    const email = req.body.email;
+    const user = await User.findOne({ email: email }).select("-password -seq1 -seq2 -seq3")
+        .catch(err => res.status(400).json("Error: " + err));
+    if (user) {
+        let chats = [];
+        for (let i = 0; i < user.chats.length; i++) {
+            let chatId = user.chats[i];
+            let chat = await Chat.findOne({ _id: chatId}).lean();
+            if (chat) {
+                let userList = []
+                for (let j = 0; j < chat.users.length; j++) {
+                    if (!user._id.equals(chat.users[j])) {
+                        userList.push(await User.findById(chat.users[j]));
+                    }
+                }
+                chats.push({
+                    createdAt: chat.createdAt,
+                    updatedAt: chat.updatedAt,
+                    isGroup: chat.isGroup,
+                    users: userList,
+                    messages: chat.messages,
+                    _id: chat._id
+                });
+            }
+        }
+        res.status(200).json({chats: chats});
+    }
+    else {
+        res.status(401).json({ message: "Email does not exist" });
+    }
+
 })
 
 module.exports = router;
