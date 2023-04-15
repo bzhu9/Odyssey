@@ -23,6 +23,7 @@ export const Chat = (props) => {
   const [messages, setMessages] = useState([]);
   const [conversations, setConversations] = useState([]);
   const [currentChat, setCurrentChat] = useState("");
+  const [headerName, setHeaderName] = useState("");
 
   async function sendMessage() {
     console.log(location.state); // this is to get chat id
@@ -45,8 +46,9 @@ export const Chat = (props) => {
     setMsgInput("");
   }
 
-  async function getMessages(id) {
+  async function getMessages(id, name) {
     setCurrentChat(id);
+    setHeaderName(name);
     const rawMessages = (await api.loadMessages({ chatId: id})).data.messages;
     let proccessedMessages = [];
     for (let i = 0; i < rawMessages.length; i++) {
@@ -111,7 +113,7 @@ export const Chat = (props) => {
     <MainContainer >
       <Sidebar position="left" scrollable={false}>
        <ConversationList>                                                     
-          <Conversation name="Lilly" active onClick={() =>console.log("HELLO")}>
+          <Conversation name="Lilly" onClick={() =>console.log("HELLO")}>
             <Ava><Avatar name="Lilly" size="40"round/></Ava>
             {/* <Avatar  name="Lilly" status="available" /> */}
           </Conversation>
@@ -137,7 +139,7 @@ export const Chat = (props) => {
             <Ava name="Eliot" status="away" />
           </Conversation>
                                               
-          <Conversation name="Zoe" lastSenderName="Zoe" info="Yes i can do it for you" active>
+          <Conversation name="Zoe" lastSenderName="Zoe" info="Yes i can do it for you">
             <Ava name="Zoe" status="dnd" />
           </Conversation>
           
@@ -146,20 +148,20 @@ export const Chat = (props) => {
           </Conversation>
 
           { conversations.map(c => 
-          <Conversation name={c.name} key={c.key} onClick={() => getMessages(c.key)}>
+          <Conversation name={c.name} key={c.key} onClick={() => getMessages(c.key, c.name)} active={c.key === currentChat}>
             <Ava><Avatar name={c.name} maxInitials={3} size="40"round/></Ava>
           </Conversation>
           )}                                        
         </ConversationList>
       </Sidebar>
 
-      { location.state !== null ?
+      { headerName !== "" ?
       <ChatContainer>
       <ConversationHeader>
         {/* <Ava src={<Avatar name = "Emaily" />} name="Emily" /> */}
         {/* <Ava name = "emily"> <Avatar name="John Green" size="25" round/> </Ava> */}
-        <Ava><Avatar name="John Green" size="40"round/></Ava>
-        <ConversationHeader.Content userName="John Green" info="Active 10 mins ago" />                                   
+        <Ava><Avatar name={headerName} size="40"round/></Ava>
+        <ConversationHeader.Content userName={headerName} info="Active 10 mins ago" />                                   
       </ConversationHeader>
         <MessageList>
         {/* <Avatar name="John Green" size="150" round/> */}
