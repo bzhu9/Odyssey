@@ -16,6 +16,11 @@ import {
 
 } from "@chatscope/chat-ui-kit-react";
 import Avatar from "react-avatar";
+import { FaPlus } from 'react-icons/fa';
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
+import Select from "react-select";
+
 
 export const Chat = (props) => {
   const location = useLocation();
@@ -24,6 +29,36 @@ export const Chat = (props) => {
   const [conversations, setConversations] = useState([]);
   const [currentChat, setCurrentChat] = useState("");
   const [headerName, setHeaderName] = useState("");
+  const [show, setShow] = useState(false);
+  const [selectedOptions, setSelectedOptions] = useState([]);
+  const [friendList, setFriendList] = useState([]);
+
+  const handleClose = () => {setShow(false); setSelectedOptions([]);};
+  const handleShow = () => setShow(true);
+
+  async function getFriends() {
+    if (!sessionStorage.getItem("user")) {
+      return;
+    }
+    const payload = { email: sessionStorage.getItem("user")}
+    const rawFriendList = await api.getFriends(payload);
+    let processedFriendList = []
+    console.log(rawFriendList);
+    for (let i = 0; i < rawFriendList.data.length; i++) {
+      let f = rawFriendList.data[i];
+      processedFriendList.push({
+        name: f.name,
+        status: f.status,
+        privacy: f.privacy,
+        email: f.email,
+        value: f.name,
+        label: f.name
+      });
+    }
+    console.log(processedFriendList);
+    setFriendList(processedFriendList);
+  }
+
 
   async function sendMessage() {
     console.log(location.state); // this is to get chat id
@@ -95,6 +130,7 @@ export const Chat = (props) => {
     // }
     // return () => {ignore = true;}
     getChats();
+    getFriends();
     const events = new EventSource('http://localhost:3500/updates');
     events.onmessage = event => {
       // const parsedData = JSON.parse(event.data);
@@ -109,9 +145,40 @@ export const Chat = (props) => {
   return (
   // <div style={{ position: "relative", height: "500px" }}>
   // <div style={{height: "80vh", width: "80vw"}}>
+  <>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossOrigin="anonymous"></link>
+  <Modal show={show} onHide={handleClose} centered backdrop="static" className="modal">
+        <Modal.Header>
+          <Modal.Title>Start a conversation</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Select 
+          defaultValue={[]}
+          value={selectedOptions}
+          isMulti
+          closeMenuOnSelect={false}
+          hideSelectedOptions={false}
+          onChange={(options) => setSelectedOptions(options)}
+          options={friendList}
+          /> 
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleClose}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
   <div style={{width: "100%", position: "relative", height: "100vh"}} id="poop">
     <MainContainer >
       <Sidebar position="left" scrollable={false}>
+      <ConversationHeader>
+        <ConversationHeader.Content>
+          <span onClick={handleShow} className="span"> New Conversation <FaPlus className="plus"/></span>
+        </ConversationHeader.Content>
+      </ConversationHeader>
        <ConversationList>                                                     
           <Conversation name="Lilly" onClick={() =>console.log("HELLO")}>
             <Ava><Avatar name="Lilly" size="40"round/></Ava>
@@ -161,7 +228,9 @@ export const Chat = (props) => {
         {/* <Ava src={<Avatar name = "Emaily" />} name="Emily" /> */}
         {/* <Ava name = "emily"> <Avatar name="John Green" size="25" round/> </Ava> */}
         <Ava><Avatar name={headerName} size="40"round/></Ava>
-        <ConversationHeader.Content userName={headerName} info="Active 10 mins ago" />                                   
+        {/* <ConversationHeader.Content userName={headerName} info="Active 10 mins ago" />                                    */}
+        <ConversationHeader.Content userName={headerName} />                                   
+
       </ConversationHeader>
         <MessageList>
         {/* <Avatar name="John Green" size="150" round/> */}
@@ -190,5 +259,8 @@ export const Chat = (props) => {
 
     </MainContainer>
   </div>
+
+  </>
+
   )
 }

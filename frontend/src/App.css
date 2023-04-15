@@ -429,4 +429,18 @@ button:hover {
 #poop {
   text-align: left;
   min-height: 100vh;
+  position: static;
+  z-index: 1;
+}
+
+.span {
+  cursor: pointer;
+}
+
+.plus {
+  float: right;
+}
+
+.modal {
+  position: static;
 }
