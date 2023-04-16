@@ -3,6 +3,12 @@ import api from "./apis"
 import { Link, useNavigate } from "react-router-dom";
 import { FaPlus } from "react-icons/fa";
 
+const courseList = [
+    { value: "option 1", label: "option 1" },
+    { value: "option 2", label: "option 2" },
+    { value: "option 3", label: "option 3" },
+    { value: "option 4", label: "option 4" },
+  ];
 
 export const Courses = (props) => {
     // const [email, setEmail] = useState('');
@@ -22,6 +28,32 @@ export const Courses = (props) => {
     const handleSubmit = (e) => {
         e.preventDefault();
     }
+
+    const myCourses = [
+        {
+          id: '1232',
+          firstname: 'CS 252',
+          lastname: 'Reviewed',
+
+        },
+        {
+          id: '12323',
+          firstname: 'COM 217',
+          lastname: 'Not Reviewed',
+          //can make last name a unique number for identifying like in discord
+          //can make id their status
+        
+        },
+       
+          {
+            id: 'idk',
+            firstname: 'CS 307',
+            lastname: 'Reviewed',
+          },
+          
+       
+        
+      ];
 
     async function getUserData() {
         const email = sessionStorage.getItem("user");
@@ -104,6 +136,7 @@ export const Courses = (props) => {
         return () => {ignore = true;}
         }, []);
 
+
     return (
         <div>
         <Link to="/addCourse">
@@ -127,6 +160,24 @@ export const Courses = (props) => {
             <button size="45" className="reset-btn2" type="submit">Weekly View</button>
         </Link>
        
+        <h4 className="recTitle"> My courses</h4>
+            <ul className="recList">
+            {myCourses.map(item => {
+            const ref = React.createRef();
+            return (
+                <li key={item.id} ref={ref} >
+                {/* <a href="localhost:3500/login">{item.name} {item.status} {item.privacy}</a> */}
+                {/* <button onClick={() => redirectToProfile(item)}> */}
+                {/*have this show add review page if there's no review yet */}
+                <Link to="/changeReview">                
+                <button>
+                    {item.id} {item.firstname} {item.lastname}
+                </button>
+                </Link>
+                </li>
+                );
+             })}
+         </ul>
         </div>
       
     
