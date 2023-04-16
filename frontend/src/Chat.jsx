@@ -51,7 +51,7 @@ export const Chat = (props) => {
         status: f.status,
         privacy: f.privacy,
         email: f.email,
-        value: f.name,
+        value: f.email,
         label: f.name
       });
     }
@@ -91,7 +91,7 @@ export const Chat = (props) => {
         message: rawMessages[i].text,
         sentTime: rawMessages[i].createdAt,
         sender: rawMessages[i].sender.name,
-        direction: rawMessages[i].sender.email === sessionStorage.getItem("user") ? "outgoing" : ""
+        direction: rawMessages[i].sender.email === sessionStorage.getItem("user") ? "outgoing" : null
       })
     }
     console.log(proccessedMessages);
@@ -106,19 +106,51 @@ export const Chat = (props) => {
       let conversationList = [];
 
       for (let i = 0; i < chats.length; i++) {
-        let convoName = "";
-        for (let j = 0; j < chats[i].users.length; j++) {
-          convoName += chats[i].users[j].name;
-        }
+        let convoName = chats[i].users.map(o => o.name).join(", ");
+        // for (let j = 0; j < chats[i].users.length; j++) {
+        //   convoName += chats[i].users[j].name;
+        // }
         conversationList.push({
           name: convoName,
           key: chats[i]._id,
+          users: chats[i].users,
           // last message sent
         })
       }
       setConversations(conversationList);
       console.log(chats);
     }
+  }
+
+  async function startConversation() {
+    // First check if the conversation exists
+    if (!sessionStorage.getItem("user")) {
+      handleClose();
+      return;
+    }
+    const selected = selectedOptions.map(o => o.email);
+    for (let i = 0; i < conversations.length; i++) {
+      if (conversations[i].users.length === selected.length) {
+        let j = 0;
+        for (j = 0; j < conversations[i].users.length; j++) {
+          if (!selected.includes(conversations[i].users[j].email)) {
+            break;
+          }
+        }
+        if (j === selected.length) {
+          // Match
+          getMessages(conversations[i].key, conversations[i].users.map(o => o.name).join(", "));
+          handleClose();
+          return;
+        }
+      }
+    }
+    // Create new chat
+    selected.push(sessionStorage.getItem("user"));
+    const res = await api.createChat({users: selected, isGroup: selected.length === 2});
+    const id = res.data.chatId;
+    getMessages(id, selectedOptions.map(o => o.name).join(", "));
+    handleClose();
   }
 
   useEffect (() => {
@@ -164,9 +196,10 @@ export const Chat = (props) => {
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
+          {/* <Button variant="secondary" onClick={startConversation}> */}
             Close
           </Button>
-          <Button variant="primary" onClick={handleClose}>
+          <Button variant="primary" onClick={startConversation}>
             Save Changes
           </Button>
         </Modal.Footer>

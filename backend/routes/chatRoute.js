@@ -38,7 +38,7 @@ router.route("/create").post(async (req, res) => {
     }
 
     newChat.save()
-        .then(() => res.status(201).json("Chat created!"))
+        .then(() => res.status(201).json({message: "Chat created!", chatId: newChat._id }))
         .catch(err => res.status(400).json("Error: " + err));
 
 });
