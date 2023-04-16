@@ -471,7 +471,7 @@ button:hover {
   display: none;
   position: absolute;
   background-color: lightgrey;
-  z-index: 1;
+  height: 100px;
 
 }
 
@@ -492,7 +492,6 @@ button:hover {
 }
 
 #plus-button {
-  position: absolute;
   font-size: 20px;
   height: 50px;
   width: 50px;
@@ -507,13 +506,13 @@ button:hover {
   margin-top: -670%; 
   
 }
-.dropdown-content button:hover {background-color: white ;}
 
 /* Show the dropdown menu on hover */
-.dropdown:hover .dropdown-content {display: block; border-radius: 10px; background-color: none; width: 80px;    
-}
+.dropdown:hover .dropdown-content {  transition: 0.7s;
+  display:inline; border-radius: 10px;  width: 80px;    
+position: relative; margin-top: -150%; margin-right: 600%;}
 
 
 
 /* Change the background color of the dropdown button when the dropdown content is shown */
-.dropdown:hover .dropbtn {background-color: dark gray}
+/* .dropdown-content .dropbtn {display: block; background: purple} */

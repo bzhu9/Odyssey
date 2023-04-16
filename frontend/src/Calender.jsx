@@ -260,7 +260,7 @@ function FullCalendarApp(props) {
         editable
         initialView="dayGridWeek"
         headerToolbar={{
-          center: 'timeGridWeek,dayGridMonth,classSearch,import,genClass,courses,chat',
+          center: 'timeGridWeek,dayGridMonth,eventReq,classSearch,import,genClass,courses,chat',
         }}
         //took out timeGridDay
         customButtons={{
@@ -365,7 +365,7 @@ function FullCalendarApp(props) {
   </Link>
 
   <div className="dropdown" id = "override">
-  <button id = "settings-button" className="dropbtn"><FaCogs/> </button>
+  <button id = "settings-button"><FaCogs/> </button>
   <div className="dropdown-content">
   <Link to="/settings">
   <button className="dropdown-btn">Settings</button>
