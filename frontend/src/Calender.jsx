@@ -9,7 +9,7 @@ import interactionPlugin from '@fullcalendar/interaction';
 // import { IconButton } from "rsuite";
 // import GearIcon from '@rsuite/icons/Gear';
 // import SpinnerIcon from '@rsuite/icons/legacy/Spinner';
-import { FaCog, FaCogs } from "react-icons/fa";
+import { FaPlus, FaCogs } from "react-icons/fa";
 
 // import {IconButton} from '@primer/react'
 
@@ -254,12 +254,13 @@ function FullCalendarApp(props) {
 
   return (
     <div className="App">
+      
       <FullCalendar
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         editable
         initialView="dayGridWeek"
         headerToolbar={{
-          center: 'timeGridWeek,dayGridMonth,new,eventReq,classSearch,import,genClass,courses,chat',
+          center: 'timeGridWeek,dayGridMonth,classSearch,import,genClass,courses,chat',
         }}
         //took out timeGridDay
         customButtons={{
@@ -362,12 +363,25 @@ function FullCalendarApp(props) {
 
         
 
-        // eventClick={props.onFormSwitch('addEvent')}
       />
-      {/* <button type="button" onClick={() => props.onFormSwitch('login')}>Go back to login</button> */}
-      <Link to="/settings">
-      <button id = "settings-button"><FaCogs/> </button>
-    </Link>
+     
+  <Link to="/addEvent">
+  <button id = "plus-button"><FaPlus/></button>
+  </Link>
+
+  <div className="dropdown" id = "override">
+  <button id = "settings-button" className="dropbtn"><FaCogs/> </button>
+  <div className="dropdown-content">
+  <Link to="/settings">
+  <button className="dropdown-btn">Settings</button>
+  </Link>
+  <Link to="/friends">
+  <button className="dropdown-btn">Friends</button>
+  </Link>
+  </div>
+  </div>
+  
+
       {/* <Link to="/import">
         <button className="importButton">Import</button>
       </Link>   */}
@@ -375,7 +389,7 @@ function FullCalendarApp(props) {
     
 
  
-       <div className="viewSchedule">
+    <div className="viewSchedule">
     <h4 className="friendCheckboxTitle">View Friend(s) schedule:</h4>
     <div className="friendCheckbox">
     {/* {checkList.map((item, index) => ( */}

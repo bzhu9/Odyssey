@@ -165,6 +165,7 @@ button:hover {
   left: 40px;
   padding: 10px;
   
+
 }
 
 .friendNav-btn {
@@ -181,7 +182,7 @@ button:hover {
 .friendsTitle {
   margin: 0.1rem;
   padding: 5px;
-  margin-left: 90px;
+  margin-left: 150px;
   border-radius: 10px;
   border: 1px solid #CEB888;
   width: 150px;
@@ -312,9 +313,13 @@ button:hover {
 .friendCheckbox{
   overflow: auto;
   min-height: 20px;
+  width: 200px;
   border-radius: 10px;
   border: 2px solid #CEB888;
   padding: 10px;
+  position: relative;
+  margin-left: 25%;
+  display: block;
 }
 
 .friendCheckboxTitle{
@@ -322,6 +327,10 @@ button:hover {
   border: 2px solid #CEB888;
   padding: 8px;
   margin-bottom: 8px;
+  width: 200px;
+  position: relative;
+  margin-left: 25%;
+  display: block;
 
 }
 
@@ -402,9 +411,15 @@ button:hover {
       margin-bottom: none;
       color: #CEB888;
       position: relative;
-      margin-left: 150%;
-      margin-bottom: 700%; 
-      margin-top: -80%;
+      margin-left: 1200%;
+      margin-top: -670%;
+      display: block;
+
+      /* margin-bottom: 100%;  */
+      /* position: absolute;
+      margin-left: 1100px;
+      margin-top: -330px;  */
+
       
     
     }
@@ -444,3 +459,61 @@ button:hover {
 .modal {
   position: static;
 }
+
+.dropdown-content button {
+  color: black;
+  padding: 14px 16px;
+  text-align: center;
+  text-decoration: none;
+  display: block;
+}
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: lightgrey;
+  z-index: 1;
+
+}
+
+#override {
+  border: none;
+  position: absolute;
+  /* margin-left: 10%;
+  margin-top: -45%;  */
+  
+  /* margin-top: -80%;  */
+   
+}
+
+.dropdown-btn {
+  background: none;
+  width: 80px;
+  
+}
+
+#plus-button {
+  position: absolute;
+  font-size: 20px;
+  height: 50px;
+  width: 50px;
+  border-radius: 100px;
+/*  margin-left: 50px;
+
+  margin-top: -340px; */
+  display: block;
+
+  position: relative;
+  margin-left: 100%;
+  margin-top: -670%; 
+  
+}
+.dropdown-content button:hover {background-color: white ;}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {display: block; border-radius: 10px; background-color: none; width: 80px;    
+}
+
+
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {background-color: dark gray}
