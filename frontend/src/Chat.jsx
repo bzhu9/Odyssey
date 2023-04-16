@@ -77,7 +77,7 @@ export const Chat = (props) => {
       chatId: currentChat,
       text: msgInput
     })
-    getMessages(currentChat);
+    getMessages(currentChat, headerName);
     setMsgInput("");
   }
 
@@ -147,12 +147,19 @@ export const Chat = (props) => {
     }
     // Create new chat
     selected.push(sessionStorage.getItem("user"));
-    const res = await api.createChat({users: selected, isGroup: selected.length === 2});
+    const res = await api.createChat({users: selected, isGroup: selected.length !== 2});
     const id = res.data.chatId;
     getMessages(id, selectedOptions.map(o => o.name).join(", "));
     handleClose();
   }
 
+  useEffect(() => {
+    if (location.state) {
+      console.log(location.state.id)
+      getMessages(location.state.id, location.state.name);
+      window.history.replaceState({}, document.title);
+    }
+  }, []);
   useEffect (() => {
     // let ignore = false;
     // if (!ignore) {
@@ -165,14 +172,15 @@ export const Chat = (props) => {
     getFriends();
     const events = new EventSource('http://localhost:3500/updates');
     events.onmessage = event => {
-      // const parsedData = JSON.parse(event.data);
-      console.log(event)
+      if (currentChat.length !== 0 && headerName !== 0) {
+        getMessages(currentChat, headerName);
+      }
     };
     
     return () => {
       events.close();
     };
-  }, []);
+  }, [currentChat, headerName]);
 
   return (
   // <div style={{ position: "relative", height: "500px" }}>

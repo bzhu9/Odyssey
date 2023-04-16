@@ -320,12 +320,7 @@ function FullCalendarApp(props) {
           chat: {
             text: 'chat',
             // click: () => props.onFormSwitch('class'),
-            click: () => navigate("../chat",
-            {
-              state: {
-                id: "yeehaw" // use for future chat id
-              }
-            }),
+            click: () => navigate("../chat"),
           },
         }}
         events={events}

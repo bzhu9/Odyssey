@@ -49,6 +49,40 @@ export const FriendProfile = (props) => {
         setCourses(c);
     }
 
+    async function redirectToChat() {
+        if (!sessionStorage.getItem("user")) {
+            return;
+        }
+        // Check if chat exists
+        const conversations = (await api.getChats({ email: sessionStorage.getItem("user")})).data.chats;
+        console.log(conversations);
+        for (let i = 0; i < conversations.length; i++) {
+            if (conversations[i].users.length === 1) {
+                if (conversations[i].users[0].email === state.email) {
+                    // Match
+                    navigate("../chat",
+                        {
+                        state: {
+                            id: conversations[i]._id, // use for future chat id
+                            name: state.name
+                        }
+                    });
+                    return;
+                }
+            }
+        }
+        // Create new chat
+        const res = await api.createChat({users: [sessionStorage.getItem("user"), state.email], isGroup: false});
+        const chatId = res.data.chatId;
+        navigate("../chat",
+            {
+            state: {
+                id: chatId, // use for future chat id
+                name: state.name
+            }
+        });
+    }
+
     // called when loading page
     useEffect (() => {
         let ignore = false;
@@ -95,7 +129,7 @@ export const FriendProfile = (props) => {
                 </>
                 }
             </form>
-            <button onClick={sendFriendRequest}>Send Friend Request</button> 
+            { isFriend ? <button onClick={redirectToChat}>Message</button>: <button onClick={sendFriendRequest}>Send Friend Request</button> }
             {/* <button type="submit" onClick={() => props.onFormSwitch('calender')}>Weekly View</button>
             <button className="reg-btn" onClick={() => props.onFormSwitch('register')}>Create an account</button>
             <button className="reset-btn" onClick={() => props.onFormSwitch('reset')}>Reset Password</button> */}
