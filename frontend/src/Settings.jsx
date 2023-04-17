@@ -104,12 +104,12 @@ export const Settings = (props) => {
 
     return (
         <div>
-       <Link to="/settings">
+       {/* <Link to="/settings">
             <button size="45" className="settingsNav-btn" >Profile</button>
         </Link>
         <Link to="/friends">
             <button size="45" className="friendNav-btn" >Friends</button>
-        </Link>
+        </Link> */}
         <div className='set-btn'>
             <h2>Profile Settings</h2>
         <Link to="/changeEmail">
