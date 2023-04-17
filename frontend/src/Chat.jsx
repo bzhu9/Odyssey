@@ -35,10 +35,16 @@ export const Chat = (props) => {
   const [show, setShow] = useState(false);
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [friendList, setFriendList] = useState([]);
+  const [addableUsers, setAddableUsers] = useState([]);
+  const [selectedUsers, setSelectedUsers] = useState([]);
+  const [showAdd, setShowAdd] = useState(false);
   const dataFetchedRef = useRef(false);
 
   const handleClose = async () => {setShow(false); setSelectedOptions([]);};
   const handleShow = async () => setShow(true);
+
+  const handleAddClose = async () => {setShowAdd(false); setSelectedUsers([]);};
+  const handleAddShow = async () => setShowAdd(true);
 
   async function getFriends() {
     if (!sessionStorage.getItem("user")) {
@@ -90,6 +96,7 @@ export const Chat = (props) => {
     setCurrentChat(id);
     setHeaderName(name);
     setCurrentIsGroup(name.includes(","));
+    getAddableUsers(id);
     const rawMessages = (await api.loadMessages({ chatId: id})).data.messages;
     let proccessedMessages = [];
     for (let i = 0; i < rawMessages.length; i++) {
@@ -161,6 +168,43 @@ export const Chat = (props) => {
     handleClose();
   }
 
+  async function getAddableUsers(id) {
+    const currentChatUsers = (await api.getChatUsers({ chatId: id })).data.users.map(u => u.email);
+    console.log(currentChatUsers);
+    let addable = [];
+    for (let i  = 0; i < friendList.length; i++) {
+      let f = friendList[i];
+      if (!currentChatUsers.includes(f.email)) {
+        addable.push({
+          name: f.name,
+          status: f.status,
+          privacy: f.privacy,
+          email: f.email,
+          value: f.email,
+          label: f.name
+        });
+      }
+    }
+    console.log("addable: ")
+    console.log(addable);
+    setAddableUsers(addable);
+  }
+
+  async function addUsers() {
+    if (currentChat.length === 0) {
+      return;
+    }
+
+    for (let i = 0; i < selectedUsers.length; i++) {
+      await api.addUserToChat({ userEmail: selectedUsers[i].email, chatId: currentChat });
+    }
+    const newUsers = selectedUsers.map(o => o.name).join(", ");
+
+    getMessages(currentChat, headerName + ", " + newUsers);
+    getChats();
+    handleAddClose();
+  }
+
   useEffect(() => {
     if (location.state) {
       console.log(location.state.id)
@@ -200,31 +244,61 @@ export const Chat = (props) => {
   // <div style={{height: "80vh", width: "80vw"}}>
   <>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossOrigin="anonymous"></link>
+  
+  {/* CREATE CONVERSATION ------------------------------------------------------ */}
   <Modal show={show} onHide={handleClose} centered backdrop="static" className="modal">
-        <Modal.Header>
-          <Modal.Title>Start a conversation</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Select 
-          defaultValue={[]}
-          value={selectedOptions}
-          isMulti
-          closeMenuOnSelect={false}
-          hideSelectedOptions={false}
-          onChange={(options) => setSelectedOptions(options)}
-          options={friendList}
-          /> 
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-          {/* <Button variant="secondary" onClick={startConversation}> */}
-            Close
-          </Button>
-          <Button variant="primary" onClick={() => startConversation()}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
-      </Modal>
+    <Modal.Header>
+      <Modal.Title>Start a conversation</Modal.Title>
+    </Modal.Header>
+    <Modal.Body>
+      <Select 
+      defaultValue={[]}
+      value={selectedOptions}
+      isMulti
+      closeMenuOnSelect={false}
+      hideSelectedOptions={false}
+      onChange={(options) => setSelectedOptions(options)}
+      options={friendList}
+      /> 
+    </Modal.Body>
+    <Modal.Footer>
+      <Button variant="secondary" onClick={handleClose}>
+      {/* <Button variant="secondary" onClick={startConversation}> */}
+        Close
+      </Button>
+      <Button variant="primary" onClick={() => startConversation()}>
+        Create Conversation
+      </Button>
+    </Modal.Footer>
+  </Modal>
+
+  {/* ADDABLE USERS TO CONVERSATION---------------------------------------------- */}
+  <Modal show={showAdd} onHide={handleAddClose} centered backdrop="static" className="modal">
+    <Modal.Header>
+      <Modal.Title>Add Users</Modal.Title>
+    </Modal.Header>
+    <Modal.Body>
+      <Select 
+      defaultValue={[]}
+      value={selectedUsers}
+      isMulti
+      closeMenuOnSelect={false}
+      hideSelectedOptions={false}
+      onChange={(options) => setSelectedUsers(options)}
+      options={addableUsers}
+      /> 
+    </Modal.Body>
+    <Modal.Footer>
+      <Button variant="secondary" onClick={handleAddClose}>
+      {/* <Button variant="secondary" onClick={startConversation}> */}
+        Close
+      </Button>
+      <Button variant="primary" onClick={() => addUsers()}>
+        Add Users
+      </Button>
+    </Modal.Footer>
+  </Modal>
+
   <div style={{width: "100%", position: "relative", height: "100vh"}} id="poop">
     <MainContainer >
       <Sidebar position="left" scrollable={false}>
@@ -257,7 +331,7 @@ export const Chat = (props) => {
         <ConversationHeader.Content userName={headerName} />      
         {currentIsGroup ? 
         <ConversationHeader.Actions>
-          <AiOutlineUsergroupAdd size={30}/>
+          <AiOutlineUsergroupAdd size={30} onClick={handleAddShow}/>
         </ConversationHeader.Actions>
         :
          <></>}                             

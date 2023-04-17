@@ -60,6 +60,7 @@ export const createChat = payload => api.post("/chat/create", payload);
 export const getChats = payload => api.post("/user/getChats", payload);
 export const addUserToChat = payload => api.post("/chat/addUser", payload);
 export const loadMessages = payload => api.post("/chat/loadMessages", payload);
+export const getChatUsers = payload => api.post("/chat/getUsers", payload);
 
 //reviews api -------------------------------------------------------------------------
 export const getAllReviews = () => api.get("/review/");
@@ -115,6 +116,7 @@ const apis = {
     getChats,
     addUserToChat,
     loadMessages,
+    getChatUsers,
 
     getAllReviews,
     addReview,
