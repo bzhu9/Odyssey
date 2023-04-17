@@ -69,6 +69,13 @@ export const addReview = payload => api.post("/review/add", payload);
 export const editReview = payload => api.post("/review/edit", payload);
 export const getSingleReview = payload => api.get("/review/single", payload);
 
+//personal note api -------------------------------------------------------------------------
+export const getAllNotes = () => api.get("/note/");
+export const addNote = payload => api.post("/note/add", payload);
+export const editNote = payload => api.post("/note/edit", payload);
+export const getSingleNote = payload => api.get("/note/single", payload);
+
+
 
 const apis = {
     insertUser,
@@ -125,6 +132,10 @@ const apis = {
     editReview,
     getSingleReview,
 
+    getAllNotes,
+    getSingleNote,
+    editNote,
+    addNote
 
 }
 
