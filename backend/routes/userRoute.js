@@ -427,6 +427,60 @@ router.route("/getCourses").post(async (req, res) => {
     }
 })
 
+// router.route("/getChats").post(async (req, res) => {
+//     const email = req.body.email;
+//     // const user = await User.findOne({ email: email }).select("-password -seq1 -seq2 -seq3")
+//     //     .catch(err => res.status(400).json("Error: " + err));
+//     // if (user) {
+//     //     let chats = [];
+//     //     for (let i = 0; i < user.chats.length; i++) {
+//     //         let chatId = user.chats[i];
+//     //         let chat = await Chat.findOne({ _id: chatId}).lean();
+//     //         if (chat) {
+//     //             let userList = []
+//     //             for (let j = 0; j < chat.users.length; j++) {
+//     //                 if (!user._id.equals(chat.users[j])) {
+//     //                     userList.push(await User.findById(chat.users[j]));
+//     //                 }
+//     //             }
+//     //             chats.push({
+//     //                 createdAt: chat.createdAt,
+//     //                 updatedAt: chat.updatedAt,
+//     //                 isGroup: chat.isGroup,
+//     //                 users: userList,
+//     //                 messages: chat.messages,
+//     //                 _id: chat._id
+//     //             });
+//     //         }
+//     //     }
+//     //     res.status(200).json({chats: chats});
+//     // }
+//     const user = await User.findOne({ email: email }).select("-password -seq1 -seq2 -seq3")
+//         .catch(err => res.status(400).json("Error: " + err));
+//     if (user) {
+//         const chats = await Chat.find({ _id: { $in: user.chats }})
+//             .populate({
+//                 path: "users",
+//                 select: "-password -seq1 -seq2 -seq3"
+//             })
+//             .lean()
+//             .exec();
+//         const chatList = chats.map(chat => ({
+//             createdAt: chat.createdAt,
+//             updatedAt: chat.updatedAt,
+//             isGroup: chat.isGroup,
+//             users: chat.users.filter(u => !user._id.equals(u._id)),
+//             messages: chat.messages,
+//             _id: chat._id
+//         }));
+//         res.status(200).json({chats: chatList});
+//     }
+//     else {
+//         res.status(401).json({ message: "Email does not exist" });
+//     }
+
+// })
+
 router.route("/getChats").post(async (req, res) => {
     const email = req.body.email;
     const user = await User.findOne({ email: email }).select("-password -seq1 -seq2 -seq3")
@@ -435,12 +489,18 @@ router.route("/getChats").post(async (req, res) => {
         let chats = [];
         for (let i = 0; i < user.chats.length; i++) {
             let chatId = user.chats[i];
-            let chat = await Chat.findOne({ _id: chatId}).lean();
+            let chat = await Chat.findOne({ _id: chatId})
+                .populate({
+                    path: "users",
+                    select: "-password -seq1 -seq2 -seq3"
+                })
+                .lean()
+                .exec();
             if (chat) {
                 let userList = []
                 for (let j = 0; j < chat.users.length; j++) {
-                    if (!user._id.equals(chat.users[j])) {
-                        userList.push(await User.findById(chat.users[j]));
+                    if (!user._id.equals(chat.users[j]._id)) {
+                        userList.push(chat.users[j]);
                     }
                 }
                 chats.push({
@@ -458,7 +518,7 @@ router.route("/getChats").post(async (req, res) => {
     else {
         res.status(401).json({ message: "Email does not exist" });
     }
+});
 
-})
 
 module.exports = router;

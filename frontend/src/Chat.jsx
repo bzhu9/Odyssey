@@ -1,6 +1,6 @@
 import styles from "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 import api from "./apis"
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import {
   MainContainer,
@@ -12,11 +12,13 @@ import {
   Conversation,
   ConversationList,
   Avatar as Ava,
-  ConversationHeader
+  ConversationHeader,
+  AvatarGroup
 
 } from "@chatscope/chat-ui-kit-react";
 import Avatar from "react-avatar";
 import { FaPlus } from 'react-icons/fa';
+import { AiOutlineUsergroupAdd } from "react-icons/ai"
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Select from "react-select";
@@ -28,13 +30,15 @@ export const Chat = (props) => {
   const [messages, setMessages] = useState([]);
   const [conversations, setConversations] = useState([]);
   const [currentChat, setCurrentChat] = useState("");
+  const [currentIsGroup, setCurrentIsGroup] = useState(false);
   const [headerName, setHeaderName] = useState("");
   const [show, setShow] = useState(false);
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [friendList, setFriendList] = useState([]);
+  const dataFetchedRef = useRef(false);
 
-  const handleClose = () => {setShow(false); setSelectedOptions([]);};
-  const handleShow = () => setShow(true);
+  const handleClose = async () => {setShow(false); setSelectedOptions([]);};
+  const handleShow = async () => setShow(true);
 
   async function getFriends() {
     if (!sessionStorage.getItem("user")) {
@@ -82,17 +86,20 @@ export const Chat = (props) => {
   }
 
   async function getMessages(id, name) {
+    console.log(id);
     setCurrentChat(id);
     setHeaderName(name);
+    setCurrentIsGroup(name.includes(","));
     const rawMessages = (await api.loadMessages({ chatId: id})).data.messages;
     let proccessedMessages = [];
     for (let i = 0; i < rawMessages.length; i++) {
+      var d = new Date(rawMessages[i].createdAt);
       proccessedMessages.push({
         message: rawMessages[i].text,
-        sentTime: rawMessages[i].createdAt,
+        sentTime: d.toLocaleString(),
         sender: rawMessages[i].sender.name,
-        direction: rawMessages[i].sender.email === sessionStorage.getItem("user") ? "outgoing" : null
-      })
+        direction: rawMessages[i].sender.email === sessionStorage.getItem("user") ? "outgoing" : "incoming"
+      });
     }
     console.log(proccessedMessages);
     setMessages(proccessedMessages);
@@ -117,6 +124,7 @@ export const Chat = (props) => {
           // last message sent
         })
       }
+      console.log("hi");
       setConversations(conversationList);
       console.log(chats);
     }
@@ -148,8 +156,8 @@ export const Chat = (props) => {
     // Create new chat
     selected.push(sessionStorage.getItem("user"));
     const res = await api.createChat({users: selected, isGroup: selected.length !== 2});
-    const id = res.data.chatId;
-    getMessages(id, selectedOptions.map(o => o.name).join(", "));
+    const newId = res.data.chatId;
+    getMessages(newId, selectedOptions.map(o => o.name).join(", "));
     handleClose();
   }
 
@@ -168,15 +176,20 @@ export const Chat = (props) => {
     //   getRecs();
     // }
     // return () => {ignore = true;}
+    if (dataFetchedRef.current) return;
+    dataFetchedRef.current = true;
     getChats();
+    console.log("fast");
     getFriends();
     const events = new EventSource('http://localhost:3500/updates');
     events.onmessage = event => {
+      console.log("culprit");
+      console.log(currentChat);
       if (currentChat.length !== 0 && headerName !== 0) {
         getMessages(currentChat, headerName);
       }
     };
-    
+    console.log("not fast");
     return () => {
       events.close();
     };
@@ -207,7 +220,7 @@ export const Chat = (props) => {
           {/* <Button variant="secondary" onClick={startConversation}> */}
             Close
           </Button>
-          <Button variant="primary" onClick={startConversation}>
+          <Button variant="primary" onClick={() => startConversation()}>
             Save Changes
           </Button>
         </Modal.Footer>
@@ -221,43 +234,14 @@ export const Chat = (props) => {
         </ConversationHeader.Content>
       </ConversationHeader>
        <ConversationList>                                                     
-          <Conversation name="Lilly" onClick={() =>console.log("HELLO")}>
-            <Ava><Avatar name="Lilly" size="40"round/></Ava>
-            {/* <Avatar  name="Lilly" status="available" /> */}
-          </Conversation>
-          
-          <Conversation name="Joe" lastSenderName="Joe" info="Yes i can do it for you">
-            {/* <Ava name="Joe Bob, Lilly Cat, Emily Smith" status="dnd" /> */}
-            <Ava><Avatar name="Joe Bob, Lilly Cat, Emily Smith" maxInitials={3} size="40"round/></Ava>
-          </Conversation>
-          
-          <Conversation name="Emily" info="Yes i can do it for you" unreadCnt={3}>
-            <Ava name="Emily" status="available" />
-          </Conversation>
-          
-          <Conversation name="Kai" lastSenderName="Kai" info="Yes i can do it for you" unreadDot>
-            <Ava name="Kai" status="unavailable" />
-          </Conversation>
-                      
-          <Conversation name="Akane" lastSenderName="Akane" info="Yes i can do it for you">
-            <Ava name="Akane" status="eager" />
-          </Conversation>
-                              
-          <Conversation name="Eliot" lastSenderName="Eliot" info="Yes i can do it for you">
-            <Ava name="Eliot" status="away" />
-          </Conversation>
-                                              
-          <Conversation name="Zoe" lastSenderName="Zoe" info="Yes i can do it for you">
-            <Ava name="Zoe" status="dnd" />
-          </Conversation>
-          
-          <Conversation name="Patrik" lastSenderName="Patrik" info="Yes i can do it for you">
-            <Ava name="Patrik" status="invisible" />
-          </Conversation>
-
           { conversations.map(c => 
           <Conversation name={c.name} key={c.key} onClick={() => getMessages(c.key, c.name)} active={c.key === currentChat}>
-            <Ava><Avatar name={c.name} maxInitials={3} size="40"round/></Ava>
+            <AvatarGroup max={3} hoverToFront={true} style={{ width: "100px"}}>
+              { c.users.map(u => 
+                <Ava><Avatar name={u.name} maxInitials={2} size="40px"round/></Ava>
+              )}
+            </AvatarGroup>
+            {/* <Ava><Avatar name={c.name} maxInitials={3} size="40"round/></Ava> */}
           </Conversation>
           )}                                        
         </ConversationList>
@@ -270,9 +254,14 @@ export const Chat = (props) => {
         {/* <Ava name = "emily"> <Avatar name="John Green" size="25" round/> </Ava> */}
         <Ava><Avatar name={headerName} size="40"round/></Ava>
         {/* <ConversationHeader.Content userName={headerName} info="Active 10 mins ago" />                                    */}
-        <ConversationHeader.Content userName={headerName} />                                   
-
-      </ConversationHeader>
+        <ConversationHeader.Content userName={headerName} />      
+        {currentIsGroup ? 
+        <ConversationHeader.Actions>
+          <AiOutlineUsergroupAdd size={30}/>
+        </ConversationHeader.Actions>
+        :
+         <></>}                             
+        </ConversationHeader>
         <MessageList>
         {/* <Avatar name="John Green" size="150" round/> */}
           {/* <Message
@@ -287,7 +276,10 @@ export const Chat = (props) => {
           </Message> */}
           {messages.map((m, i) => 
           <Message key={i} model={m}>
-            <Message.Header sender={m.sender} sentTime={m.sentTime} /> {/* not displaying if direction is outgoing */}
+            { m.direction === "incoming" ?
+            <Message.Header sender={m.sender} sentTime={m.sentTime}>{m.sender}, {m.sentTime}</Message.Header> :
+            <Message.Header sender={m.sender} sentTime={m.sentTime}>{m.sentTime}</Message.Header>
+            }
             <Ava><Avatar name={m.sender} size="40"round/></Ava>
           </Message>)}
         </MessageList>
