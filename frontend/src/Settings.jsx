@@ -91,6 +91,11 @@ export const Settings = (props) => {
         // }
     }
 
+    function logout(){
+        api.setStatus({email: sessionStorage.getItem("user"), status: "Offline"});
+        sessionStorage.removeItem("user");
+    }
+
     // called when loading page
     useEffect (() => {
         let ignore = false;
@@ -148,7 +153,7 @@ export const Settings = (props) => {
             <button size="45" className="reset-btn2">Set Courses</button>
         </Link> */}
         <Link to="/login">
-            <button size="45" className="reset-btn2" onClick={() => (sessionStorage.removeItem("user"))}>Log Out</button>
+            <button size="45" className="reset-btn2" onClick={logout}>Log Out</button>
         </Link>
         <Link to="/cal">
             <button size="45" className="reset-btn2" type="submit">Weekly View</button>

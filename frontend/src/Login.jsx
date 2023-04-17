@@ -24,6 +24,7 @@ export const Login = (props) => {
             // set stringified user object in session storage, access using JSON.parse
             // can change just to emails
             sessionStorage.setItem("user", res.data.user);
+            api.setStatus({email: sessionStorage.getItem("user"), status: "Online"});
 
             if (sessionStorage.getItem("user")) {
                 console.log(sessionStorage.getItem("user") + " is logged in");
