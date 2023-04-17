@@ -2,80 +2,62 @@ const router = require('express').Router();
 const mongoose = require('mongoose');
 const { ObjectId } = require('mongodb');
 //const Review = require('../models/Review');
-const PersonalNote = require('../models/PersonalNote');
+const Note = require('../models/PersonalNote');
 const Course = require('../models/Course');
 const User = require('../models/User');
 // const { default: apis } = require('../../frontend/src/apis');
 
 // Get all personal notes --------------------------------
 router.route("/").get((req, res) => {
-    PersonalNote.find()
-    .then(reviews => res.json(reviews))
+    Note.find()
+    .then(notes => res.json(notes))
     .catch(err => res.status(400).json("Error: " + err));
 });
-/*
-// Get a signal review --------------------------------
+// Get a signal note --------------------------------
 router.route("/single").post((req, res) => {
-    const reviewID = req.body.reviewID;
-    Review.findOne({_id: reviewID}).lean()
-    .then(reviews => res.json(reviews))
+    const noteID = req.body.noteID;
+    Note.findOne({_id: noteID}).lean()
+    .then(notes => res.json(notes))
     .catch(err => res.status(400).json("Error: " + err));
 });
 
-// Add a review --------------------------------
+// Add a personal note --------------------------------
 router.route('/add').post(async (req, res) => {
     const text = req.body.text;
     const user = req.body.user;
     const course = req.body.course;
-    const stars = req.body.stars;
 
     //create the new review
-    const newReview = new Review({
+    const newNote = new PersonalNote({
         "text": text,
         "user": user,
         "course": course,
         "stars": stars
     });
-    newReview.save()
+    newNote.save()
         .catch(err => res.status(400).json("Error: " + err));
 
-    //get course object
-    const courseObj = await Course.findById(course);
-    if (!courseObj) {
-        //course doesnt exist
-        console.log("course doesn't exist????");
-    }
-    //add review
-    courseObj.reviews.push(newReview._id);
-    //update total score
-    courseObj.totalscore = courseObj.totalscore + stars;
-    //update total rewiews
-    courseObj.reviewcount = courseObj.reviewcount + 1;
-    //save course obj
-    courseObj.save()
-        .catch(err => res.status(400).json({message: 'Error: ' + err}));
-
-    //add the review id to the user
+    //add the note id to the user
     const userObj = await User.findById(user);
     if (!userObj) {
         //user doesn't exist
         console.log("user doesn't exist????");
     }
-    userObj.reviews.push(newReview._id);
+    userObj.personalNote.push(newNote._id);
     userObj.save()
         .catch(err => res.status(400).json({message: 'Error: ' + err}));
     
     
-    return res.status(200).json("Review added!");
+    return res.status(200).json("Personal Note added!");
 });
 
-// Delete a review --------------------------------
+// Delete a personal note --------------------------------
 router.route('/delete').post(async (req, res) => {
     const id = req.body._id;
-    const review = await Event.findOne({_id: id}).exec();
+    const note = await Note.findOne({_id: id}).exec();
 
-    if (!review) {
-        return res.status(400).json({ message: "Review not found"});
+    if (!note) {
+        return res.status(400).json({ message: "Personal Note not found"});
     }
 
     //get the user
@@ -141,5 +123,5 @@ router.route('/edit').post(async (req, res) => {
 
     return res.status(200).json("Review successfully editted!");
 });
-*/
+
 module.exports = router;
