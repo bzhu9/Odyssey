@@ -30,6 +30,7 @@ app.use("/course", require("./routes/courseRoute"));
 app.use("/message", require("./routes/messageRoute"));
 app.use("/chat", require("./routes/chatRoute"));
 app.use("/review", require("./routes/reviewRoute"));
+app.use("/personalNote", require("./routes/personalNoteRoute"));
 
 const db = mongoose.connection;
 const sseStream = new sse();
