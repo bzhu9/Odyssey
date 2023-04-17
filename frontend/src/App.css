@@ -115,7 +115,10 @@ button:hover {
 
 .reset-btn {
   width:400px;
+
 }
+a:link { text-decoration: none; }
+
 
 
 .reset-btn2 {

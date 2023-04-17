@@ -145,7 +145,9 @@ export const Courses = (props) => {
         <div>
       
     
-        
+        <Link to="/searchReview">
+            <button size="45" className="reset-btn2">Search Review</button>
+        </Link>
         <Link to="/addReview">
             <button size="45" className="reset-btn2">Add Review</button>
         </Link>
