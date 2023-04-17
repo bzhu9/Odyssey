@@ -26,23 +26,31 @@ router.route('/add').post(async (req, res) => {
     const text = req.body.text;
     const user = req.body.user;
     const course = req.body.course;
+    const stars = req.body.stars;
 
     //create the new review
     const newReview = new Review({
         "text": text,
         "user": user,
-        "course": course
+        "course": course,
+        "stars": stars
     });
     newReview.save()
         .catch(err => res.status(400).json("Error: " + err));
 
-    //add the review id to the course
+    //get course object
     const courseObj = await Course.findById(course);
     if (!courseObj) {
         //course doesnt exist
         console.log("course doesn't exist????");
     }
+    //add review
     courseObj.reviews.push(newReview._id);
+    //update total score
+    courseObj.totalscore = courseObj.totalscore + stars;
+    //update total rewiews
+    courseObj.reviewcount = courseObj.reviewcount + 1;
+    //save course obj
     courseObj.save()
         .catch(err => res.status(400).json({message: 'Error: ' + err}));
 
@@ -88,6 +96,9 @@ router.route('/delete').post(async (req, res) => {
     //delete the review from the course
     if (course.reviews.includes(review._id)) {
         course.reviews.splice(course.reviews.indexOf(review._id),1);
+        //update the review score & count
+        course.totalscore = course.totalscore - review.stars;
+        course.reviewcount = course.reviewcount - 1;
         course.save()
             .catch(err => res.status(400).json({message: 'Course Delete Review Error: ' + err}));
     }
@@ -103,10 +114,31 @@ router.route('/delete').post(async (req, res) => {
 router.route('/edit').post(async (req, res) => {
     const text = req.body.text;
     const reviewID = req.body.reviewID;
+    const stars = req.body.stars;
+    //update the reviewObj 
+    const reviewObj = Review.findOne({_id: reviewID}).exec();
+    if (stars != reviewObj.stars) {
+        //get the course
+        //this line might be wrong have to test it still
+        const course = await Course.findOne({_id: reviewObj.course});
+        if (course.reviews.includes(reviewObj._id)) {
+            //update the total score
+            course.totalscore = course.totalscore - reviewObj.stars + stars;
+            course.save()
+                .catch(err => res.status(400).json({message: 'Course Edit Review Error: ' + err}));
+        }
 
-    await Review.findOneAndUpdate({_id: reviewID}, {text: text}).lean();
+        //update stars
+        reviewObj.stars = stars;
+    }
+    //update the review
+    reviewObj.text = text;
 
-    return res.status(200).json("Review editted!");
+    //save the review obj
+    reviewObj.save()
+        .catch(err => res.status(400).json({message: 'ReviewObj Edit Review Error: ' + err}));
+
+    return res.status(200).json("Review successfully editted!");
 });
 
 module.exports = router;
