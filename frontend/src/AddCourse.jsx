@@ -20,8 +20,9 @@ export const AddCourse = (props) => {
           let c = rawCourseList.data[i];
           //each object will contain the email and the id of the friend
           processedCourseList.push({
-            value: c.name,
-            label: c.name, 
+            //value: c.subject + " " + c.number,
+            value: c._id,
+            label: c.subject + " " + c.number, 
             id: c._id
           });
         }
@@ -43,8 +44,9 @@ export const AddCourse = (props) => {
         let c = rawCourseList.data[i];
         //each object will contain the email and the id of the friend
         processedCourseList.push({
-          value: c.name,
-          label: c.name, 
+          //value: c.subject + " " + c.number,
+          value: c._id,
+          label: c.subject + " " + c.number, 
           id: c._id
         });
       }
@@ -62,7 +64,7 @@ export const AddCourse = (props) => {
         console.log(selectedOptions[i])
         courseNames.push(selectedOptions[i].value);
       }
-      const payload = {email: user, courseNames: courseNames};
+      const payload = {email: user, courseID: courseNames};
       api.setCourses(payload)
       .then( async res => {
           // console.log(res);

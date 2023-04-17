@@ -17,6 +17,8 @@ const profOptions = [
   { value: "prof 4", label: "prof 4" },
 ];
 
+
+
 export const AddReview = (props) => {
   const navigate = useNavigate();
 
@@ -24,12 +26,106 @@ export const AddReview = (props) => {
   const [review, setReview] = useState("");
   const [hover, setHover] = useState(0);
   const [rating, setRating] = useState(0);
+  const [courseList, setCourseList] = useState([]);
 
 
+  async function getCourses() {
+    //get all the courses of the given user
+    const pload = { email: sessionStorage.getItem("user") };
+    const rawCourseList = await api.getMyCourses(pload);
+    
+      let processedCourseList = [];
+      console.log(rawCourseList);
+      for (let i = 0; i < rawCourseList.data.length; i++) {
+        let f = rawCourseList.data[i];
+        //each object will contain the email and the id of the friend
+        console.log(f.subject);
+        processedCourseList.push({
+          name: f.subject + " " + f.number,
+          id: f._id,
+        });
+      }
+      //set the friendList
+      setCourseList(processedCourseList);
+  }
+  
+  useEffect(() => {
+    let ignore = false;
+    if (!ignore) {
+      getCourses();
+      //console.log(friendList);
+    }
+    return () => {
+      ignore = true;
+    };
+  }, []);
 
+
+  //what happens when the submit button is clicked
   const handleSubmit = (e) => {
     e.preventDefault();
   };
+
+
+  const submit = async () => {
+    //rating and text are not required, but are prefered
+
+
+     //check a course was selected selectedOptions > 0
+     if (selectedOptions.length < 0) {
+        alert("Please select a course");
+     } else {
+      //console.log("rating:" + rating);
+      //console.log(review);
+
+      //get the user ID
+      const pl = {email: sessionStorage.getItem("user")};
+      const user = await api.getUserID(pl);
+      //console.log(user.data.id);
+
+      //make the object
+      const payload = {
+        "text": review,
+        "stars": rating,
+        "user": user.data.id,
+        "course": selectedOptions,
+      };
+
+      //make the api call
+      await api
+                .addReview(payload)
+                .then((res) => {
+                  window.alert("Review created successfully");
+                  navigate("../courses");
+                })
+                .catch((err) => {
+                  console.log("yo why are you here");
+                  if (err.response) {
+                    console.log(err.response.data);
+                    alert(err.response.data.message);
+                  }
+                });
+
+
+      //get the course
+      // const pl = {
+      //   id: selectedOptions
+      // };
+      // const rawCourse = await api.getCourseWithID(pl);
+      // //console.log(course.data.course);
+      // const course = rawCourse.data.course;
+      // //console.log(course);
+
+      alert("submitted");
+      
+     }
+
+  }
+
+
+
+
+
   return (
     <div>
       <h2>Create Review</h2>
@@ -46,31 +142,45 @@ export const AddReview = (props) => {
             closeMenuOnSelect={true}
             hideSelectedOptions={false}
             onChange={(options) => {
-              if (Array.isArray(options)) {
-                setSelectedOptions(options.map((opt) => opt.value));
-              }
+              console.log(options);
+              console.log(Array.isArray(options));
+              console.log(options.value);
+              setSelectedOptions(options.value);
+              // if (Array.isArray(options)) {
+              //   setSelectedOptions(options.map((opt) => opt.value));
+              // }
             }}
-            options={allOptions}
+            options={courseList.map((course) => ({
+              value: course.id,
+              label: course.name,
+            }))}
           />
           <p>
            {'\n'} 
         </p>
-          <label htmlFor="text">Select professor for that course</label>
+          {/* <label htmlFor="text">Select professor for that course</label> */}
           <p>
            {'\n'} 
         </p>
-          <Select
+          {/* <Select
             defaultValue={[]}
             isMulti={false}
             closeMenuOnSelect={true}
             hideSelectedOptions={false}
             onChange={(options) => {
-              if (Array.isArray(options)) {
-                setSelectedOptions(options.map((opt) => opt.value));
-              }
+              console.log(options);
+              console.log(Array.isArray(options));
+              console.log(options.value);
+              setSelectedOptions(options.value);
+              //console.log(selectedOptions);
+              // if (Array.isArray(options)) {
+              //   console.log("here")
+              //   setSelectedOptions(options.map((opt) => opt.value));
+              //   console.log(selectedOptions);
+              // }
             }}
             options={profOptions}
-          />
+          /> */}
 
 {/* <label htmlFor="text">Create review</label> */}
 
@@ -113,7 +223,7 @@ export const AddReview = (props) => {
             <button className="reg-btn" onClick={() => props.onFormSwitch('register')}>Create an account</button>
             <button className="reset-btn" onClick={() => props.onFormSwitch('reset')}>Reset Password</button> */}
         {/* not sure why the buttons are small */}
-        <button type="submit" className="reset-btn">Submit Review</button>
+        <button type="submit" className="reset-btn" onClick={submit}>Submit Review</button>
         <div>
         <Link to="/courses">
           <button size="45" className="reset-btn">

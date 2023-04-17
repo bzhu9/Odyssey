@@ -68,7 +68,8 @@ export const Courses = (props) => {
         let c = [];
         let rawCourses = (await api.getMyCourses({ email: email})).data;
         for (let i = 0; i < rawCourses.length; i++) {
-            c.push(rawCourses[i].name);
+            //console.log(rawCourses[i].subject + " " + rawCourses[i].number);
+            c.push(rawCourses[i].subject + " " + rawCourses[i].number);
         }
         setCourses(c);
     }

@@ -53,6 +53,7 @@ export const searchOpenClass = payload => api.post("/openclass", payload);
 export const getAllCourses = () => api.get("/course");
 export const getMyCourses = payload => api.post("/user/getCourses", payload);
 export const setCourses = payload => api.post("/user/setCourses", payload);
+export const getCourseWithID = payload => api.post("/course/getWithID", payload);
 
 //message api -----------------------------------------------------------------
 export const sendMessage = payload => api.post("/message/send", payload);
@@ -110,6 +111,7 @@ const apis = {
     getAllCourses,
     getMyCourses,
     setCourses,
+    getCourseWithID,
 
     sendMessage,
     createChat,

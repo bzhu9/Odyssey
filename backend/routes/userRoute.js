@@ -383,14 +383,18 @@ router.route("/getWorkday").post(async (req, res) => {
 
 router.route("/setCourses").post(async (req, res) => {
     const email = req.body.email;
-    const courseNames = req.body.courseNames;
+    //const courseNames = req.body.courseNames;
+    const courseID = req.body.courseID;
 
     const user = await User.findOne({ email: email }).select("-password -seq1 -seq2 -seq3");
 
     let tempCourses = [];
-    for (let i = 0; i < courseNames.length; i++) {
-        const course = await Course.findOne({ name: courseNames[i]});
-        tempCourses.push(course._id);
+    //console.log("this is a list of course IDS:");
+    //console.log(courseID[0]);
+    for (let i = 0; i < courseID.length; i++) {
+        //const course = await Course.findOne({ name: courseNames[i]});
+
+        tempCourses.push(courseID[i]);
     }
 
     user.courses = tempCourses;
@@ -415,7 +419,8 @@ router.route("/getCourses").post(async (req, res) => {
             let course = await Course.findOne({ _id: id }).lean();
             if (course) {
                 courseList.push({
-                    name: course.name,
+                    subject: course.subject,
+                    number: course.number,
                     _id: course._id
                 });
             }

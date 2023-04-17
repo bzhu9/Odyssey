@@ -11,6 +11,13 @@ router.route("/").get((req, res) => {
     .catch(err => res.status(400).json("Error: " + err));
 });
 
+// Get course by ID --------------------------------------
+router.route("/getWithID").post(async (req, res) => {
+    const id = req.body.id;
+    const course = await Course.findOne({ _id: id }).lean();
+    return res.status(200).json({ course: course });
+});
+
 router.route("/subject").get((req, res) => {
     Course.find({
         subject: req.body.subject
