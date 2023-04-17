@@ -61,35 +61,20 @@ router.route('/delete').post(async (req, res) => {
     }
 
     //get the user
-    const user = await User.findOne({_id: review.user});
+    const user = await User.findOne({_id: note.user});
     if (!user) {
         return res.status(400).json({ message: "User not found"});
     }
     //delete the review from the user
-    if (user.reviews.includes(review._id)) {
-        user.reviews.splice(user.reviews.indexOf(review._id),1);
+    if (user.personalNotes.includes(note._id)) {
+        user.personalNotes.splice(user.personalNotes.indexOf(note._id),1);
         user.save()
             .catch(err => res.status(400).json({message: 'User Delete Review Error: ' + err}));
     }
-    //get the course
-    const course = await Course.findOne({_id: review.course});
-    if (!course) {
-        return res.status(400).json({ message: "Course not found"});
-    }
-    //delete the review from the course
-    if (course.reviews.includes(review._id)) {
-        course.reviews.splice(course.reviews.indexOf(review._id),1);
-        //update the review score & count
-        course.totalscore = course.totalscore - review.stars;
-        course.reviewcount = course.reviewcount - 1;
-        course.save()
-            .catch(err => res.status(400).json({message: 'Course Delete Review Error: ' + err}));
-    }
-
     //delete the review
-    const result = await review.deleteOne();
+    const result = await note.deleteOne();
 
-    res.status(200).json({ message: `Review, was deleted successfully` })
+    res.status(200).json({ message: `Personal Note was deleted successfully` })
 
 });
 
