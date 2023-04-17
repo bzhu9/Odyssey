@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import React, { Component } from 'react'
 import { Link, useNavigate } from "react-router-dom";
 import api from "./apis"
@@ -117,6 +117,21 @@ function FullCalendarApp(props) {
   useEffect (() => {
     getEvents();
   }, [ownEvents, friendEvents, checked]);
+
+  const handleKeyPress = useCallback((event) => {
+    console.log(`Key pressed: ${event.key}`);
+    if (event.key == 'c') {
+      navigate("../addEvent")
+    }
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener('keydown', handleKeyPress);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyPress);
+    }
+  });
 
   async function genClass() {
     const todayList = []
@@ -260,8 +275,8 @@ function FullCalendarApp(props) {
         editable
         initialView="dayGridWeek"
         headerToolbar={{
-          center:'timeGridWeek,dayGridMonth',
           right: 'eventReq,classSearch,import,genClass,courses,chat,social',
+          center: 'timeGridWeek,dayGridMonth,today,prev,next',
           // center: 'timeGridWeek,dayGridMonth,eventReq,classSearch,import,genClass,courses,friends',
         }}
         //took out timeGridDay
