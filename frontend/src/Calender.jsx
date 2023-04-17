@@ -260,8 +260,8 @@ function FullCalendarApp(props) {
         editable
         initialView="dayGridWeek"
         headerToolbar={{
-          center:'timeGridWeek,dayGridMonth',
           right: 'eventReq,classSearch,import,genClass,courses,chat,social',
+          center: 'timeGridWeek,dayGridMonth,today,prev,next',
           // center: 'timeGridWeek,dayGridMonth,eventReq,classSearch,import,genClass,courses,friends',
         }}
         //took out timeGridDay
