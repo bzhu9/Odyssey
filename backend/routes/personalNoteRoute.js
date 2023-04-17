@@ -78,29 +78,16 @@ router.route('/delete').post(async (req, res) => {
 
 });
 
-// Edit a review --------------------------------
+// Edit a personal note --------------------------------
 router.route('/edit').post(async (req, res) => {
     const text = req.body.text;
-    const reviewID = req.body.reviewID;
-    const stars = req.body.stars;
+    const noteID = req.body.noteID;
+    const course = req.body.course;
     //update the reviewObj 
-    const reviewObj = Review.findOne({_id: reviewID}).exec();
-    if (stars != reviewObj.stars) {
-        //get the course
-        //this line might be wrong have to test it still
-        const course = await Course.findOne({_id: reviewObj.course});
-        if (course.reviews.includes(reviewObj._id)) {
-            //update the total score
-            course.totalscore = course.totalscore - reviewObj.stars + stars;
-            course.save()
-                .catch(err => res.status(400).json({message: 'Course Edit Review Error: ' + err}));
-        }
-
-        //update stars
-        reviewObj.stars = stars;
-    }
+    const noteObj = Note.findOne({_id: noteID}).exec();
     //update the review
     reviewObj.text = text;
+    reviewObj.course = course;
 
     //save the review obj
     reviewObj.save()
