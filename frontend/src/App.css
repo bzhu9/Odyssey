@@ -318,8 +318,9 @@ button:hover {
   border: 2px solid #CEB888;
   padding: 10px;
   position: relative;
-  margin-left: 25%;
-  display: block;
+  /* margin-left: 25%; */
+  margin-left: -10%;
+  display: flex;
 }
 
 .friendCheckboxTitle{
@@ -329,7 +330,8 @@ button:hover {
   margin-bottom: 8px;
   width: 200px;
   position: relative;
-  margin-left: 25%;
+  /* margin-left: 25%; */
+  margin-left: -10%;
   display: block;
 
 }
@@ -404,15 +406,36 @@ button:hover {
 
     #settings-button {
       border: none;
-      font-size: 60px;
+      font-size: 65px;
+      background: none;
+      border-radius:none;
+      cursor: pointer;
+      color: #CEB888;
+      position: relative; 
+      margin-left: 150%; 
+      margin-top: -380%; 
+      display: block;
+
+      /* margin-bottom: 100%;  */
+      /* position: absolute;
+      margin-left: 1100px;
+      margin-top: -330px;  */
+
+      
+    
+    }
+
+    #chat-button {
+      border: none;
+      font-size: 55px;
       background: none;
       border-radius:none;
       cursor: pointer;
       margin-bottom: none;
       color: #CEB888;
-      position: relative;
-      margin-left: 1200%;
-      margin-top: -670%;
+      /* position: relative; */
+      /* margin-left: 80%; 
+      margin-top: -470%;  */
       display: block;
 
       /* margin-bottom: 100%;  */
@@ -502,8 +525,8 @@ button:hover {
   display: block;
 
   position: relative;
-  margin-left: 100%;
-  margin-top: -670%; 
+  margin-left: 50%;
+  margin-top: -570%; 
   
 }
 

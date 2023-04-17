@@ -260,12 +260,14 @@ function FullCalendarApp(props) {
         editable
         initialView="dayGridWeek"
         headerToolbar={{
-          center: 'timeGridWeek,dayGridMonth,eventReq,classSearch,import,genClass,courses,chat',
+          center:'timeGridWeek,dayGridMonth',
+          right: 'eventReq,classSearch,import,genClass,courses,chat,social',
+          // center: 'timeGridWeek,dayGridMonth,eventReq,classSearch,import,genClass,courses,friends',
         }}
         //took out timeGridDay
         customButtons={{
           eventReq: {
-            text: 'event req',
+            text: 'event requests',
             // click: () => props.onFormSwitch('addEvent'),
             click: () => navigate("../acceptEvent"),
           },
@@ -303,7 +305,7 @@ function FullCalendarApp(props) {
             click: () => navigate("../settings"),
           },
           classSearch: {
-            text: 'search',
+            text: 'open class',
             // click: () => props.onFormSwitch('class'),
             click: () => navigate("../class"),
           },
@@ -363,8 +365,10 @@ function FullCalendarApp(props) {
   <Link to="/addEvent">
   <button id = "plus-button"><FaPlus/></button>
   </Link>
-
-  <div className="dropdown" id = "override">
+  <Link to="/settings">
+  <button id = "settings-button"><FaCogs/> </button>
+  </Link>
+  {/* <div className="dropdown" id = "override">
   <button id = "settings-button"><FaCogs/> </button>
   <div className="dropdown-content">
   <Link to="/settings">
@@ -374,7 +378,7 @@ function FullCalendarApp(props) {
   <button className="dropdown-btn">Friends</button>
   </Link>
   </div>
-  </div>
+  </div> */}
   
 
       {/* <Link to="/import">
