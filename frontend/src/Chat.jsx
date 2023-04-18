@@ -19,6 +19,7 @@ import {
 import Avatar from "react-avatar";
 import { FaPlus } from 'react-icons/fa';
 import { AiOutlineUsergroupAdd } from "react-icons/ai"
+import { GrGroup } from "react-icons/gr"
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Select from "react-select";
@@ -97,7 +98,9 @@ export const Chat = (props) => {
     setHeaderName(name);
     setCurrentIsGroup(name.includes(","));
     getAddableUsers(id);
+    console.log("here");
     const rawMessages = (await api.loadMessages({ chatId: id})).data.messages;
+    console.log("here2");
     let proccessedMessages = [];
     for (let i = 0; i < rawMessages.length; i++) {
       var d = new Date(rawMessages[i].createdAt);
@@ -128,6 +131,7 @@ export const Chat = (props) => {
           name: convoName,
           key: chats[i]._id,
           users: chats[i].users,
+          isGroup: chats[i].isGroup,
           // last message sent
         })
       }
@@ -220,8 +224,8 @@ export const Chat = (props) => {
     //   getRecs();
     // }
     // return () => {ignore = true;}
-    if (dataFetchedRef.current) return;
-    dataFetchedRef.current = true;
+    // if (dataFetchedRef.current) return;
+    // dataFetchedRef.current = true;
     getChats();
     console.log("fast");
     getFriends();
@@ -309,13 +313,13 @@ export const Chat = (props) => {
       </ConversationHeader>
        <ConversationList>                                                     
           { conversations.map(c => 
+          // Add group icon
           <Conversation name={c.name} key={c.key} onClick={() => getMessages(c.key, c.name)} active={c.key === currentChat}>
-            <AvatarGroup max={3} hoverToFront={true} style={{ width: "100px"}}>
-              { c.users.map(u => 
-                <Ava><Avatar name={u.name} maxInitials={2} size="40px"round/></Ava>
-              )}
-            </AvatarGroup>
-            {/* <Ava><Avatar name={c.name} maxInitials={3} size="40"round/></Ava> */}
+            { c.isGroup ?
+              <Ava><GrGroup size="40px"/></Ava>
+            :
+              <Ava><Avatar name={c.users[0].name} maxInitials={2} size="40px"round/></Ava>
+            }
           </Conversation>
           )}                                        
         </ConversationList>
@@ -324,7 +328,12 @@ export const Chat = (props) => {
       { headerName !== "" ?
       <ChatContainer>
       <ConversationHeader>
-        <Ava status="available"><Avatar name={headerName} size="40"round/></Ava>
+        {/* <Ava status="available"><Avatar name={headerName} size="40"round/></Ava> */}
+        { currentIsGroup ?
+          <Ava><GrGroup size="40px"/></Ava>
+          :
+          <Ava><Avatar name={headerName} maxInitials={2} size="40px"round/></Ava>
+        }
         {/* <ConversationHeader.Content userName={headerName} info="Active 10 mins ago" />                                    */}
         <ConversationHeader.Content userName={headerName} />      
         {currentIsGroup ? 
@@ -336,17 +345,6 @@ export const Chat = (props) => {
          <ConversationHeader.Actions />}                             
         </ConversationHeader>
         <MessageList>
-        {/* <Avatar name="John Green" size="150" round/> */}
-          {/* <Message
-            model={{
-              message: "Hello my friend",
-              sentTime: "just now",
-              sender: "Joe",
-              // direction: "outgoing"
-            }}
-          >
-            <Message.Header sender="Emily" sentTime="just now" />
-          </Message> */}
           {messages.map((m, i) => 
           <Message key={i} model={m}>
             { m.direction === "incoming" ?

@@ -62,12 +62,12 @@ router.route("/addUser").post(async (req, res) => {
 
 router.route("/loadMessages").post(async (req, res) => {
     const chatId = req.body.chatId;
-    const chat = await Chat.findById(chatId);
+    const chat = await Chat.findById(chatId).lean();
     const rawMessages = chat.messages;
     const processedMessages = [];
     for (let i = 0; i < rawMessages.length; i++) {
-        const m = await Message.findById(rawMessages[i]);
-        const user = await User.findById(m.sender);
+        const m = await Message.findById(rawMessages[i]).lean();
+        const user = await User.findById(m.sender).lean();
         processedMessages.push({
             sender: {
                 name: user.name,
