@@ -1,7 +1,7 @@
 import styles from "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 import api from "./apis"
 import React, { useState, useEffect, useRef } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   MainContainer,
   ChatContainer,
@@ -40,6 +40,7 @@ export const Chat = (props) => {
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [showAdd, setShowAdd] = useState(false);
   const dataFetchedRef = useRef(false);
+  const navigate = useNavigate();
 
   const handleClose = async () => {setShow(false); setSelectedOptions([]);};
   const handleShow = async () => setShow(true);
@@ -93,14 +94,11 @@ export const Chat = (props) => {
   }
 
   async function getMessages(id, name) {
-    console.log(id);
     setCurrentChat(id);
     setHeaderName(name);
     setCurrentIsGroup(name.includes(","));
     getAddableUsers(id);
-    console.log("here");
     const rawMessages = (await api.loadMessages({ chatId: id})).data.messages;
-    console.log("here2");
     let proccessedMessages = [];
     for (let i = 0; i < rawMessages.length; i++) {
       var d = new Date(rawMessages[i].createdAt);
@@ -111,7 +109,6 @@ export const Chat = (props) => {
         direction: rawMessages[i].sender.email === sessionStorage.getItem("user") ? "outgoing" : "incoming"
       });
     }
-    console.log(proccessedMessages);
     setMessages(proccessedMessages);
     return;
   }
@@ -135,9 +132,7 @@ export const Chat = (props) => {
           // last message sent
         })
       }
-      console.log("hi");
       setConversations(conversationList);
-      console.log(chats);
     }
   }
 
@@ -174,7 +169,6 @@ export const Chat = (props) => {
 
   async function getAddableUsers(id) {
     const currentChatUsers = (await api.getChatUsers({ chatId: id })).data.users.map(u => u.email);
-    console.log(currentChatUsers);
     let addable = [];
     for (let i  = 0; i < friendList.length; i++) {
       let f = friendList[i];
@@ -189,8 +183,6 @@ export const Chat = (props) => {
         });
       }
     }
-    console.log("addable: ")
-    console.log(addable);
     setAddableUsers(addable);
   }
 
@@ -211,7 +203,6 @@ export const Chat = (props) => {
 
   useEffect(() => {
     if (location.state) {
-      console.log(location.state.id)
       getMessages(location.state.id, location.state.name);
       window.history.replaceState({}, document.title);
     }
@@ -227,17 +218,13 @@ export const Chat = (props) => {
     // if (dataFetchedRef.current) return;
     // dataFetchedRef.current = true;
     getChats();
-    console.log("fast");
     getFriends();
     const events = new EventSource('http://localhost:3500/updates');
     events.onmessage = event => {
-      console.log("culprit");
-      console.log(currentChat);
       if (currentChat.length !== 0 && headerName !== 0) {
         getMessages(currentChat, headerName);
       }
     };
-    console.log("not fast");
     return () => {
       events.close();
     };
@@ -307,6 +294,7 @@ export const Chat = (props) => {
     <MainContainer >
       <Sidebar position="left" scrollable={false}>
       <ConversationHeader>
+        <ConversationHeader.Back onClick={() => navigate("../cal")}/>
         <ConversationHeader.Content>
           <span onClick={handleShow} className="span"> New Conversation <FaPlus className="plus"/></span>
         </ConversationHeader.Content>
