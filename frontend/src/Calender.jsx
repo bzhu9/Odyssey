@@ -134,13 +134,16 @@ function FullCalendarApp(props) {
   });
 
   async function genClass() {
+    const user = sessionStorage.getItem("user");
+    const payload = { email: user};
+    const workday = await api.getWorkday(payload);
+    console.log(workday.data)
+    if (Object.keys(workday.data).length == 0) {
+      alert("Workday is not set!")
+      return
+    }
     const todayList = []
-    // let timeInput = 1680177600
-    // let today = new Date(0)
     let today = new Date()
-    // today.setUTCSeconds(timeInput)
-    console.log(today)
-    // console.log(new Date(ownEvents[0]))
     for (let i = 0; i < ownEvents.length; i++) {
       let year = Number(ownEvents[i].end.substring(0, 4))
       let month = Number(ownEvents[i].end.substring(5, 7))
@@ -153,10 +156,7 @@ function FullCalendarApp(props) {
     todayList.sort(function(a,b) {
       return a.start.localeCompare(b.start)
     })
-    const user = sessionStorage.getItem("user");
-    const payload = { email: user};
-    const workday = await api.getWorkday(payload);
-    console.log(workday)
+
     let workdayStart = today.setHours(workday.data.workdayStart.split(':')[0])
     workdayStart = today.setMinutes(workday.data.workdayStart.split(':')[1])
     workdayStart = today.setSeconds(0)
@@ -263,7 +263,7 @@ function FullCalendarApp(props) {
         console.log(i)
     }
     console.log(workdayEnd)
-    window.location.reload()
+    // window.location.reload()
   }
 
 
@@ -336,7 +336,7 @@ function FullCalendarApp(props) {
           genClass: {
             text: 'gen class',
             // click: () => props.onFormSwitch('class'),
-            click: () => genClass,
+            click: () => genClass(),
           },
           chat: {
             text: 'chat',
