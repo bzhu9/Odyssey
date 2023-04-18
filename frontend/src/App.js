@@ -32,6 +32,8 @@ import { ChangeNote } from './ChangeNote';
 import { Chat } from "./Chat"
 import {Search}  from './Search';
 import {SearchReview}  from './SearchReview';
+import  Sidebar  from './Sidebar';
+import Settings2 from './Settings2'
 
 function App() {
   const [currentForm, setCurrentForm] = useState('login');
@@ -87,6 +89,12 @@ function App() {
           <Route path ="search" element={<Search />}/>
           <Route path ="searchReview" element={<SearchReview />}/>
           <Route path ="chat" element={<Chat />}/>
+          <Route path ="sidebar" element={<Sidebar />}/>
+          <Route path ="settings2" element={<Settings2 />}/>
+
+
+
+
 
 
 
