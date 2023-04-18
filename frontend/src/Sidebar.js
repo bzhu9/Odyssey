@@ -68,12 +68,14 @@ return (
 			</NavIcon>
 			{SidebarData.map((item, index) => {
 return (
-	<li key={item.id}  >
-
+	
+<div>
 	<Link to={item.path}>                
 		{item.title} 
 	</Link>
-	</li>)			})}
+	<div></div>
+	</div>
+	)			})}
 		</SidebarWrap>
 		</SidebarNav>
 	</IconContext.Provider>
