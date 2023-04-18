@@ -1,7 +1,7 @@
 import logo from './logo.svg';
 import React from 'react';
 import { BrowserRouter, Routes, Route } from  "react-router-dom";
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import './App.css';
 import { Login } from "./Login";
 import { Register } from "./Register";
@@ -35,12 +35,35 @@ import {SearchReview}  from './SearchReview';
 import  Sidebar  from './Sidebar';
 import Settings2 from './Settings2'
 
+import api from "./apis"
 function App() {
   const [currentForm, setCurrentForm] = useState('login');
 
   const toggleForm = (formName) => {
     setCurrentForm(formName);
   }
+  useEffect(() => {
+    const handleTabClose = event => {
+      event.preventDefault();
+
+      console.log('beforeunload event triggered');
+
+      if (sessionStorage.getItem("user")) {
+        api.setStatus({email: sessionStorage.getItem("user"), status: "Offline"});
+        // return (event.returnValue ='Are you sure you want to exit?');
+      }
+      // print()
+    };
+    if (sessionStorage.getItem("user")) {
+      api.setStatus({email : sessionStorage.getItem("user"), status: "Online"});
+    }
+
+    window.addEventListener('beforeunload', handleTabClose);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleTabClose);
+    };
+  }, []);
 
   return (
     // <div className="App">

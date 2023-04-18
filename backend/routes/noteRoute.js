@@ -2,7 +2,7 @@ const router = require('express').Router();
 const mongoose = require('mongoose');
 const { ObjectId } = require('mongodb');
 //const Review = require('../models/Review');
-const Note = require('../models/PersonalNote');
+const Note = require('../models/Note');
 const Course = require('../models/Course');
 const User = require('../models/User');
 // const { default: apis } = require('../../frontend/src/apis');
@@ -27,14 +27,17 @@ router.route('/add').post(async (req, res) => {
     const user = req.body.user;
     const course = req.body.course;
 
+    console.log(text);
+    console.log(user);
+    console.log(course);
+
     //create the new review
-    const newNote = new PersonalNote({
+    const newNote = new Note({
         "text": text,
         "user": user,
-        "course": course,
-        "stars": stars
+        "course": course
     });
-    newNote.save()
+    await newNote.save()
         .catch(err => res.status(400).json("Error: " + err));
 
     //add the note id to the user
@@ -43,12 +46,12 @@ router.route('/add').post(async (req, res) => {
         //user doesn't exist
         console.log("user doesn't exist????");
     }
-    userObj.personalNote.push(newNote._id);
-    userObj.save()
+    userObj.personalNotes.push(newNote._id);
+    await userObj.save()
         .catch(err => res.status(400).json({message: 'Error: ' + err}));
     
     
-    return res.status(200).json("Personal Note added!");
+    return res.status(200).json({message: "Note added!"});
 });
 
 // Delete a personal note --------------------------------
@@ -57,7 +60,7 @@ router.route('/delete').post(async (req, res) => {
     const note = await Note.findOne({_id: id}).exec();
 
     if (!note) {
-        return res.status(400).json({ message: "Personal Note not found"});
+        return res.status(400).json({ message: "Note not found"});
     }
 
     //get the user
@@ -74,7 +77,7 @@ router.route('/delete').post(async (req, res) => {
     //delete the review
     const result = await note.deleteOne();
 
-    res.status(200).json({ message: `Personal Note was deleted successfully` })
+    res.status(200).json({ message: `Note was deleted successfully` })
 
 });
 
@@ -93,7 +96,7 @@ router.route('/edit').post(async (req, res) => {
     reviewObj.save()
         .catch(err => res.status(400).json({message: 'ReviewObj Edit Review Error: ' + err}));
 
-    return res.status(200).json("Review successfully editted!");
+    return res.status(200).json("Note successfully editted!");
 });
 
 module.exports = router;

@@ -324,9 +324,7 @@ export const Chat = (props) => {
       { headerName !== "" ?
       <ChatContainer>
       <ConversationHeader>
-        {/* <Ava src={<Avatar name = "Emaily" />} name="Emily" /> */}
-        {/* <Ava name = "emily"> <Avatar name="John Green" size="25" round/> </Ava> */}
-        <Ava><Avatar name={headerName} size="40"round/></Ava>
+        <Ava status="available"><Avatar name={headerName} size="40"round/></Ava>
         {/* <ConversationHeader.Content userName={headerName} info="Active 10 mins ago" />                                    */}
         <ConversationHeader.Content userName={headerName} />      
         {currentIsGroup ? 
@@ -334,7 +332,8 @@ export const Chat = (props) => {
           <AiOutlineUsergroupAdd size={30} onClick={handleAddShow}/>
         </ConversationHeader.Actions>
         :
-         <></>}                             
+         
+         <ConversationHeader.Actions />}                             
         </ConversationHeader>
         <MessageList>
         {/* <Avatar name="John Green" size="150" round/> */}

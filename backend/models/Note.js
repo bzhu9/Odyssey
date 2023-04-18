@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
-const personalNoteSchema = new Schema({
+const noteSchema = new Schema({
     course: {
         type: Schema.Types.ObjectId,
         required: true,
@@ -18,6 +18,6 @@ const personalNoteSchema = new Schema({
 })
 
 
-const personalNote = mongoose.model("PersonalNote", personalNoteSchema);
+const note = mongoose.model("Note", noteSchema);
 
-module.exports = personalNote;
+module.exports = note;

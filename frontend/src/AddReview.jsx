@@ -69,9 +69,11 @@ export const AddReview = (props) => {
 
   const submit = async () => {
     //rating and text are not required, but are prefered
-
+    console.log(rating);
 
      //check a course was selected selectedOptions > 0
+     //check if both rating and text are empty [you should be able to set one and not the other
+
      if (selectedOptions.length < 0) {
         alert("Please select a course");
      } else {
@@ -105,16 +107,6 @@ export const AddReview = (props) => {
                     alert(err.response.data.message);
                   }
                 });
-
-
-      //get the course
-      // const pl = {
-      //   id: selectedOptions
-      // };
-      // const rawCourse = await api.getCourseWithID(pl);
-      // //console.log(course.data.course);
-      // const course = rawCourse.data.course;
-      // //console.log(course);
 
       alert("submitted");
       
