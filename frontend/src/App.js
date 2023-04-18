@@ -32,6 +32,8 @@ import { ChangeNote } from './ChangeNote';
 import { Chat } from "./Chat"
 import {Search}  from './Search';
 import {SearchReview}  from './SearchReview';
+import  Sidebar  from './Sidebar';
+import Settings2 from './Settings2'
 
 import api from "./apis"
 function App() {
@@ -110,6 +112,12 @@ function App() {
           <Route path ="search" element={<Search />}/>
           <Route path ="searchReview" element={<SearchReview />}/>
           <Route path ="chat" element={<Chat />}/>
+          <Route path ="sidebar" element={<Sidebar />}/>
+          <Route path ="settings2" element={<Settings2 />}/>
+
+
+
+
 
 
 

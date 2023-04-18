@@ -279,6 +279,10 @@ function FullCalendarApp(props) {
           center: 'timeGridWeek,dayGridMonth,today,prev,next',
           // center: 'timeGridWeek,dayGridMonth,eventReq,classSearch,import,genClass,courses,friends',
         }}
+        footerToolbar={{
+      
+          end: 'today,prev,next'
+        }}
         //took out timeGridDay
         customButtons={{
           eventReq: {
