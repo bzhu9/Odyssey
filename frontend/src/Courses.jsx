@@ -2,7 +2,44 @@ import React, { useState, useEffect } from "react";
 import api from "./apis"
 import { Link, useNavigate } from "react-router-dom";
 import { FaPlus } from "react-icons/fa";
+import styled from "styled-components";
+import * as FaIcons from "react-icons/fa";
+import * as AiIcons from "react-icons/ai";
+import { SidebarData } from "./CourseSidebarData";
+import { IconContext } from "react-icons/lib";
+const Nav = styled.div`
+  background: #15171c;
+  height: 80px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+`;
 
+const NavIcon = styled(Link)`
+  margin-left: 2rem;
+  font-size: 2rem;
+  height: 80px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+`;
+
+const SidebarNav = styled.nav`
+  background: #15171c;
+  width: 250px;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: ${({ sidebar }) => (sidebar ? "0" : "-100%")};
+  transition: 350ms;
+  z-index: 10;
+`;
+
+const SidebarWrap = styled.div`
+  width: 100%;
+`;
 const courseList = [
     { value: "option 1", label: "option 1" },
     { value: "option 2", label: "option 2" },
@@ -23,6 +60,8 @@ export const Courses = (props) => {
     const [workdayStart, setWorkdayStart] = useState("");
     const [workdayEnd, setWorkdayEnd] = useState("");
     const [courses, setCourses] = useState([]);
+    const [sidebar, setSidebar] = useState(true);
+    const showSidebar = () => setSidebar(!sidebar);
     const navigate = useNavigate();
 
     const handleSubmit = (e) => {
@@ -141,12 +180,20 @@ export const Courses = (props) => {
     return (
         <div>
         <Link to="/addCourse">
-        <button id = "addCourse-button"><FaPlus/> </button>
+        <button id = "addCourse-button" style={{
+              
+              position: "absolute",
+              marginTop: "-140px",
+              marginLeft: "300px",
+             
+
+
+            }}><FaPlus/> </button>
       </Link>
         <div>
       
     
-        <Link to="/searchReview">
+        {/* <Link to="/searchReview">
             <button size="45" className="reset-btn2">Search Review</button>
         </Link>
         <Link to="/addReview">
@@ -161,10 +208,88 @@ export const Courses = (props) => {
         </Link>
         <Link to="/cal">
             <button size="45" className="reset-btn2" type="submit">Weekly View</button>
-        </Link>
+        </Link> */}
        
-        <h4 className="recTitle"> My courses</h4>
-            <ul className="recList">
+        <h4 className="recTitle"> My current courses</h4>
+        <IconContext.Provider
+        value={{ color: "#fff" }}
+        style={{
+          textAlign: "center",
+          width: "30px",
+          height: "30px",
+        }}
+      >
+        <Nav
+          style={{
+            textAlign: "center",
+            position: "absolute",
+            left: "30px",
+            top: "30px",
+            background: "#CEB888",
+            border: "1px solid #CEB888",
+            borderRadius: "10px",
+            width: "100px",
+            height: "50px",
+          }}
+        >
+          <NavIcon to="#">
+            <FaIcons.FaBars onClick={showSidebar} />
+          </NavIcon>
+          <h1
+            style={{
+              textAlign: "left",
+              width: "100px",
+              marginLeft: "200px",
+            }}
+          ></h1>
+        </Nav>
+        <SidebarNav sidebar={sidebar}>
+          <SidebarWrap>
+            <NavIcon to="#">
+              <AiIcons.AiOutlineClose onClick={showSidebar} />
+            </NavIcon>
+            {SidebarData.map((item, index) => {
+              return (
+                <div>
+                  <Link
+                    to={item.path}
+                    style={{
+                      color: "#CEB888",
+                      fontSize: "22px",
+                    }}
+                  >
+                    {item.icon} {item.title}
+                    <br />
+                    <br />
+                  </Link>
+                </div>
+              );
+            })}
+          </SidebarWrap>
+        </SidebarNav>
+      </IconContext.Provider>
+      <h1 style={{
+             
+              position: "absolute",
+              marginTop: "-180px",
+              marginLeft: "-10px",
+              
+
+
+            }}>My Courses</h1>
+            <ul  style={{
+              overflow: "auto",
+              position: "absolute",
+              width: "280px",
+              marginTop: "-100px",
+              height: "300px",
+              borderRadius: "10px",
+              marginLeft: "-80px",
+              backgroundColor:"#CEB888",
+              color:"black",
+
+
+            }}>
             {myCourses.map(item => {
             const ref = React.createRef();
             return (
