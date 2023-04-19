@@ -1,6 +1,5 @@
 const router = require("express").Router();
 let OpenClass = require("../models/OpenClass");
-const coordinates = require('../coordinates.json');
 
 // GET
 router.route("/").get((req, res) => {

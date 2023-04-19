@@ -8,7 +8,6 @@ import api from "./apis";
 import Select, { components } from "react-select";
 //import { set } from "mongoose";
 
-
 async function getEvent(eventID) {
     const eventObj = await api.getSingleEvent(eventID);
     console.log(eventObj);
@@ -37,6 +36,7 @@ export const ChangeEvent = (props) => {
 
     const [eventObj, setEventObj] = useState({});
     const navigate = useNavigate();
+
     //get the event object given the object id
     useEffect(() => {
       const fetchEvent = async () => {
@@ -57,6 +57,11 @@ export const ChangeEvent = (props) => {
     const [eventReqList, setEventReqList] = useState([]);
     const [preSelectedOptions, setPreSelectedOptions] = useState([]);
     const [notifTime, setNotifTime] = useState('');
+
+    // const [directions, setDirections] = useState(null);
+    // const [showPopup, setShowPopup] = useState(false);
+    // const [map, setMap] = useState(null);
+    const [buildingDirection, setBuildingDirection] = useState(0)
 
 
 
@@ -193,6 +198,14 @@ export const ChangeEvent = (props) => {
         e.preventDefault();
     }
 
+    const getDirections = (e) => {
+        if (!location.match(/[A-z]+ b*B*[0-9]+/)) {
+            alert("Location must be a valid classroom!")
+            return
+        }
+        navigate('/directions')
+    }
+
     //check if the time is valid
     useEffect(() => {
         const start = new Date(`${date}T${startTime}:00`);
@@ -200,8 +213,21 @@ export const ChangeEvent = (props) => {
         setIsValidTime(start <= end);
     }, [date, startTime, endTime]);
 
+    
 
+    // const handleDirections = (e) => {
+    //     if (location.match(/[A-z]+ b*B*[0-9]+/) && map) {
+    //         setShowPopup(true)
+    //     }
+    //     else {
+    //         alert("Location must be a valid classroom!")
+    //         return
+    //     }
+    // }
 
+    // function handleMapLoad(map) {
+    //     setMap(map)
+    // }
     
     const update = async () => {
         try {
@@ -445,6 +471,7 @@ export const ChangeEvent = (props) => {
 
     </form>
     {/* <button className="link-btn" onClick={() => props.onFormSwitch('calender')}>Go back to Calender</button> */}
+    <button onClick={getDirections}>Get Directions</button>
     <Link to="/cal">
         <button size="45" className="reset-btn" type="submit">Cancel Changes</button>
     </Link>
