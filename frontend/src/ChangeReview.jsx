@@ -75,7 +75,11 @@ export const ChangeReview = (props) => {
           </div>
           
           <textarea value={review}
-            onChange={(e) => setReview(e.target.value)} size="9000" className="review">
+            onChange={(e) => setReview(e.target.value)} size="9000" className="review" style={{
+             
+              fontFamily: "Arial, sans-serif",
+             
+            }}>
           </textarea>
         </form>
         {/* <button type="submit" onClick={() => props.onFormSwitch('calender')}>Weekly View</button>
