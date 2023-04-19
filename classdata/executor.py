@@ -57,9 +57,9 @@ def find_rooms(df):
     return building
 
 
-# filename = "data.csv"
-# fetch_from_unitime(0, filename, 6, 22, 0, 500)
-df = pd.read_csv("week.csv")
-clean_file(df)
-unique_rooms = find_rooms(df)
-len(unique_rooms)
+filename = "data.csv"
+fetch_from_unitime(0, filename, 6, 22, 0, 500)
+# df = pd.read_csv("meetings.csv")
+# clean_file(df)
+# unique_rooms = find_rooms(df)
+# len(unique_rooms)
