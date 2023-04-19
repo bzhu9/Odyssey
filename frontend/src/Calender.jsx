@@ -444,11 +444,12 @@ function FullCalendarApp(props) {
 ))} */}
     {
       Object.keys(friendList).map( (key) => (
+       
         <li key={friendList[key]}>
           <input value={friendList[key]} type="checkbox" onChange={handleCheck}/>
           <span>{key}</span>
-          <br />
         </li>
+       
       ))
     }
 
