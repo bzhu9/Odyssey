@@ -35,6 +35,7 @@ import {SearchReview}  from './SearchReview';
 import  Sidebar  from './Sidebar';
 import Settings2 from './Settings2'
 import {ChangePassword} from './ChangePassword'
+import {Directions} from './Directions'
 
 import api from "./apis"
 function App() {
@@ -116,6 +117,7 @@ function App() {
           <Route path ="sidebar" element={<Sidebar />}/>
           <Route path ="settings2" element={<Settings2 />}/>
           <Route path ="changePassword" element={<ChangePassword />}/>
+          <Route path ="directions" element={<Directions />}/>
 
 
 
