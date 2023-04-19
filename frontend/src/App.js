@@ -36,6 +36,9 @@ import  Sidebar  from './Sidebar';
 import Settings2 from './Settings2'
 import {ChangePassword} from './ChangePassword'
 import {Directions} from './Directions'
+import Navbar from './Navbar';
+import {CoursePage} from './CoursePage'
+
 
 import api from "./apis"
 function App() {
@@ -118,6 +121,11 @@ function App() {
           <Route path ="settings2" element={<Settings2 />}/>
           <Route path ="changePassword" element={<ChangePassword />}/>
           <Route path ="directions" element={<Directions />}/>
+          <Route path ="navbar" element={<Navbar />}/>
+          <Route path ="coursePage" element={<CoursePage />}/>
+
+
+
 
 
 

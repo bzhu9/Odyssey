@@ -26,5 +26,23 @@ export const SidebarData = [
 
 
 },
+{
+	title: "Add Review",
+	path: "/addReview",
+	icon: <FaIcons.FaPlus />,
+
+	
+
+
+},
+{
+	title: "Add Note",
+	path: "/addNote",
+	icon: <FaIcons.FaStickyNote />,
+
+	
+
+
+},
 
 ];

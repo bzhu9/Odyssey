@@ -3,7 +3,15 @@ import api from "./apis";
 import { FaCheck, FaTimes } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import Select, { components } from "react-select";
-
+import {
+Nav,
+NavLink,
+Bars,
+NavMenu,
+NavBtn,
+NavBtnLink,
+} from './NavbarElements';
+import Navbar from "./Navbar";
 
 
 export const ChangeNote = (props) => {
@@ -18,8 +26,12 @@ export const ChangeNote = (props) => {
     e.preventDefault();
   };
   return (
+    <>
+    <Navbar />
+
     <div>
       <h2>Change note for cs307 with Prof Turkstra</h2>
+   
       <div>
         
         <form  onSubmit={handleSubmit}>
@@ -64,5 +76,6 @@ export const ChangeNote = (props) => {
         </Link>
       </div>
     </div>
+    </>
   );
 };

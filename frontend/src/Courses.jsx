@@ -297,7 +297,7 @@ export const Courses = (props) => {
                 {/* <a href="localhost:3500/login">{item.name} {item.status} {item.privacy}</a> */}
                 {/* <button onClick={() => redirectToProfile(item)}> */}
                 {/*have this show add review page if there's no review yet */}
-                <Link to="/changeReview">                
+                <Link to="/coursePage">                
                 <button>
                     {item.id} {item.firstname} {item.lastname}
                 </button>

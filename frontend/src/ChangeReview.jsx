@@ -3,6 +3,7 @@ import api from "./apis";
 import { FaCheck, FaTimes } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import Select, { components } from "react-select";
+import Navbar from "./Navbar";
 
 const allOptions = [
   { value: "option 1", label: "option 1" },
@@ -31,7 +32,11 @@ export const ChangeReview = (props) => {
     e.preventDefault();
   };
   return (
+    <>
+    <Navbar />
+
     <div>
+
       <h2>Change Review</h2>
       <div>
         
@@ -92,5 +97,6 @@ export const ChangeReview = (props) => {
         </Link>
       </div>
     </div>
+    </>
   );
 };
