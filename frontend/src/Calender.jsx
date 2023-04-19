@@ -24,6 +24,7 @@ function FullCalendarApp(props) {
   const [checked, setChecked] = useState([]);
   const [friendList, setFriendList] = useState({});
   const navigate = useNavigate();
+  let calendarRef = React.createRef();
   // get events from DB
 
   async function getData() {
@@ -122,6 +123,14 @@ function FullCalendarApp(props) {
     console.log(`Key pressed: ${event.key}`);
     if (event.key == 'c') {
       navigate("../addEvent")
+    }
+    if (event.key == 'j') {
+      let calendarApi = calendarRef.current.getApi()
+      calendarApi.next()
+    }
+    if (event.key == 'k') {
+      let calendarApi = calendarRef.current.getApi()
+      calendarApi.prev()
     }
   }, []);
 
@@ -273,6 +282,7 @@ function FullCalendarApp(props) {
       <FullCalendar
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         editable
+        ref={calendarRef}
         initialView="dayGridWeek"
         headerToolbar={{
           right: 'eventReq,classSearch,import,genClass,courses,chat,social',
