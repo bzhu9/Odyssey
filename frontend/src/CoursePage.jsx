@@ -39,9 +39,9 @@ export const CoursePage = (props) => {
              
               position: "absolute",
               marginTop: "-230px",
-              marginLeft: "-175px",
+              marginLeft: "-97px",
              
-            }}>Course Reviews for CS 307 with Turkstra</h2>  
+            }}>CS 307 with Prof. Turkstra</h2>  
     <p>{"\n"}</p>
    <p style={{
              

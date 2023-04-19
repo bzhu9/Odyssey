@@ -320,10 +320,13 @@ a:link { text-decoration: none; }
   border-radius: 10px;
   border: 2px solid #CEB888;
   padding: 10px;
+  
   position: relative;
   /* margin-left: 25%; */
   margin-left: -10%;
   display: flex;
+  flex-direction: column;
+
 }
 
 .friendCheckboxTitle{
