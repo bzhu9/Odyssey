@@ -422,6 +422,7 @@ function FullCalendarApp(props) {
         <li key={friendList[key]}>
           <input value={friendList[key]} type="checkbox" onChange={handleCheck}/>
           <span>{key}</span>
+          <br />
         </li>
       ))
     }
