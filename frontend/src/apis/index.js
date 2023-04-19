@@ -62,6 +62,7 @@ export const getChats = payload => api.post("/user/getChats", payload);
 export const addUserToChat = payload => api.post("/chat/addUser", payload);
 export const loadMessages = payload => api.post("/chat/loadMessages", payload);
 export const getChatUsers = payload => api.post("/chat/getUsers", payload);
+export const leaveGroup = payload => api.post("/chat/leaveGroup", payload);
 
 //reviews api -------------------------------------------------------------------------
 export const getAllReviews = () => api.get("/review/");
@@ -126,6 +127,7 @@ const apis = {
     addUserToChat,
     loadMessages,
     getChatUsers,
+    leaveGroup,
 
     getAllReviews,
     addReview,
