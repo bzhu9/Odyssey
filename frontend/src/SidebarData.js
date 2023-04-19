@@ -5,24 +5,58 @@ import * as IoIcons from "react-icons/io";
 import * as RiIcons from "react-icons/ri";
 
 export const SidebarData = [
+	{
+		title: "View Profile",
+		path: "/settings",
+		icon: <FaIcons.FaUser /> ,
+	},
 
 {
-	title: "Contact",
+	title: "Change Email",
 	path: "/changeEmail",
-	icon: <FaIcons.FaPhone />,
+	icon: <FaIcons.FaEnvelope /> ,
 },
 {
-	title: "Events",
-	path: "/changePrivacy",
-	icon: <FaIcons.FaEnvelopeOpenText />,
+	title: "Change Password",
+	path: "/changePassword",
+	icon: <FaIcons.FaKey />,
 
 	
 
 
 },
 {
-	title: "Support",
+	title: "Change Privacy",
+	path: "/changePrivacy",
+	icon: <FaIcons.FaLock />,
+
+	
+
+},
+
+
+{
+	title: "Change Workday",
+	path: "/changeWorkday",
+	icon: <FaIcons.FaCalendar/>, 
+	
+
+	
+
+
+},
+{
+	title: "Change Meal Times",
+	path: "/changeMealTime",
+	icon: <FaIcons.FaUtensils /> ,
+
+	
+
+
+},
+{
+	title: "Change Status",
 	path: "/changeStatus",
-	icon: <IoIcons.IoMdHelpCircle />,
+	icon: <FaIcons.FaBan />,
 },
 ];

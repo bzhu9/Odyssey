@@ -34,6 +34,7 @@ import {Search}  from './Search';
 import {SearchReview}  from './SearchReview';
 import  Sidebar  from './Sidebar';
 import Settings2 from './Settings2'
+import {ChangePassword} from './ChangePassword'
 
 import api from "./apis"
 function App() {
@@ -114,6 +115,7 @@ function App() {
           <Route path ="chat" element={<Chat />}/>
           <Route path ="sidebar" element={<Sidebar />}/>
           <Route path ="settings2" element={<Settings2 />}/>
+          <Route path ="changePassword" element={<ChangePassword />}/>
 
 
 

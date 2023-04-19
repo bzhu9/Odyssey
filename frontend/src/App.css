@@ -134,8 +134,8 @@ a:link { text-decoration: none; }
 .prof {
   
   position: relative;
-  left: 65%;
-  margin-top: -95%;
+  left: -30%;
+  margin-bottom: -100%;
   min-height: 300px;
   
 
@@ -530,6 +530,7 @@ a:link { text-decoration: none; }
   position: relative;
   margin-left: 50%;
   margin-top: -570%; 
+ 
   
 }
 
