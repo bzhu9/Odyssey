@@ -18,7 +18,7 @@ export const SidebarData = [
 	icon: <FaIcons.FaSearch /> ,
 },
 {
-	title: "Search Review",
+	title: "Course Reviews",
 	path: "/searchReview",
 	icon: <FaIcons.FaStar />,
 
