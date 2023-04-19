@@ -539,7 +539,12 @@ a:link { text-decoration: none; }
   display:inline; border-radius: 10px;  width: 80px;    
 position: relative; margin-top: -150%; margin-right: 600%;}
 
-
+.leave-group-button:hover{
+  cursor: pointer;
+}
+.add-user-button:hover {
+  cursor: pointer;
+}
 
 /* Change the background color of the dropdown button when the dropdown content is shown */
 /* .dropdown-content .dropbtn {display: block; background: purple} */

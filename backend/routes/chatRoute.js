@@ -97,6 +97,28 @@ router.route("/getUsers").post(async (req, res) => {
     return res.status(200).json({users: processedUsers });
 })
 
+router.route("/leaveGroup").post(async (req, res) => {
+    const email = req.body.user;
+    const chatId = req.body.chatId;
+    const chat = await Chat.findById(chatId);
+    const user = await User.findOne({ email: email });
+
+    let ind = chat.users.indexOf(user._id);
+    if (chat.users.length <= 3) {
+        return res.status(400).json("You cannot leave a group with 3 people!");
+    }
+    if (ind > -1) {
+        chat.users.splice(ind, 1);
+    }
+    ind = user.chats.indexOf(chat._id);
+    if (ind > -1) {
+        user.chats.splice(ind, 1);
+    }
+    chat.save();
+    user.save()
+    .then(() => res.status(201).json("Left group!"))
+    .catch(err => res.status(400).json("Error: " + err));
+});
 
 
 module.exports = router;

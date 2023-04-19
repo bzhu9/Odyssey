@@ -20,6 +20,7 @@ import Avatar from "react-avatar";
 import { FaPlus } from 'react-icons/fa';
 import { AiOutlineUsergroupAdd } from "react-icons/ai"
 import { GrGroup } from "react-icons/gr"
+import { GiExitDoor } from "react-icons/gi"
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Select from "react-select";
@@ -39,6 +40,7 @@ export const Chat = (props) => {
   const [addableUsers, setAddableUsers] = useState([]);
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [showAdd, setShowAdd] = useState(false);
+  const [showLeave, setShowLeave] = useState(false);
   const dataFetchedRef = useRef(false);
   const navigate = useNavigate();
 
@@ -47,6 +49,9 @@ export const Chat = (props) => {
 
   const handleAddClose = async () => {setShowAdd(false); setSelectedUsers([]);};
   const handleAddShow = async () => setShowAdd(true);
+
+  const handleLeaveClose = async () => {setShowLeave(false)};
+  const handleLeaveShow = async () => setShowLeave(true);
 
   async function getFriends() {
     if (!sessionStorage.getItem("user")) {
@@ -201,6 +206,27 @@ export const Chat = (props) => {
     handleAddClose();
   }
 
+  async function leaveGroup() {
+    if (!sessionStorage.getItem("user") || currentChat.length === 0) {
+      return;
+    }
+
+    const res = await api.leaveGroup({ user: sessionStorage.getItem("user"), chatId: currentChat })
+    .catch(err => {
+      if (err.response) {
+          alert("You cannot leave a group with 3 people!");
+          handleLeaveClose();
+      }
+      return;
+    });
+    // getMessages(currentChat, headerName + ", " + newUsers);
+    setHeaderName("");
+    setCurrentChat("");
+    setCurrentIsGroup(false);
+    setAddableUsers([]);
+    getChats();
+    handleLeaveClose();
+  }
   useEffect(() => {
     if (location.state) {
       getMessages(location.state.id, location.state.name);
@@ -290,6 +316,24 @@ export const Chat = (props) => {
     </Modal.Footer>
   </Modal>
 
+  {/* LEAVE GROUP---------------------------------------------- */}
+  <Modal show={showLeave} onHide={handleLeaveClose} centered className="modal">
+    <Modal.Header>
+      <Modal.Title>Leave Group</Modal.Title>
+    </Modal.Header>
+    <Modal.Body>
+      <p>Are you sure you want to leave?</p>
+    </Modal.Body>
+    <Modal.Footer>
+      <Button variant="secondary" onClick={handleLeaveClose}>
+        Cancel
+      </Button>
+      <Button variant="danger" onClick={() => leaveGroup()}>
+        Leave
+      </Button>
+    </Modal.Footer>
+  </Modal>
+
   <div style={{width: "100%", position: "relative", height: "100vh"}} id="poop">
     <MainContainer >
       <Sidebar position="left" scrollable={false}>
@@ -326,7 +370,9 @@ export const Chat = (props) => {
         <ConversationHeader.Content userName={headerName} />      
         {currentIsGroup ? 
         <ConversationHeader.Actions>
-          <AiOutlineUsergroupAdd size={30} onClick={handleAddShow}/>
+          <GiExitDoor size={30} onClick={handleLeaveShow} className="leave-group-button" title="Leave Group"/>
+          &nbsp;&nbsp;
+          <AiOutlineUsergroupAdd size={30} onClick={handleAddShow} className="add-user-button" title="Add User"/>
         </ConversationHeader.Actions>
         :
          
