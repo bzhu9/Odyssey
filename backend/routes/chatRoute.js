@@ -104,6 +104,9 @@ router.route("/leaveGroup").post(async (req, res) => {
     const user = await User.findOne({ email: email });
 
     let ind = chat.users.indexOf(user._id);
+    if (chat.users.length <= 3) {
+        return res.status(400).json("You cannot leave a group with 3 people!");
+    }
     if (ind > -1) {
         chat.users.splice(ind, 1);
     }

@@ -211,7 +211,14 @@ export const Chat = (props) => {
       return;
     }
 
-    await api.leaveGroup({ user: sessionStorage.getItem("user"), chatId: currentChat });
+    const res = await api.leaveGroup({ user: sessionStorage.getItem("user"), chatId: currentChat })
+    .catch(err => {
+      if (err.response) {
+          alert("You cannot leave a group with 3 people!");
+          handleLeaveClose();
+      }
+      return;
+    });
     // getMessages(currentChat, headerName + ", " + newUsers);
     setHeaderName("");
     setCurrentChat("");
