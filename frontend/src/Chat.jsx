@@ -26,6 +26,7 @@ import Modal from 'react-bootstrap/Modal';
 import Select from "react-select";
 
 
+
 export const Chat = (props) => {
   const location = useLocation();
   const [msgInput, setMsgInput] = useState("");
@@ -41,6 +42,7 @@ export const Chat = (props) => {
   const [selectedUsers, setSelectedUsers] = useState([]);
   const [showAdd, setShowAdd] = useState(false);
   const [showLeave, setShowLeave] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
   const dataFetchedRef = useRef(false);
   const navigate = useNavigate();
 
@@ -52,6 +54,9 @@ export const Chat = (props) => {
 
   const handleLeaveClose = async () => {setShowLeave(false)};
   const handleLeaveShow = async () => setShowLeave(true);
+
+  const handleAlertClose = async () => {setShowAlert(false)};
+  const handleAlertShow = async () => setShowAlert(true);
 
   async function getFriends() {
     if (!sessionStorage.getItem("user")) {
@@ -214,8 +219,8 @@ export const Chat = (props) => {
     const res = await api.leaveGroup({ user: sessionStorage.getItem("user"), chatId: currentChat })
     .catch(err => {
       if (err.response) {
-          alert("You cannot leave a group with 3 people!");
           handleLeaveClose();
+          handleAlertShow();
       }
       return;
     });
@@ -330,6 +335,21 @@ export const Chat = (props) => {
       </Button>
       <Button variant="danger" onClick={() => leaveGroup()}>
         Leave
+      </Button>
+    </Modal.Footer>
+  </Modal>
+
+  {/* ALERT LEAVE GROUP---------------------------------------------- */}
+  <Modal show={showAlert} onHide={handleAlertClose} centered className="modal">
+    <Modal.Header>
+      <Modal.Title>Error Leaving Group</Modal.Title>
+    </Modal.Header>
+    <Modal.Body>
+      <p>You can't leave a group with three people!</p>
+    </Modal.Body>
+    <Modal.Footer>
+      <Button variant="secondary" onClick={handleAlertClose}>
+        Close
       </Button>
     </Modal.Footer>
   </Modal>
