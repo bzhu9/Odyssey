@@ -23,8 +23,8 @@ function FullCalendarApp(props) {
   const [friendEvents, setFriendEvents] = useState({});
   const [checked, setChecked] = useState([]);
   const [friendList, setFriendList] = useState({});
+  const [calRef, setCalRef] = useState();
   const navigate = useNavigate();
-  let calendarRef = React.createRef();
   // get events from DB
 
   async function getData() {
@@ -111,6 +111,7 @@ function FullCalendarApp(props) {
       // refresh();
       getData();
       getFriendsEvents();
+      setCalRef(React.createRef());
       // console.log("hey");
     }
     return () => {ignore = true;}
@@ -124,21 +125,35 @@ function FullCalendarApp(props) {
     if (event.key == 'c') {
       navigate("../addEvent")
     }
+    // if (event.key == 'j') {
+    //   let calendarApi = calendarRef.current.getApi()
+    //   calendarApi.next()
+    // }
+    // if (event.key == 'k') {
+    //   let calendarApi = calendarRef.current.getApi()
+    //   calendarApi.prev()
+    // }
+  }, []);
+  const handleNavigatePress = useCallback((event) => {
+    console.log(`Key pressed: ${event.key}`);
+
     if (event.key == 'j') {
-      let calendarApi = calendarRef.current.getApi()
+      let calendarApi = calRef.current.getApi()
       calendarApi.next()
     }
     if (event.key == 'k') {
-      let calendarApi = calendarRef.current.getApi()
+      let calendarApi = calRef.current.getApi()
       calendarApi.prev()
     }
-  }, []);
+  }, [calRef]);
 
   useEffect(() => {
     window.addEventListener('keydown', handleKeyPress);
+    window.addEventListener('keydown', handleNavigatePress);
 
     return () => {
       window.removeEventListener('keydown', handleKeyPress);
+      window.removeEventListener('keydown', handleNavigatePress);
     }
   });
 
@@ -282,7 +297,7 @@ function FullCalendarApp(props) {
       <FullCalendar
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         editable
-        ref={calendarRef}
+        ref={calRef}
         initialView="dayGridWeek"
         headerToolbar={{
           right: 'eventReq,classSearch,import,genClass,courses,chat,social',
