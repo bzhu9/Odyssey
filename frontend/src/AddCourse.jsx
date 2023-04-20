@@ -22,7 +22,7 @@ export const AddCourse = (props) => {
           processedCourseList.push({
             //value: c.subject + " " + c.number,
             value: c._id,
-            label: c.subject + " " + c.number, 
+            label: c.subject + " " + c.number + " with " + c.professor, 
             id: c._id
           });
         }
@@ -46,7 +46,7 @@ export const AddCourse = (props) => {
         processedCourseList.push({
           //value: c.subject + " " + c.number,
           value: c._id,
-          label: c.subject + " " + c.number, 
+          label: c.subject + " " + c.number + " with " + c.professor, 
           id: c._id
         });
       }
