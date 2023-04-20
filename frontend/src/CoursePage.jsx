@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import api from "./apis";
 import { FaCheck, FaTimes } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
+//import { useParams } from "react-router-dom";
 import Select, { components } from "react-select";
 import {
 Nav,
@@ -19,11 +20,93 @@ const myCourses = [
   { value: "option 4", label: "option 4" },
 ];
 
-export const CoursePage = (props) => {
-  const navigate = useNavigate();
+async function getCourse(courseID) {
+  const courseObj = await api.getSingleCourse(courseID);
+  console.log(courseObj.data);
+  return courseObj.data;
+}
 
+export const CoursePage = (props) => {
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [note, setNote] = useState("");
+  const [avgRating, setAvgRating] = useState("");
+  const [reviews, setReviews] = useState([]);
+  const [courseTitle, setCourseTitle] = useState("");
+
+
+  const courseID = sessionStorage.getItem("courseId");
+  console.log(courseID);
+  const [courseObj, setCourseObj] = useState({});
+  const navigate = useNavigate();
+  //get the course object given the course id
+  useEffect(() => {
+    const fetchObject = async () => {
+      const response = await getCourse(courseID);
+      //console.log("response: ");
+      //console.log(response);
+      setCourseObj(response);
+    };
+    fetchObject();
+  }, [courseID]);
+
+  useEffect(() => {
+    //preload all of the needed information
+    let name = courseObj.subject + " " + courseObj.number + " with " + courseObj.professor;
+    setCourseTitle(name);
+
+    //get the average rating
+    if (courseObj.reviewcount === 0) {
+      //no reviews so the rating should say N/A
+      setAvgRating("N/A");
+    } else {
+      //rating up to 2 decimal points
+      const score = (courseObj.totalscore / courseObj.reviewcount).toFixed(2);
+      // console.log("tof score")
+      // console.log(typeof courseObj.totalscore);
+      // console.log(typeof courseObj.reviewcount);
+
+      setAvgRating(score);
+    }
+
+    //get the reviews
+    //get review list
+    async function getReviews() {
+      let r = [];
+
+      const rawReviews = (await api.getMyReviews({ id: courseID})).data;
+      //data has nothing
+      //console.log(rawReviews);
+      for (let i = 0; i < rawReviews.length; i++) {
+        //get the course object
+        r.push({
+          id: rawReviews[i]._id,
+          rating: rawReviews[i].stars,
+          text: rawReviews[i].text,
+          user: rawReviews[i].user, //idk if we need this but added it just in case
+        })
+      }
+      // console.log("rev")
+      // console.log(r);
+      // console.log(r[0].text);
+      setReviews(r);
+    }
+
+    //call getReviews
+    getReviews();
+    //console.log("revs");
+    //console.log(reviews);
+
+
+ }, [courseObj]);
+
+// checking reviews is populated correctly
+//  useEffect(() => {
+//   console.log("rev2")
+//   console.log(reviews);
+//  }, [reviews]);
+  
+  
+
 
 
 
@@ -41,7 +124,7 @@ export const CoursePage = (props) => {
               marginTop: "-230px",
               marginLeft: "-97px",
              
-            }}>CS 307 with Prof. Turkstra</h2>  
+            }}>{courseTitle}</h2>  
     <p>{"\n"}</p>
    <p style={{
              
@@ -49,7 +132,7 @@ export const CoursePage = (props) => {
              marginTop: "-180px",
              marginLeft: "-60px",
             
-           }}>Average rating: </p>
+           }}>Average rating: {avgRating} </p>
                <p>{"\n"}</p>
 
    <h3 style={{
@@ -76,20 +159,13 @@ export const CoursePage = (props) => {
 
 
             }}>
-            {myCourses.map(item => {
-            const ref = React.createRef();
-            return (
-                <li key={item.id} ref={ref} >
-                {/* <a href="localhost:3500/login">{item.name} {item.status} {item.privacy}</a> */}
-                {/* <button onClick={() => redirectToProfile(item)}> */}
-                {/*have this show add review page if there's no review yet */}
-                
-                   {item.value} 
-                  
-                </li>
-
-                );
-             })}
+            {reviews.map(review => (
+              <li key={review.id}>
+                <p>Rating: {review.rating}</p>
+                <p>Text: {review.text}</p>
+                <p>User: {review.user}</p>
+              </li>
+            ))}            
          </ul>
    </div>
 

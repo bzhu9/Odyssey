@@ -53,7 +53,8 @@ export const searchOpenClass = payload => api.post("/openclass", payload);
 export const getAllCourses = () => api.get("/course");
 export const getMyCourses = payload => api.post("/user/getCourses", payload);
 export const setCourses = payload => api.post("/user/setCourses", payload);
-export const getCourseWithID = payload => api.post("/course/getWithID", payload);
+export const getSingleCourse = id => api.get(`/course/single/${id}`);
+//export const getCourseWithID = payload => api.post("/course/single/${id}", payload);
 
 //message api -----------------------------------------------------------------
 export const sendMessage = payload => api.post("/message/send", payload);
@@ -69,6 +70,7 @@ export const getAllReviews = () => api.get("/review/");
 export const addReview = payload => api.post("/review/add", payload);
 export const editReview = payload => api.post("/review/edit", payload);
 export const getSingleReview = payload => api.get("/review/single", payload);
+export const getMyReviews = payload => api.post("/course/getReviews", payload);
 
 //personal note api -------------------------------------------------------------------------
 export const getAllNotes = () => api.get("/note/");
@@ -119,7 +121,7 @@ const apis = {
     getAllCourses,
     getMyCourses,
     setCourses,
-    getCourseWithID,
+    getSingleCourse,
 
     sendMessage,
     createChat,
@@ -133,6 +135,7 @@ const apis = {
     addReview,
     editReview,
     getSingleReview,
+    getMyReviews,
 
     getAllNotes,
     getSingleNote,

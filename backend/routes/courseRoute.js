@@ -1,5 +1,6 @@
 const router = require('express').Router();
 let Course = require('../models/Course');
+let Review = require('../models/Review');
 const mongoose = require('mongoose');
 const { ObjectId } = require('mongodb');
 const { RestartProcess } = require('concurrently');
@@ -11,7 +12,14 @@ router.route("/").get((req, res) => {
     .catch(err => res.status(400).json("Error: " + err));
 });
 
-// Get course by ID --------------------------------------
+// Get a single course by ID --------------------------------------
+router.route('/single/:_id').get(async (req, res) => {
+    Course.findOne({ _id: req.params._id }).lean()
+    .then(course => res.json(course))
+    .catch(err => res.status(400).json('Error: ' + err));
+});
+
+// Get one course using courseID --------------------
 router.route("/getWithID").post(async (req, res) => {
     const id = req.body.id;
     const course = await Course.findOne({ _id: id }).lean();
@@ -82,6 +90,39 @@ router.route('/addscore').post(async (req, res) => {
         }
     );
     res.status(200).json({message: 'added'})
+})
+router.route("/getReviews").post(async (req, res) => {
+    const id = req.body.id;
+    const course = await Course.findOne({ _id: id })
+    .catch(err => res.status(400).json("Error: " + err));
+    
+    if (course) {
+        console.log("this is the course");
+        console.log(course);
+        let reviewList = [];
+        console.log("course review length " + course.reviews.length);
+        for (let i = 0; i < course.reviews.length; i++) {
+            let id = course.reviews[i];
+            console.log("this is the id: " + id);
+            // have to have _id, or else it will search friends list too
+            let review = await Review.findOne({ _id: id }).lean();
+            if (review) {
+                reviewList.push({
+                    text: review.text,
+                    stars: review.stars,
+                    user: review.user,
+                    course: review.course,
+                    _id: review._id
+                });
+            }
+        }
+        console.log("this is the review list: ");
+        console.log(reviewList);
+        res.status(200).json(reviewList);
+    }
+    else {
+        res.status(401).json({ message: "ID does not exist" });
+    }
 })
 
 module.exports = router;

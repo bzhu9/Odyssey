@@ -67,7 +67,7 @@ export const Courses = (props) => {
     const handleSubmit = (e) => {
         e.preventDefault();
     }
-
+    /*
     const myCourses = [
         {
           id: '1232',
@@ -89,10 +89,8 @@ export const Courses = (props) => {
             firstname: 'CS 307',
             lastname: 'Reviewed',
           },
-          
-       
-        
       ];
+    */
 
     async function getUserData() {
         const email = sessionStorage.getItem("user");
@@ -106,11 +104,17 @@ export const Courses = (props) => {
         setWorkdayEnd(user.data.user.workdayEnd);
         let c = [];
         let rawCourses = (await api.getMyCourses({ email: email})).data;
+        //console.log(rawCourses);
         for (let i = 0; i < rawCourses.length; i++) {
             //console.log(rawCourses[i].subject + " " + rawCourses[i].number);
             //+ " with " + rawCourses[i].professor
-            c.push(rawCourses[i].subject + " " + rawCourses[i].number );
+            c.push( {
+              id: rawCourses[i]._id,
+              name: rawCourses[i].subject + " " + rawCourses[i].number 
+            });
         }
+        console.log("this is course list: ");
+        console.log(c);
         setCourses(c);
     }
 
@@ -291,7 +295,7 @@ export const Courses = (props) => {
 
 
             }}>
-            {myCourses.map(item => {
+            {courses.map(item => {
             const ref = React.createRef();
             return (
                 <li key={item.id} ref={ref} >
@@ -299,8 +303,11 @@ export const Courses = (props) => {
                 {/* <button onClick={() => redirectToProfile(item)}> */}
                 {/*have this show add review page if there's no review yet */}
                 <Link to="/coursePage">                
-                <button>
-                    {item.id} {item.firstname} {item.lastname}
+                {/* <button> */}
+                <button onClick={() => {
+                  sessionStorage.setItem('courseId', item.id);
+                }}>
+                    {item.name}
                 </button>
                 </Link>
                 </li>

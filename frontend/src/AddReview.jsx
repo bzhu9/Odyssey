@@ -145,8 +145,6 @@ export const AddReview = (props) => {
                     alert(err.response.data.message);
                   }
                 });
-
-      alert("submitted");
       
      }
 
