@@ -65,6 +65,15 @@ const levelOptions = [
 
   ];
 
+  const c = [
+    { value: "pls", label: "work" },
+    { value: "pls", label: "work" },
+    { value: "pls", label: "work" },
+    { value: "hi", label: "1"},
+    { value: "test", label: "2" },
+
+  ];
+
 
 
 export const Search = (props) => {
@@ -206,6 +215,7 @@ export const Search = (props) => {
 
   
       </div>
+      <button size="45" className="reset-btn" >Search</button>
 
 <div>
           </div>
@@ -213,7 +223,28 @@ export const Search = (props) => {
            {'\n'} 
         </p>
          <h3>Results</h3>
+         <ul  style={{
+              overflow: "auto",
+              // position: "absolute",
+              width: "500px",
+              // marginTop: "100px",
+              // height: "350px",
+              borderRadius: "10px",
+              // marginLeft: "-305px",
 
+              backgroundColor:"#CEB888",
+              color:"black",
+              
+
+
+            }}>
+            {c.map(c => (
+              <li key={c.id}>
+                <p>{c.value}</p>
+              
+              </li>
+            ))}            
+         </ul>
           <p>
            {'\n'} 
         </p>
@@ -221,18 +252,8 @@ export const Search = (props) => {
          
         </form>
       
-        <div>
-        <Link to="/courses">
-          <button size="45" className="reset-btn">
-           Go back to courses
-          </button>
-        </Link>
-        </div> 
-        <Link to="/cal">
-          <button size="45" className="reset-btn" >
-            Weekly View
-          </button>
-        </Link>
+       
+       
       </div>
     </div>
   );

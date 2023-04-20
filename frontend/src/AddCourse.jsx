@@ -69,7 +69,7 @@ export const AddCourse = (props) => {
       .then( async res => {
           // console.log(res);
           alert("Courses set successfully");
-          navigate("../settings");
+          navigate("../courses");
       }).catch (function (error) {
           if (error.response) {
               alert(error.response.data.message);

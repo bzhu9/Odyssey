@@ -90,7 +90,7 @@ export const SearchReview = (props) => {
   const [review, setReview] = useState("");
   const [hover, setHover] = useState(0);
   const [rating, setRating] = useState(0);
-  const [name, setName] = useState(0);
+  const [name, setName] = useState("");
   const [sidebar, setSidebar] = useState(true);
   const showSidebar = () => setSidebar(!sidebar);
 
