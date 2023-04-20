@@ -45,7 +45,7 @@ export const ChangeReview = (props) => {
     setCourseID(sessionStorage.getItem("courseId"));
   }, []);
 
-  //this useEffect will run only when the dependencies are changed
+  //this useEffect will run only when the dependencies are changed (courseID)
   useEffect(() => {
     const fetchData = async () => {
       const courseResponse = await getCourse(courseID);
