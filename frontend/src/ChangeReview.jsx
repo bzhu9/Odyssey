@@ -34,50 +34,37 @@ export const ChangeReview = (props) => {
   const [courseObj, setCourseObj] = useState({});
   const [reviewObj, setReviewObj] = useState({});
   const [userObj, setUserObj] = useState({});
+  const [hasDisplayedAlert, setHasDisplayedAlert] = useState(false);
+  const [courseID, setCourseID] = useState("");
 
-  const courseID = sessionStorage.getItem("courseId");
 
+  // const courseID = sessionStorage.getItem("courseId");
+  //this use effect will only run once
+  useEffect(() => {
+    //const courseID = sessionStorage.getItem("courseId");
+    setCourseID(sessionStorage.getItem("courseId"));
+  }, []);
+
+  //this useEffect will run only when the dependencies are changed
+  useEffect(() => {
+    const fetchData = async () => {
+      const courseResponse = await getCourse(courseID);
+      setCourseObj(courseResponse);
   
-  //get the course object
-  useEffect(() => {
-    const fetchObject = async () => {
-      const response = await getCourse(courseID);
-      //console.log("response: ");
-      //console.log(response);
-      setCourseObj(response);
-    };
-    fetchObject();
-
-    const fetchUserObj = async () => {
-      const pl = {email: sessionStorage.getItem("user")};
-      const response = await api.getUser(pl);
-      setUserObj(response.data.user);
-    }
-    fetchUserObj();
-  }, [courseID]);
-
-  //get the review objects
-  useEffect(() => {
-    //get the title 
-    let name = "Change Review for " + courseObj.subject + " " + courseObj.number + " with " + courseObj.professor;
-    setTitle(name);
-    //get the review
-    async function getReviews() {
+      const userResponse = await api.getUser({email: sessionStorage.getItem("user")});
+      setUserObj(userResponse.data.user);
+      const uObj = userResponse.data.user;
+  
+      let name = "Change Review for " + courseResponse.subject + " " + courseResponse.number + " with " + courseResponse.professor;
+      setTitle(name);
+  
       let r;
       let hasReview = false;
       let index = -1;
-
+  
       const rawReviews = (await api.getMyReviews({ id: courseID})).data;
-      //data has nothing
-      //console.log(rawReviews[0].user);
-      //console.log(typeof rawReviews[0].user);
-      //console.log(typeof userObj._id);
       for (let i = 0; i < rawReviews.length; i++) {
-        //check if the review is the same as the user
-        let usr = rawReviews[i].user;
-        let usrId = userObj._id;
-        //if (usr.toString() === usrId.toString()) {
-        if (rawReviews[0].user === userObj._id) {
+        if (rawReviews[0].user === uObj._id) {
           hasReview = true;
           r = rawReviews[i];
           setReviewObj(rawReviews[i]);
@@ -86,27 +73,94 @@ export const ChangeReview = (props) => {
           i = rawReviews.length;
         }
       }
-      //if yes then repopulate the data with that review
       if (hasReview === true) {
-        //set the text
         setReview(r.text);
-        //set the rating
         setRating(r.stars);
-
       } else {
         //if no then show a message that says review has not been made
         //keep the nav bar
+        console.log("no rev found");
+        console.log(uObj._id);
+        console.log(r);
+        if (!hasDisplayedAlert) {
 
+          setHasDisplayedAlert(true);
+          alert("You have not made a review for this course, please make a review first");
+          navigate("../courses");
+        }
       }
-    }
+    };
+    fetchData();
+  }, [courseID]);
+  
+  
+  // //get the course object
+  // useEffect(() => {
+  //   const fetchObject = async () => {
+  //     const response = await getCourse(courseID);
+  //     setCourseObj(response);
+  //   };
+  //   fetchObject();
 
-    //call getReviews
-    getReviews();
-    //console.log("revs");
-    //console.log(reviews);
+  //   const fetchUserObj = async () => {
+  //     const pl = {email: sessionStorage.getItem("user")};
+  //     const response = await api.getUser(pl);
+  //     setUserObj(response.data.user);
+  //   }
+  //   fetchUserObj();
+  // }, [courseID]);
+
+  // //get the review objects
+  // useEffect(() => {
+  //   //get the title 
+  //   let name = "Change Review for " + courseObj.subject + " " + courseObj.number + " with " + courseObj.professor;
+  //   setTitle(name);
+  //   //get the review
+  //   async function getReviews() {
+  //     let r;
+  //     let hasReview = false;
+  //     let index = -1;
+
+  //     const rawReviews = (await api.getMyReviews({ id: courseID})).data;
+  //     //data has nothing
+  //     //console.log(rawReviews[0].user);
+  //     //console.log(typeof rawReviews[0].user);
+  //     //console.log(typeof userObj._id);
+  //     for (let i = 0; i < rawReviews.length; i++) {
+  //       //check if the review is the same as the user
+  //       let usr = rawReviews[i].user;
+  //       let usrId = userObj._id;
+  //       //if (usr.toString() === usrId.toString()) {
+  //       if (rawReviews[0].user === userObj._id) {
+  //         hasReview = true;
+  //         r = rawReviews[i];
+  //         setReviewObj(rawReviews[i]);
+  //       }
+  //       if (hasReview === true) {
+  //         i = rawReviews.length;
+  //       }
+  //     }
+  //     //if yes then repopulate the data with that review
+  //     if (hasReview === true) {
+  //       //set the text
+  //       setReview(r.text);
+  //       //set the rating
+  //       setRating(r.stars);
+
+  //     } else {
+  //       //if no then show a message that says review has not been made
+  //       //keep the nav bar
+
+  //     }
+  //   }
+
+  //   //call getReviews
+  //   getReviews();
+  //   //console.log("revs");
+  //   //console.log(reviews);
 
 
-  }, [courseObj]);
+  // }, [courseObj]);
   //find the review with the exact user
 
 
