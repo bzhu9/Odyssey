@@ -24,7 +24,29 @@ function FullCalendarApp(props) {
   const [checked, setChecked] = useState([]);
   const [friendList, setFriendList] = useState({});
   const [calRef, setCalRef] = useState();
+  const [eventAlerts, setEventAlerts] = useState({});
   const navigate = useNavigate();
+
+
+  async function triggerEventNotification(eventId) {
+    alert(`${eventId} is starting soon.`)
+  }
+  const addTimeout = (eventId, delay) => {
+    const timeoutId = setTimeout(() => {
+      // window.alert('Alert!');
+      triggerEventNotification(eventId);
+      removeTimeout(timeoutId);
+    }, delay);
+    setEventAlerts([...eventAlerts, {eventId: timeoutId}]);
+  };
+
+  const removeTimeout = (eventId) => {
+    clearTimeout(eventAlerts[eventId]);
+    const updatedAlerts = eventAlerts;
+    delete updatedAlerts[eventId]
+    setEventAlerts(updatedAlerts);
+  };
+
   // get events from DB
 
   async function getData() {
@@ -35,6 +57,8 @@ function FullCalendarApp(props) {
     }
     console.log("hello there");
     const rawEvents = await api.getUsersEvents({userEmail: userEmail});
+
+    const now = new Date();
 
     // https://fullcalendar.io/docs/event-object
     let processedEvents = []
@@ -49,6 +73,14 @@ function FullCalendarApp(props) {
         backgroundColor: e.location.toLowerCase() === "virtual" ? "green" : "blue",
         editable: true
       })
+
+      // check time and add alerts
+      // if (alertTime < now) {
+        // alertTime.setDate(alertTime.getDate() + 1); // if alert time is in the past, add 1 day to set it for tomorrow
+      // }
+  
+      // const timeRemaining = alertTime.getTime() - now.getTime();
+      // addTimeout(e._id, timeRemaining);
     }
     setOwnEvents(processedEvents);
   }
@@ -119,6 +151,12 @@ function FullCalendarApp(props) {
   useEffect (() => {
     getEvents();
   }, [ownEvents, friendEvents, checked]);
+
+  useEffect (() => {
+    return () => {
+      Object.keys(eventAlerts).forEach(key => clearTimeout(eventAlerts[key]));
+    };
+  }, [eventAlerts]);
 
   const handleKeyPress = useCallback((event) => {
     console.log(`Key pressed: ${event.key}`);
