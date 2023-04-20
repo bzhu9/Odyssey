@@ -323,7 +323,7 @@ a:link { text-decoration: none; }
   
   position: relative;
   /* margin-left: 25%; */
-  margin-left: -10%;
+  margin-left: 45%;
   display: flex;
   flex-direction: column;
 
@@ -337,7 +337,7 @@ a:link { text-decoration: none; }
   width: 200px;
   position: relative;
   /* margin-left: 25%; */
-  margin-left: -10%;
+  margin-left: 45%;
   display: block;
 
 }
@@ -410,17 +410,15 @@ a:link { text-decoration: none; }
     
     }
 
-    #settings-button {
-      border: none;
-      font-size: 65px;
+    #homepage-icon-button {
+      font-size: 50px;
       background: none;
-      border-radius:none;
       cursor: pointer;
       color: #CEB888;
-      position: relative; 
-      margin-left: 150%; 
-      margin-top: -380%; 
-      display: block;
+      display: flex;
+      flex-direction: column;
+
+    
 
       /* margin-bottom: 100%;  */
       /* position: absolute;

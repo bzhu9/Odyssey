@@ -9,7 +9,7 @@ import interactionPlugin from '@fullcalendar/interaction';
 // import { IconButton } from "rsuite";
 // import GearIcon from '@rsuite/icons/Gear';
 // import SpinnerIcon from '@rsuite/icons/legacy/Spinner';
-import { FaPlus, FaCogs } from "react-icons/fa";
+import { FaPlus, FaCogs, FaComments, FaBook, FaUserFriends, FaRegBookmark, FaSquare} from "react-icons/fa";
 
 // import {IconButton} from '@primer/react'
 
@@ -300,7 +300,7 @@ function FullCalendarApp(props) {
         ref={calRef}
         initialView="dayGridWeek"
         headerToolbar={{
-          right: 'eventReq,classSearch,import,genClass,courses,chat,social',
+          right: 'eventReq,classSearch,import,genClass',
           center: 'timeGridWeek,dayGridMonth,today,prev,next',
           // center: 'timeGridWeek,dayGridMonth,eventReq,classSearch,import,genClass,courses,friends',
         }}
@@ -407,10 +407,65 @@ function FullCalendarApp(props) {
       />
      
   <Link to="/addEvent">
-  <button id = "plus-button"><FaPlus/></button>
+  <button id = "homepage-icon-button" style={{
+                      fontSize: "20px",
+                      position: "absolute",
+                      marginTop: "-380px",
+                      background: "#CEB888",
+                      color: "black",
+                      borderRadius: "100px",
+                      marginLeft: "10px"
+                    }}><FaPlus/></button>
   </Link>
+  <button id = "homepage-icon-button" style={{
+                      position: "absolute",
+                      color: "#8d1919",
+                      fontSize: "120px",
+                      borderWidth: "2px",
+                      marginTop: "-600px",
+                      marginLeft: "1150px",
+                      transform: " scaleX(0.8) scaleY(3.5)",
+                      // opacity:"0.8",
+
+                     
+
+
+
+
+                    }}><FaSquare/> </button>
   <Link to="/settings">
-  <button id = "settings-button"><FaCogs/> </button>
+  <button id = "homepage-icon-button" style={{
+                      position: "absolute",
+                      marginTop: "-380px",
+                      marginLeft: "170px"
+
+                    }}><FaCogs/> </button>
+  </Link>
+
+  <Link to="/chat">
+  <button id = "homepage-icon-button" style={{
+                      position: "absolute",
+                      marginTop: "-330px",
+                      marginLeft: "170px",
+                  
+
+                    }}><FaComments/> </button>
+  </Link>
+  <Link to="/courses">
+  <button id = "homepage-icon-button" style={{
+                      position: "absolute",
+                      marginTop: "-270px",
+                      marginLeft: "170px"
+
+                    }}><FaBook/> </button>
+  </Link>
+  <Link to="/friends">
+  <button id = "homepage-icon-button" style={{
+                      position: "absolute",
+                      marginTop: "-210px",
+                      marginLeft: "170px"
+
+                    }}><FaUserFriends/> </button>
   </Link>
   {/* <div className="dropdown" id = "override">
   <button id = "settings-button"><FaCogs/> </button>
