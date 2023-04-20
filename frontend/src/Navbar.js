@@ -9,31 +9,37 @@ NavBtnLink,
 } from './NavbarElements';
 
 
-const Navbar = () => {
-return (
-	<>
-	<Nav>
-		<Bars />
+const Navbar = ({courseID}) => {
 
-		<NavMenu>
-		<NavLink to='/coursePage' activeStyle>
-			Course Reviews
-		</NavLink>
-		<NavLink to='/changeNote' activeStyle>
-			Note
-		</NavLink>
-		<NavLink to='/changeReview' activeStyle>
-			My Review
-		</NavLink>
-	
+
+	const handleMyReviewClick = () => {
+		console.log(courseID);
+		sessionStorage.setItem("courseId", courseID);
+	};
+	return (
+		<>
+		<Nav>
+			<Bars />
+
+			<NavMenu>
+			<NavLink to='/coursePage' activeStyle>
+				Course Reviews
+			</NavLink>
+			<NavLink to='/changeNote' activeStyle>
+				Note
+			</NavLink>
+			<NavLink to='/changeReview' activeStyle onClick={handleMyReviewClick}>
+				My Review
+			</NavLink>
 		
-		{/* Second Nav */}
-		{/* <NavBtnLink to='/sign-in'>Sign In</NavBtnLink> */}
-		</NavMenu>
-		
-	</Nav>
-	</>
-);
+			
+			{/* Second Nav */}
+			{/* <NavBtnLink to='/sign-in'>Sign In</NavBtnLink> */}
+			</NavMenu>
+			
+		</Nav>
+		</>
+	);
 };
 
 export default Navbar;

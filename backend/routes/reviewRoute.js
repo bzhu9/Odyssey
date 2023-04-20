@@ -115,12 +115,18 @@ router.route('/edit').post(async (req, res) => {
     const text = req.body.text;
     const reviewID = req.body.reviewID;
     const stars = req.body.stars;
-    //update the reviewObj 
-    const reviewObj = Review.findOne({_id: reviewID}).exec();
+    //update the reviewObj
+    console.log("reviewID: "); 
+    console.log(reviewID);
+    const reviewObj = await Review.findOne({_id: reviewID}).exec();
     if (stars != reviewObj.stars) {
         //get the course
         //this line might be wrong have to test it still
+        console.log("reviewObj.course");
+        console.log(reviewObj.course);
         const course = await Course.findOne({_id: reviewObj.course});
+        console.log("course");
+        console.log(course);
         if (course.reviews.includes(reviewObj._id)) {
             //update the total score
             course.totalscore = course.totalscore - reviewObj.stars + stars;

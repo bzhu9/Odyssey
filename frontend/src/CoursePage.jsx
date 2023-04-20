@@ -115,7 +115,7 @@ export const CoursePage = (props) => {
   };
   return (
     <>
-    <Navbar />
+    <Navbar courseID={courseID}/>
     <div>
 
    <h2  style={{
