@@ -206,7 +206,7 @@ export const Friends = (props) => {
                 <li key={item.id} ref={ref} >
                 {/* <a href="localhost:3500/login">{item.name} {item.status} {item.privacy}</a> */}
                 <button onClick={() => redirectToProfile(item)}>
-                    {item.name} {item.privacy}
+                    {item.name} | {item.privacy}
                 </button>
                 </li>
                 );
@@ -243,7 +243,7 @@ export const Friends = (props) => {
             const ref = React.createRef();
             return (
                 <li key={item.id} ref={ref} >
-                <div>{item.name} {item.status} {item.privacy}
+                <div>{item.name} | {item.status} | {item.privacy}
                 &nbsp;
                 <button type="submit" onClick={() => acceptFriendRequest(item.email, item.name)}><FaCheck color="green"/> </button>
                 <button type="submit" onClick={() => deleteFriendRequest(item.email)}><FaTimes color="red"/> </button>
@@ -256,20 +256,22 @@ export const Friends = (props) => {
         </div>
          
         <Link to="/cal">
-            <button size="45" className="reset-btn" type="submit">Back to Calendar</button>
+            <button size="45" className="reset-btn" >Back to Calendar</button>
         </Link>
-        {/* <Link to='/courses' >
+
+
+        <Link to='/cal' >
 			
       <button  style={{
                 fontSize: "40px",
                           color:"#CEB888",
                 background: "none",
                 position: "absolute",
-                marginLeft: "-500px",
-                marginTop: "-500px",
+                marginLeft: "-800px",
+                marginTop: "-450px",
     
                         }}><FaArrowLeft/> </button>
-            </Link> */}
+            </Link> 
         {/* <Link to="/cal">
             <button size="45" className="reset-btn" type="submit">Add Friend</button>
         </Link> */}

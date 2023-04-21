@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from "react"
 import api, { isFriend } from "./apis"
 import { Link, useNavigate, useLocation } from "react-router-dom";
+import { FaArrowLeft } from 'react-icons/fa';
+
 export const FriendProfile = (props) => {
     const { state } = useLocation();
     const navigate = useNavigate();
@@ -94,6 +96,19 @@ export const FriendProfile = (props) => {
     }, []);
     
     return (
+        <div>
+        <Link to='/friends' >
+			
+        <button  style={{
+                  fontSize: "40px",
+                  color:"#CEB888",
+                  background: "none",
+                  position: "absolute",
+                  marginLeft: "-600px",
+                  marginTop: "-20px",
+      
+                          }}><FaArrowLeft/> </button>
+              </Link>
         <div className="auth-form-container">
             <h2>User's Profile</h2>
             <form  >
@@ -134,15 +149,16 @@ export const FriendProfile = (props) => {
             <button className="reg-btn" onClick={() => props.onFormSwitch('register')}>Create an account</button>
             <button className="reset-btn" onClick={() => props.onFormSwitch('reset')}>Reset Password</button> */}
             {/* not sure why the buttons are small */}
-            <Link to="/friends">
+            {/* <Link to="/friends">
                 <button size="45" className="reg-btn">Friends</button>
-            </Link>
-            <Link to="/cal">
+            </Link> */}
+            {/* <Link to="/cal">
                 <button size="45" className="reset-btn" type="submit">Weekly View</button>
             </Link>
-            
+             */}
            
 
+        </div>
         </div>
     )
 }
