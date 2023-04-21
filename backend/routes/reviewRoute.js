@@ -28,44 +28,75 @@ router.route('/add').post(async (req, res) => {
     const course = req.body.course;
     const stars = req.body.stars;
 
-    //create the new review
-    const newReview = new Review({
-        "text": text,
-        "user": user,
-        "course": course,
-        "stars": stars
-    });
-    newReview.save()
-        .catch(err => res.status(400).json("Error: " + err));
-
     //get course object
     const courseObj = await Course.findById(course);
-    if (!courseObj) {
-        //course doesnt exist
-        console.log("course doesn't exist????");
-    }
-    //add review
-    courseObj.reviews.push(newReview._id);
-    //update total score
-    courseObj.totalscore = courseObj.totalscore + stars;
-    //update total rewiews
-    courseObj.reviewcount = courseObj.reviewcount + 1;
-    //save course obj
-    courseObj.save()
-        .catch(err => res.status(400).json({message: 'Error: ' + err}));
-
-    //add the review id to the user
+    //console.log(courseObj);
+    //get the user object
     const userObj = await User.findById(user);
-    if (!userObj) {
-        //user doesn't exist
-        console.log("user doesn't exist????");
+    let hasReview = false;
+    let r;
+    console.log(courseObj.reviews.length);
+    for (let i = 0; i < courseObj.reviews.length; i++) {
+        //get the review ID
+        r = await Review.findById(courseObj.reviews[i]);
+        // console.log("this is the course");
+        // console.log(r);
+        // console.log("this is the user");
+        // console.log(userObj);
+        // console.log("comparing:");
+        // console.log(r.user.equals(userObj._id));
+        
+        //if the review has already been made
+        if (r.user.equals(userObj._id)) {
+            hasReview = true;
+        }
+        //check if the review has the same user
+        console.log(typeof r.user);
+        console.log(typeof userObj._id);
     }
-    userObj.reviews.push(newReview._id);
-    userObj.save()
-        .catch(err => res.status(400).json({message: 'Error: ' + err}));
+    //find out if the course already has a review
+    //if not then continue with adding the review
+/*
     
+*/
+    if (hasReview) {
+        return res.status(200).json({message: "hasReview"});
+    } else {
+            //create the new review
+        const newReview = new Review({
+            "text": text,
+            "user": user,
+            "course": course,
+            "stars": stars
+        });
+        newReview.save()
+            .catch(err => res.status(400).json("Error: " + err));
+
+        if (!courseObj) {
+            //course doesnt exist
+            console.log("course doesn't exist????");
+        }
+        //add review
+        courseObj.reviews.push(newReview._id);
+        //update total score
+        courseObj.totalscore = courseObj.totalscore + stars;
+        //update total rewiews
+        courseObj.reviewcount = courseObj.reviewcount + 1;
+        //save course obj
+        courseObj.save()
+            .catch(err => res.status(400).json({message: 'Error: ' + err}));
+
+        //add the review id to the user
+        if (!userObj) {
+            //user doesn't exist
+            console.log("user doesn't exist????");
+        }
+        userObj.reviews.push(newReview._id);
+        userObj.save()
+            .catch(err => res.status(400).json({message: 'Error: ' + err}));
     
-    return res.status(200).json("Review added!");
+        return res.status(200).json({message: "Review added!"});
+    }
 });
 
 // Delete a review --------------------------------
