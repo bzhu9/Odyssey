@@ -64,17 +64,17 @@ export const CreateEvent = (props) => {
     let ignore = false;
     if (!ignore) {
       getFriends();
-      //console.log(friendList);
+      console.log(friendList);
     }
     return () => {
       ignore = true;
     };
   }, []);
 
-  useEffect(() => {
-    console.log("this is the friend list:");
-    console.log(friendList);
-  }, [friendList]);
+  // useEffect(() => {
+  //   console.log("this is the friend list:");
+  //   console.log(friendList);
+  // }, [friendList]);
 
   const submit = async () => {
     if (title === "" || date === "" || startTime === "" || endTime === "") {

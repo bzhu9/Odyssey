@@ -76,10 +76,10 @@ input {
 
 .friendDropdown {
   
-  border-radius:36px;
+  /* border-radius:36px; */
   display:inline-block;
-  overflow:hidden;
-  height: 40px;
+  /* overflow:hidden; */
+  /* height: 40px; */
   background:#cccccc;
   border:1px solid #cccccc;
   margin: 0.5rem 0;
