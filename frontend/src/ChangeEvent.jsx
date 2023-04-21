@@ -11,8 +11,8 @@ import coordinates from './coordinates.json'
 
 async function getEvent(eventID) {
     const eventObj = await api.getSingleEvent(eventID);
-    console.log(eventObj);
-    console.log(eventObj.data.note);
+    // console.log(eventObj);
+    // console.log(eventObj.data.note);
     //setTitle(eventObj.data.title);
     return eventObj.data
 }
@@ -86,14 +86,14 @@ export const ChangeEvent = (props) => {
         setEndTime(((endDay.getHours() < 10) ? "0" : "") + endDay.getHours() + ":" + ((endDay.getMinutes() < 10) ? "0" : "") + endDay.getMinutes());
         if (loc.state) {
             setLocation(loc.state.location);
-            console.log("RIGHT HEREASDKLFASDLKHFLAKSDHFLKASDHFLKASDHFLKASDHLKFHASD");
+            // console.log("RIGHT HEREASDKLFASDLKHFLAKSDHFLKASDHFLKASDHFLKASDHLKFHASD");
             window.history.replaceState({}, document.title);
         }
         else {
             setLocation(eventObj.location);
         }
-        console.log("THIS IS THE ALERT TIME");
-        console.log(eventObj.alertTime);
+        // console.log("THIS IS THE ALERT TIME");
+        // console.log(eventObj.alertTime);
         setNotifTime(`${eventObj.alertTime}`);
         setLocation(eventObj.location);
         setNote(eventObj.note);
@@ -142,8 +142,8 @@ export const ChangeEvent = (props) => {
           let currentUser = sessionStorage.getItem("user");
           allUsers.splice(allUsers.indexOf(currentUser), 1);
           //value checking
-          console.log("ALL USERS");
-          console.log(allUsers);
+        //   console.log("ALL USERS");
+        //   console.log(allUsers);
           //set the list
           setEventReqList(allUsers);
         } catch (error) {
@@ -158,26 +158,26 @@ export const ChangeEvent = (props) => {
     
       useEffect(() => {
         //value checking
-        console.log("eventReqList");
-        console.log(eventReqList);
+        // console.log("eventReqList");
+        // console.log(eventReqList);
     }, [eventReqList]);
 
     useEffect(() => {
-        console.log(eventReqList); //convert this to objects with ID and email
+        // console.log(eventReqList); //convert this to objects with ID and email
         userReqObj();
      }, [eventReqList]);
 
     useEffect(() => {
-        console.log("HERE");
+        // console.log("HERE");
         setSelectedOptions(preSelectedOptions.map((friend) => ({
             key: friend.id,
             value: friend.id,
             label: friend.email
         })))
-        console.log(preSelectedOptions.map((friend) => ({
-            value: friend.id,
-            label: friend.email
-        })))
+        // console.log(preSelectedOptions.map((friend) => ({
+        //     value: friend.id,
+        //     label: friend.email
+        // })))
         
     }, [preSelectedOptions]);
 
@@ -312,7 +312,7 @@ export const ChangeEvent = (props) => {
             //clear the console for debugging reasons.
             console.clear();
             const userList = eobj.users;
-            console.log(userList[0]);
+            // console.log(userList[0]);
             for (let i = 0; i < userList.length; i++) {
                 let pload = {
                     id: userList[i]
@@ -374,8 +374,8 @@ export const ChangeEvent = (props) => {
 
             //console.log(selectedOptions);
             const values = selectedOptions.map(obj => obj.value);
-            console.log("this is what values is");
-            console.log(values);
+            // console.log("this is what values is");
+            // console.log(values);
             // console.log("after selected");
             // console.log(values);
             const alertTime = parseInt(notifTime);
@@ -391,12 +391,12 @@ export const ChangeEvent = (props) => {
                 alertTime: alertTime
             };
             const response = await api.editEvent(payload);
-            console.log(response.data);
+            // console.log(response.data);
             window.alert("Event modified successfully!");
             navigate("../cal");
 
         } catch (error) {
-            console.log(error);
+            // console.log(error);
             window.alert(error.repsonse.data.message);
         }
     }
