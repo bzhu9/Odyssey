@@ -452,6 +452,7 @@ router.route("/getCourses").post(async (req, res) => {
                 courseList.push({
                     subject: course.subject,
                     number: course.number,
+                    professor: course.professor,
                     _id: course._id
                 });
             }
