@@ -347,7 +347,7 @@ function FullCalendarApp(props) {
 					}
 				})
     }
-    // window.location.reload()
+    window.location.reload()
   }
 
 
