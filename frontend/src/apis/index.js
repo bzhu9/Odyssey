@@ -86,6 +86,7 @@ export const leaveGroup = payload => api.post("/chat/leaveGroup", payload);
 export const getAllReviews = () => api.get("/review/");
 export const addReview = payload => api.post("/review/add", payload);
 export const editReview = payload => api.post("/review/edit", payload);
+export const deleteReview = payload => api.post("/review/delete", payload);
 export const getSingleReview = payload => api.get("/review/single", payload);
 export const getMyReviews = payload => api.post("/course/getReviews", payload);
 
@@ -166,6 +167,7 @@ const apis = {
     getAllReviews,
     addReview,
     editReview,
+    deleteReview,
     getSingleReview,
     getMyReviews,
 

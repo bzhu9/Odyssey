@@ -102,7 +102,7 @@ router.route('/add').post(async (req, res) => {
 // Delete a review --------------------------------
 router.route('/delete').post(async (req, res) => {
     const id = req.body._id;
-    const review = await Event.findOne({_id: id}).exec();
+    const review = await Review.findOne({_id: id}).exec();
 
     if (!review) {
         return res.status(400).json({ message: "Review not found"});

@@ -51,13 +51,16 @@ export const CoursePage = (props) => {
 
   useEffect(() => {
     //preload all of the needed information
+    if (!courseObj) {
+      console.log("course is empty");
+    } else {
     let name = courseObj.subject + " " + courseObj.number + " with " + courseObj.professor;
     setCourseTitle(name);
 
     //get the average rating
     if (courseObj.reviewcount === 0) {
       //no reviews so the rating should say N/A
-      setAvgRating("N/A");
+      setAvgRating("--");
     } else {
       //rating up to 2 decimal points
       const score = (courseObj.totalscore / courseObj.reviewcount).toFixed(2);
@@ -95,20 +98,12 @@ export const CoursePage = (props) => {
     getReviews();
     //console.log("revs");
     //console.log(reviews);
+  }
 
 
  }, [courseObj]);
-
-// checking reviews is populated correctly
-//  useEffect(() => {
-//   console.log("rev2")
-//   console.log(reviews);
-//  }, [reviews]);
   
   
-
-
-
 
   const handleSubmit = (e) => {
     e.preventDefault();

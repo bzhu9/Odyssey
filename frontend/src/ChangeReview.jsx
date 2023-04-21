@@ -86,7 +86,8 @@ export const ChangeReview = (props) => {
 
           setHasDisplayedAlert(true);
           alert("You have not made a review for this course, please make a review first");
-          navigate("../addReview");
+          //navigate("../addReview");
+          navigate("../coursePage");
         }
       }
     };
@@ -171,6 +172,24 @@ export const ChangeReview = (props) => {
     e.preventDefault();
   };
 
+  const deleteRev = async () => {
+    //console.log(reviewObj._id)
+    const pl = {"_id": reviewObj._id};
+    await api
+          .deleteReview(pl)
+          .then((res) => {
+            window.alert("Review Successfully Deleted");
+            //window.location.reload();
+          })
+          .catch((err) => {
+            console.log("yo why are you here");
+            if (err.response) {
+              console.log(err.response.data);
+              alert(err.response.data.message);
+            }
+          });
+  }
+
   const submit = async () => {
     //rating and text are not required, but are prefered
     //make the object
@@ -189,7 +208,8 @@ export const ChangeReview = (props) => {
                 .editReview(payload)
                 .then((res) => {
                   window.alert("Review Successfully Changed");
-                  navigate("../courses");
+                  //navigate("../courses");
+                  navigate("../coursePage");
                 })
                 .catch((err) => {
                   console.log("yo why are you here");
@@ -275,6 +295,13 @@ export const ChangeReview = (props) => {
             <button className="reset-btn" onClick={() => props.onFormSwitch('reset')}>Reset Password</button> */}
         {/* not sure why the buttons are small */}
         <button type="submit" className="reset-btn" onClick={submit}>Submit change</button>
+        <div>
+        <Link to="/courses" onClick={deleteRev}>
+          <button size="45" className="reset-btn">
+           Delete Review
+          </button>
+        </Link>
+        </div> 
         <div>
         <Link to="/courses">
           <button size="45" className="reset-btn">
