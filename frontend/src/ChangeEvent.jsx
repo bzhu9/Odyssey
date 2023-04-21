@@ -478,7 +478,10 @@ export const ChangeEvent = (props) => {
     {/* <button className="link-btn" onClick={() => props.onFormSwitch('calender')}>Go back to Calender</button> */}
     <button onClick={getDirections}>Get Directions</button>
     <Link to="/cal">
-        <button size="45" className="reset-btn" type="submit">Cancel Changes</button>
+        <button size="45"  style={{
+                     width:"500px",
+          
+                              }}>Cancel Changes</button>
     </Link>
 </div>
     )
