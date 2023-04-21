@@ -49,14 +49,52 @@ export const ChangeMealTime = (props) => {
     const showSidebar = () => setSidebar(!sidebar);
 
     const navigate = useNavigate();
+
+
+    useEffect(() => {
+      async function fetchData() {
+        try {
+          //get user object
+          const pl = {email: sessionStorage.getItem("user")};
+          const user = (await api.getUser(pl)).data.user;
+
+          //get the meal time and parse it
+          // console.log(user);
+          //console.log(user.mealTimeStart);
+          //console.log(user.mealTimeEnd);
+          setStartTime(user.mealTimeStart);
+          setEndTime(user.mealTimeEnd);
+      
+        } catch (error) {
+          console.error(error);
+        }
+      }
+      fetchData();
+    }, []);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     const handleSubmit = (e) => {
         e.preventDefault();
     }
 
-    async function setWorkday() {
+    async function setMealTime() {
         const user = sessionStorage.getItem("user");
         if (!user) {
-            alert("Please sign in to change your meal time!")
+            alert("Please sign in to set your meal time!")
         }
 
         const payload = { email: user, startTime: startTime, endTime: endTime};
@@ -64,9 +102,9 @@ export const ChangeMealTime = (props) => {
             alert("Start time cannot be after end time")
         }
         else {
-            await api.setWorkday(payload)
+            await api.setMealTime(payload)
                 .then(res => {
-                    alert(`Changed your meal time successfully`);
+                    alert(`Set your meal time successfully`);
                     navigate("../settings");
                 });
         }
@@ -74,7 +112,7 @@ export const ChangeMealTime = (props) => {
 
     return (
         <div className="auth-form-container">
-        <h2>Change Meal Time</h2>
+        <h2>Set Meal Time</h2>
         <div>
       
       <IconContext.Provider
@@ -141,7 +179,7 @@ export const ChangeMealTime = (props) => {
         <label htmlFor="time">End Time of Meals</label>
         <input size="45" value={endTime} onChange={(e) => setEndTime(e.target.value)} type="time" placeholder="End Time" id="time" name="time" />
         {/* <button type="submit" onClick={() => props.onFormSwitch('calender')}>Submit Changes</button> */}
-        <button type="submit" onClick={setWorkday} >Submit meal time change</button>
+        <button type="submit" onClick={setMealTime} >Submit</button>
     </form>
     {/* <button className="link-btn" onClick={() => props.onFormSwitch('calender')}>Go back to Calender</button> */}
     <Link to="/settings">

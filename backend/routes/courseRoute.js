@@ -26,6 +26,19 @@ router.route("/getWithID").post(async (req, res) => {
     return res.status(200).json({ course: course });
 });
 
+// Get all subjects --------------------
+router.route("/getAllSubjects").get(async (req, res) => {
+    try {
+      const subjects = await Course.distinct("subject");
+      console.log(subjects);
+      res.status(200).json({ subjects });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: "Server error" });
+    }
+});
+
+// Get all course with the subject --------------------
 router.route("/subject").get((req, res) => {
     Course.find({
         subject: req.body.subject
@@ -34,6 +47,42 @@ router.route("/subject").get((req, res) => {
     .catch(err => console.err(err))
 })
 
+// Get the maximum and minimum level of the courses given the subject ------
+router.route("/level").get((req, res) => {
+    Course.find({
+        subject: req.body.subject
+    }, (err, courses) => {
+        if (err) {
+            res.status(500).send(err);
+        } else {
+            //console.log(courses);
+            console.log(courses.length);
+            let min = Infinity;
+            let max = -Infinity;
+            for (let i = 0; i < courses.length; i++) {
+                const course = courses[i];
+                const number = course.number;
+                console.log(number)
+                if (number < min) {
+                    min = number;
+                }
+                if (number > max) {
+                    max = number;
+                }
+            }
+            const minDigit = parseInt(min.toString()[0]);
+            const maxDigit = parseInt(max.toString()[0]);
+            res.send({
+                minLevel: minDigit,
+                maxLevel: maxDigit
+            });
+        }
+    });
+});
+
+  
+
+// Get all course with the subject & number --------------------
 router.route("/subjectnumber").get((req, res) => {
     Course.find({
         subject: req.body.subject,
@@ -43,6 +92,7 @@ router.route("/subjectnumber").get((req, res) => {
     .catch(err => console.err(err))
 })
 
+// Get all course with the professor --------------------
 router.route("/professor").get((req,res) => {
     Course.find({
         professor: req.body.professor
@@ -51,6 +101,7 @@ router.route("/professor").get((req,res) => {
     .catch(err => console.err(err))
 })
 
+// Add a course --------------------
 router.route('/add').post((req, res) => {
     const name = req.body.name;
 
@@ -63,11 +114,13 @@ router.route('/add').post((req, res) => {
         .catch(err => res.status(400).json("Error: " + err));
 });
 
+// removes all course with the subject --------------------
 router.route('/clear').post(async (req, res) => {
     const status = await Course.deleteMany({});
     res.status(200).json({message: 'cleared'})
 })
 
+// add the reviews and users when importing courses --------------------
 router.route('/fixformat').post(async (req, res) => {
     const status = await Course.updateMany(
         {
@@ -80,6 +133,7 @@ router.route('/fixformat').post(async (req, res) => {
     res.status(200).json({message: 'fixed'})
 })
 
+// add the total score and review count when importing courses --------------------
 router.route('/addscore').post(async (req, res) => {
     const status = await Course.updateMany(
         {
@@ -91,6 +145,8 @@ router.route('/addscore').post(async (req, res) => {
     );
     res.status(200).json({message: 'added'})
 })
+
+// Get all the reviews for a course --------------------
 router.route("/getReviews").post(async (req, res) => {
     const id = req.body.id;
     const course = await Course.findOne({ _id: id })

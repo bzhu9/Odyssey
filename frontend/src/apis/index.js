@@ -43,6 +43,8 @@ export const getStatus = payload => api.post("/user/getStatus", payload);
 export const setStatus = payload => api.post("/user/setStatus", payload);
 export const setWorkday = payload => api.post("/user/setWorkday", payload);
 export const getWorkday = payload => api.post("/user/getWorkday", payload);
+export const setMealTime = payload => api.post("/user/setMealTime", payload);
+export const getMealTime = payload => api.post("/user/getMealTime", payload);
 
 
 //class apis ------------------------------------------------------------------
@@ -54,6 +56,7 @@ export const getAllCourses = () => api.get("/course");
 export const getMyCourses = payload => api.post("/user/getCourses", payload);
 export const setCourses = payload => api.post("/user/setCourses", payload);
 export const getSingleCourse = id => api.get(`/course/single/${id}`);
+export const getAllSubjects = () => api.get("/course/getAllSubjects");
 //export const getCourseWithID = payload => api.post("/course/single/${id}", payload);
 
 //message api -----------------------------------------------------------------
@@ -115,6 +118,8 @@ const apis = {
     setStatus,
     setWorkday,
     getWorkday,
+    setMealTime,
+    getMealTime,
 
     searchOpenClass,
     
@@ -122,6 +127,7 @@ const apis = {
     getMyCourses,
     setCourses,
     getSingleCourse,
+    getAllSubjects,
 
     sendMessage,
     createChat,

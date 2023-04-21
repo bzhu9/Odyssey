@@ -378,6 +378,37 @@ router.route("/getWorkday").post(async (req, res) => {
     }
 });
 
+router.route("/setMealTime").post(async (req, res) => {
+    const email = req.body.email;
+    const startTime = req.body.startTime;
+    const endTime = req.body.endTime;
+
+    const user = await User.findOne({ email: email }).select("mealTimeStart mealTimeEnd").lean();
+
+    if (user) {
+        await User.findOneAndUpdate({ email: email }, { mealTimeStart: startTime, mealTimeEnd: endTime }).lean();
+        res.status(200).json({message: "Success"});
+    }
+    else {
+        res.status(401).json({ message: "Email does not exist" });
+    }
+})
+router.route("/getMealTime").post(async (req, res) => {
+    const email = req.body.email;
+    const user = await User.findOne({ email: email }).select("mealTimeStart mealTimeEnd").lean();
+
+    if (user) {
+        res.status(200).json({mealTimeStart: user.mealTimeStart, mealTimeEnd: user.mealTimeEnd});
+    }
+    else {
+        res.status(401).json({ message: "Email does not exist" });
+    }
+});
+
+
+
+
+
 
 
 

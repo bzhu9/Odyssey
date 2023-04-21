@@ -54,6 +54,47 @@ export const ChangeWorkday = (props) => {
     const showSidebar = () => setSidebar(!sidebar);
 
     const navigate = useNavigate();
+
+    //useEffect( async () => {
+      //preload the start and end workday times
+      //get the user object
+      //const pl = {email: sessionStorage.getItem("user")};
+      //const user = (await api.getUserID(pl)).data;
+
+      //get the workday and parse it
+      //let d = new Date(user.workdayStart);
+      //console.log(((d.getHours() < 10) ? "0" : "") + d.getHours() + ":" + ((d.getMinutes() < 10) ? "0" : "") + d.getMinutes());
+      //setStartTime(((d.getHours() < 10) ? "0" : "") + d.getHours() + ":" + ((d.getMinutes() < 10) ? "0" : "") + d.getMinutes());
+      //const endDay = new Date(user.workdayEnd);
+      //setEndTime(((endDay.getHours() < 10) ? "0" : "") + endDay.getHours() + ":" + ((endDay.getMinutes() < 10) ? "0" : "") + endDay.getMinutes());
+      
+    //}, []);
+    useEffect(() => {
+      async function fetchData() {
+        try {
+          //Your async code here
+          const pl = {email: sessionStorage.getItem("user")};
+          const user = (await api.getUser(pl)).data.user;
+
+          //get the workday and parse it
+          // console.log(user);
+          // console.log(user.workdayStart);
+          // console.log(user.workdayEnd);
+          setStartTime(user.workdayStart);
+          setEndTime(user.workdayEnd);
+      
+        } catch (error) {
+          console.error(error);
+        }
+      }
+      fetchData();
+    }, []);
+    
+
+
+
+
+
     const handleSubmit = (e) => {
         e.preventDefault();
     }
@@ -61,7 +102,7 @@ export const ChangeWorkday = (props) => {
     async function setWorkday() {
         const user = sessionStorage.getItem("user");
         if (!user) {
-            alert("Please sign in to change your workday!")
+            alert("Please sign in to set your workday!")
         }
 
         const payload = { email: user, startTime: startTime, endTime: endTime};
@@ -71,7 +112,7 @@ export const ChangeWorkday = (props) => {
         else {
             await api.setWorkday(payload)
                 .then(res => {
-                    alert(`Changed your workday successfully`);
+                    alert(`Set your workday successfully`);
                     navigate("../settings");
                 });
         }
@@ -79,7 +120,7 @@ export const ChangeWorkday = (props) => {
 
     return (
         <div className="auth-form-container">
-        <h2>Change Workday</h2>
+        <h2>Set Workday</h2>
         <IconContext.Provider
         value={{ color: "#fff" }}
         style={{
@@ -146,7 +187,7 @@ export const ChangeWorkday = (props) => {
         <label htmlFor="time">End Time of Workday</label>
         <input size="45" value={endTime} onChange={(e) => setEndTime(e.target.value)} type="time" placeholder="End Time" id="time" name="time" />
         {/* <button type="submit" onClick={() => props.onFormSwitch('calender')}>Submit Changes</button> */}
-        <button type="submit" onClick={setWorkday} >Submit workday change</button>
+        <button type="submit" onClick={setWorkday} >Submit</button>
     </form>
     {/* <button className="link-btn" onClick={() => props.onFormSwitch('calender')}>Go back to Calender</button> */}
     <Link to="/settings">

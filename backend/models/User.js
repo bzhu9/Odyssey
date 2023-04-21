@@ -77,19 +77,15 @@ const userSchema = new Schema({
     workdayEnd: {
         type: String
     },
+    mealTimeStart: {
+        type: String
+    },
+    mealTimeEnd: {
+        type: String
+    },
     chats: [{
         type: Schema.Types.ObjectId  
     }]
-    // add nutritional preferences: list of enums
-        // vegetarian
-        // vegan
-        // gluten free
-        // none
-    // add work time: tuple(string start, string end)
-    // add meal time: event
-    // add course list 
-    // add socials (instagram, facebook, linkedin...)
-    // add friendsRequests
 });
 
 const User = mongoose.model("User", userSchema);

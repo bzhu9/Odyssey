@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import api from "./apis";
+import api, { setCourses } from "./apis";
 import { FaCheck, FaTimes } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import Select, { components } from "react-select";
@@ -62,7 +62,7 @@ const levelOptions = [
     { value: "300", label: "300" },
     { value: "400", label: "400" },
     { value: "500", label: "500" },
-
+    { value: "600", label: "600"},
   ];
 
   const c = [
@@ -84,7 +84,38 @@ export const Search = (props) => {
   const [hover, setHover] = useState(0);
   const [rating, setRating] = useState(0);
   const [sidebar, setSidebar] = useState(true);
+  const [courses, setCourses] = useState([]);
   const showSidebar = () => setSidebar(!sidebar);
+
+
+  //get all the course subjects
+  //get all the course
+  useEffect(() => {
+    const fetchData = async () => {
+      const allSubjects = (await api.getAllSubjects()).data.subjects;
+      setCourses(allSubjects);
+      
+
+
+
+
+
+    }
+    fetchData();
+
+  }, []);
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -167,7 +198,7 @@ export const Search = (props) => {
                 setSelectedOptions(options.map((opt) => opt.value));
               }
             }}
-            options={deptOptions}
+            options={courses.map((course) => ({ value: course, label: course }))}
           />
           <p>
            {'\n'} 
