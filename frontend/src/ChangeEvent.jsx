@@ -6,6 +6,7 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import api from "./apis";
 import Select, { components } from "react-select";
+import coordinates from './coordinates.json'
 //import { set } from "mongoose";
 
 async function getEvent(eventID) {
@@ -200,6 +201,10 @@ export const ChangeEvent = (props) => {
 
     const getDirections = (e) => {
         if (!location.match(/[A-z]+ b*B*[0-9]+/)) {
+            alert("Location must be a valid classroom!")
+            return
+        }
+        if (location.split(" ")[0].toUpperCase() in coordinates == false) {
             alert("Location must be a valid classroom!")
             return
         }
