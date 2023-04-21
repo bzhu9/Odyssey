@@ -64,7 +64,7 @@ export const ChangeReview = (props) => {
   
       const rawReviews = (await api.getMyReviews({ id: courseID})).data;
       for (let i = 0; i < rawReviews.length; i++) {
-        if (rawReviews[0].user === uObj._id) {
+        if (rawReviews[i].user === uObj._id) {
           hasReview = true;
           r = rawReviews[i];
           setReviewObj(rawReviews[i]);
