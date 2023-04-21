@@ -82,6 +82,8 @@ router.route('/add').post(async (req, res) => {
         courseObj.totalscore = courseObj.totalscore + stars;
         //update total rewiews
         courseObj.reviewcount = courseObj.reviewcount + 1;
+        //update the avg score
+        courseObj.avgRating = (courseObj.totalscore / courseObj.reviewcount).toFixed(2);
         //save course obj
         courseObj.save()
             .catch(err => res.status(400).json({message: 'Error: ' + err}));
@@ -130,6 +132,12 @@ router.route('/delete').post(async (req, res) => {
         //update the review score & count
         course.totalscore = course.totalscore - review.stars;
         course.reviewcount = course.reviewcount - 1;
+        //update the avgRating
+        if (course.reviewcount > 0)
+            course.avgRating = (course.totalscore / course.reviewcount).toFixed(2);
+        else
+            course.avgRating = -1;
+
         course.save()
             .catch(err => res.status(400).json({message: 'Course Delete Review Error: ' + err}));
     }
@@ -161,6 +169,8 @@ router.route('/edit').post(async (req, res) => {
         if (course.reviews.includes(reviewObj._id)) {
             //update the total score
             course.totalscore = course.totalscore - reviewObj.stars + stars;
+            //update the avg rating
+            course.avgRating = (course.totalscore / course.reviewcount).toFixed(2);
             course.save()
                 .catch(err => res.status(400).json({message: 'Course Edit Review Error: ' + err}));
         }
