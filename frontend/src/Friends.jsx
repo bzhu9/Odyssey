@@ -255,8 +255,8 @@ export const Friends = (props) => {
 
         </div>
          
-        <Link to="/cal">
-            <button size="45" className="reset-btn" >Back to Calendar</button>
+        <Link to="/courses">
+            <button size="45" className="reset-btn" style={{width: "200px", }}>Update my Courses</button>
         </Link>
 
 
