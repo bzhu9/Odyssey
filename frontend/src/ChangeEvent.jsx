@@ -426,7 +426,7 @@ export const ChangeEvent = (props) => {
             label: friend.email
         }))}
         /> 
-
+</div>
 <label htmlFor="time">Set notification time prior to event</label>
         <select
           className="notif-dropdown"
@@ -452,6 +452,7 @@ export const ChangeEvent = (props) => {
             1 hour before event
           </option>
         </select>
+
         <label htmlFor="text">Event Notes</label>
         <input
           size="40"
@@ -462,7 +463,7 @@ export const ChangeEvent = (props) => {
           id="text"
           name="text"
         />
-        </div>
+     
         <label htmlFor="text">Event Notes</label>
         
         <input size="65" value={note} onChange={(e) => setNote(e.target.value)} type="text" placeholder="Notes" id="text" name="text" />
