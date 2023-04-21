@@ -64,18 +64,20 @@ router.route('/searchCourse').post(async (req, res) => {
     level = Number(req.body.level);
     subject = req.body.subject;
     prof = req.body.professor;
+    avgrating = Number(req.body.rating);
 
     console.log(subject);
     console.log(prof);
     console.log(level);
-    if ((subject !== null) && (req.body.level === null) && (prof === null)) {
+    console.log(avgrating);
+    if ((subject !== null) && (req.body.level === null) && (prof === null)  && (req.body.rating === null)) {
         console.log("sub");
         //subject only has values
         const c = await Course.find({ 
             subject: subject,
         });
         res.send(c);
-    } else if ((subject !== null) && (req.body.level !== null) && (prof === null)) {
+    } else if ((subject !== null) && (req.body.level !== null) && (prof === null) && (req.body.rating === null)) {
         //department & level
         console.log("sub + lvl");
         const c = await Course.find({ 
@@ -83,7 +85,7 @@ router.route('/searchCourse').post(async (req, res) => {
             number: { $gte: 10000 * level, $lt: 10000 * (level + 1) }
         });
         res.send(c);
-    } else if ((subject !== null) && (req.body.level === null) && (prof !== null)) {
+    } else if ((subject !== null) && (req.body.level === null) && (prof !== null)  && (req.body.rating === null)) {
         //department & prof
         console.log("sub + prof");
         const c = await Course.find({ 
@@ -91,23 +93,23 @@ router.route('/searchCourse').post(async (req, res) => {
             professsor: prof,
         });
         res.send(c);
-    } else if ((subject !== null) && (req.body.level !== null) && (prof !== null)) {
+    } else if ((subject !== null) && (req.body.level !== null) && (prof !== null)  && (req.body.rating === null)) {
         //department & level & prof
-        console.log("all");
+        console.log("dept + lvl + prof");
         const c = await Course.find({ 
             subject: subject,
             professor: prof,
             number: { $gte: 10000 * level, $lt: 10000 * (level + 1) }
         });
         res.send(c);
-    } else if ((subject === null) && (req.body.level !== null) && (prof === null)) {
+    } else if ((subject === null) && (req.body.level !== null) && (prof === null)  && (req.body.rating === null)) {
         //level
         console.log("lvl");
         const c = await Course.find({ 
             number: { $gte: 10000 * level, $lt: 10000 * (level + 1) }
         });
         res.send(c);
-    } else if ((subject === null) && (req.body.level !== null) && (prof !== null)) {
+    } else if ((subject === null) && (req.body.level !== null) && (prof !== null)  && (req.body.rating === null)) {
         //level & prof
         console.log("lvl + prof");
         const c = await Course.find({ 
@@ -115,14 +117,85 @@ router.route('/searchCourse').post(async (req, res) => {
             number: { $gte: 10000 * level, $lt: 10000 * (level + 1) }
         });
         res.send(c);
-    } else if ((subject === null) && (req.body.level === null) && (prof !== null)) {
+    } else if ((subject === null) && (req.body.level === null) && (prof !== null)  && (req.body.rating === null)) {
         //prof
         console.log("prof");
         const c = await Course.find({ 
             professor: prof,
         });
         res.send(c);
-    } else {
+    } else if ((subject === null) && (req.body.level === null) && (prof === null)  && (req.body.rating !== null)) {
+        //rating
+        console.log("rating");
+        const c = await Course.find({ 
+            avgRating: { $gte: avgrating }
+        });
+        res.send(c);
+    }  else if ((subject !== null) && (req.body.level === null) && (prof === null)  && (req.body.rating !== null)) {
+        //rating subject
+        console.log("rating subject");
+        const c = await Course.find({ 
+            subject: subject,
+            avgRating: { $gte: avgrating }
+        });
+        res.send(c);
+    } else if ((subject === null) && (req.body.level !== null) && (prof === null)  && (req.body.rating !== null)) {
+        //rating level
+        console.log("rating level");
+        const c = await Course.find({ 
+            avgRating: { $gte: avgrating },
+            number: { $gte: 10000 * level, $lt: 10000 * (level + 1) }
+
+        });
+        res.send(c);
+    } else if ((subject === null) && (req.body.level === null) && (prof !== null)  && (req.body.rating !== null)) {
+        //rating prof
+        console.log("prof");
+        const c = await Course.find({ 
+            professor: prof,
+            avgRating: { $gte: avgrating },
+        });
+        res.send(c);
+    }  else if ((subject !== null) && (req.body.level !== null) && (prof === null)  && (req.body.rating !== null)) {
+        //rating subject level
+        console.log("prof");
+        const c = await Course.find({ 
+            avgRating: { $gte: avgrating },
+            subject: subject,
+            number: { $gte: 10000 * level, $lt: 10000 * (level + 1) }
+        });
+        res.send(c);
+    }  else if ((subject !== null) && (req.body.level === null) && (prof !== null)  && (req.body.rating !== null)) {
+        //rating subject prof
+        console.log("prof");
+        const c = await Course.find({ 
+            avgRating: { $gte: avgrating },
+            subject: subject,
+            professor: prof,
+        });
+        res.send(c);
+    }  else if ((subject === null) && (req.body.level !== null) && (prof !== null)  && (req.body.rating !== null)) {
+        //rating level prof
+        console.log("prof");
+        const c = await Course.find({ 
+            avgRating: { $gte: avgrating },
+            professor: prof,
+            number: { $gte: 10000 * level, $lt: 10000 * (level + 1) }
+        });
+        res.send(c);
+    } else if ((subject !== null) && (req.body.level !== null) && (prof !== null)  && (req.body.rating !== null)) {
+        //sub lvl prof rating
+        console.log("all");
+        const c = await Course.find({ 
+            avgRating: { $gte: avgrating },
+            subject: subject,
+            professor: prof,
+            number: { $gte: 10000 * level, $lt: 10000 * (level + 1) }
+        });
+        res.send(c);
+    }
+    
+    else {
         console.log("wtf how did it end up here")
     }
     // const c = await Course.find({
@@ -382,6 +455,40 @@ router.route('/addscore').post(async (req, res) => {
     );
     res.status(200).json({ message: 'added' })
 })
+
+
+// add the total score and review count when importing courses --------------------
+router.route('/avgRating').post(async (req, res) => {
+    console.log("HERE");
+    const status = await Course.updateMany(
+        {
+            $set: {
+                avgRating: -1,
+            }
+        }
+    );
+    res.status(200).json({ message: 'added' })
+})
+// update the ratings the total score and review count when importing courses --------------------
+router.route('/updateAvgRating').post(async (req, res) => {
+    console.log("HERE");
+    //get the objects
+    const cObj = await Course.find({
+        reviewcount: {$gt: 0},
+        avgRating: -1
+    })
+    console.log("this is course");
+    //console.log(cObj);
+    cObj.forEach(async course => {
+        //update the rating
+        course.avgRating = (course.totalscore / course.reviewcount).toFixed(2);
+        console.log(course);
+        await course.save();
+        // do something with each course object
+    });     
+    res.status(200).json({ message: 'added' })
+})
+
 
 // Get all the reviews for a course --------------------
 router.route("/getReviews").post(async (req, res) => {

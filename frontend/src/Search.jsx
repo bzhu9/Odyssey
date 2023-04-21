@@ -85,6 +85,7 @@ export const Search = (props) => {
   const [selectedDepartment, setSelectedDepartment] = useState([]);
   const [selectedProfessor, setSelectedProfessor] = useState([]);
   const [selectedLevel, setSelectedLevel] = useState([]);
+  const [selectedRating, setSelectedRating] = useState([]);
   // const [review, setReview] = useState("");
   // const [hover, setHover] = useState(0);
   // const [rating, setRating] = useState(0);
@@ -94,6 +95,7 @@ export const Search = (props) => {
   const [professorOpt, setProfessorOpt] = useState([]);
   const showSidebar = () => setSidebar(!sidebar);
   const [courses, setCourses] = useState([]);
+  const [ratingOpt, setRatingOpt] = useState([]);
 
 
   //get all the course subjects
@@ -114,6 +116,17 @@ export const Search = (props) => {
       ];
       setLevelOpt(defaultLvlOptions);
 
+      const defaultRatingOptions = [
+        { value: "0", label: "0" },
+        { value: "1", label: "1" },
+        { value: "2", label: "2" },
+        { value: "3", label: "3" },
+        { value: "4", label: "4" },
+        { value: "5", label: "5" },
+      ];
+      setRatingOpt(defaultRatingOptions);
+      setSelectedRating(null);
+
       //get all the profs
       const defaultProfs = (await api.getAllProfessors()).data.professor;
       //const defaultProfs = ["hi", "bye", "lmfao"];
@@ -123,6 +136,8 @@ export const Search = (props) => {
     console.log("preload")
     fetchData();
     console.log("selectedNull");
+    console.log(ratingOpt)
+    //setSelectedRatingOpt(defaultRatingOptions[0].label)
     setSelectedDepartment(null);
     setSelectedLevel(null);
     setSelectedProfessor(null);
@@ -229,8 +244,8 @@ export const Search = (props) => {
       setLevelOpt(newOpt);
     }
 
-    const fetchAll = async () => {
-      //do i need to do anything for this???
+    const fetchDeptLevelProf = async () => {
+      //dept & level & prof
       
     }
 
@@ -242,6 +257,31 @@ export const Search = (props) => {
       const res = (await api.getSubjectbyLevelProf(pl)).data;
       setDepartments(res);
     }
+    const fetchRating = async () => {
+      //rating
+    }
+    const fetchRatingDept = async () => {
+      //rating & dept
+    }
+    const fetchRatingLevel = async () => {
+      //rating & lvl
+    }
+    const fetchRatingProf = async () => {
+      //rating & prof
+    }
+    const fetchRatingDeptLevel = async () => {
+      //rating dept level
+    }
+    const fetchRatingDeptProf = async () => {
+      //rating dept prof
+    }
+    const fetchRatingLevelProf = async () => {
+      //rating level prof
+    }
+    const fetchEverything = async () => {
+      //everything
+    }
+
 
 
     console.log("---------------------");
@@ -249,37 +289,70 @@ export const Search = (props) => {
     console.log(selectedDepartment);
     console.log(selectedLevel);
     console.log(selectedProfessor);
-    if ((selectedDepartment === null) && (selectedLevel === null) && (selectedProfessor === null)) {
+    // && (selectedRating === null)
+    if ((selectedDepartment === null) && (selectedLevel === null) && (selectedProfessor === null) ){//&& (selectedRating === null)) {
       console.log("null everything");
       fetchNullEverything();
-    } else if ((selectedDepartment !== null) && (selectedLevel === null) && (selectedProfessor === null)) {
+    } else if ((selectedDepartment !== null) && (selectedLevel === null) && (selectedProfessor === null)){// && (selectedRating === null)) {
       //department only has values
       console.log("dept");
       fetchDept();
-    } else if ((selectedDepartment !== null) && (selectedLevel !== null) && (selectedProfessor === null)) {
+    } else if ((selectedDepartment !== null) && (selectedLevel !== null) && (selectedProfessor === null) ){//&& (selectedRating === null)) {
       //department & level
       console.log("dept + level");
       fetchDeptLevel();
-    } else if ((selectedDepartment !== null) && (selectedLevel === null) && (selectedProfessor !== null)) {
+    } else if ((selectedDepartment !== null) && (selectedLevel === null) && (selectedProfessor !== null) ){//&& (selectedRating === null)) {
       //department & prof
       console.log("dept + prof");
       fetchDeptProf();
-    } else if ((selectedDepartment !== null) && (selectedLevel !== null) && (selectedProfessor !== null)) {
+    } else if ((selectedDepartment !== null) && (selectedLevel !== null) && (selectedProfessor !== null) ){//&& (selectedRating === null) ) {
       //department & level & prof
       console.log("dept + level + prof");
-      fetchAll();
-    } else if ((selectedDepartment === null) && (selectedLevel !== null) && (selectedProfessor === null)) {
+      fetchDeptLevelProf();
+    } else if ((selectedDepartment === null) && (selectedLevel !== null) && (selectedProfessor === null) ){//&& (selectedRating === null)) {
       //level
       console.log("fetchlvl");
       fetchLevel();
-    } else if ((selectedDepartment === null) && (selectedLevel !== null) && (selectedProfessor !== null)) {
+    } else if ((selectedDepartment === null) && (selectedLevel !== null) && (selectedProfessor !== null) ){//&& (selectedRating === null)) {
       //level & prof
       console.log("level + prof");
       fetchLevelProf();
-    } else if ((selectedDepartment === null) && (selectedLevel === null) && (selectedProfessor !== null)) {
+    } else if ((selectedDepartment === null) && (selectedLevel === null) && (selectedProfessor !== null) ){//&& (selectedRating === null)) {
       //prof
       console.log("prof");
       fetchProf();
+    } else if ((selectedDepartment === null) && (selectedLevel === null) && (selectedProfessor === null) && (selectedRating !== null)) {
+      //rating
+      console.log("rating");
+      fetchRating()
+    }  else if ((selectedDepartment !== null) && (selectedLevel === null) && (selectedProfessor === null) && (selectedRating !== null)) {
+      //rating & dept
+      console.log("rating");
+      fetchRatingDept();
+    } else if ((selectedDepartment === null) && (selectedLevel !== null) && (selectedProfessor === null) && (selectedRating !== null)) {
+      //rating & level
+      console.log("rating");
+      fetchRatingLevel()
+    }  else if ((selectedDepartment === null) && (selectedLevel === null) && (selectedProfessor !== null) && (selectedRating !== null)) {
+      //rating & prof
+      console.log("rating");
+      fetchRatingProf();
+    }  else if ((selectedDepartment !== null) && (selectedLevel !== null) && (selectedProfessor === null) && (selectedRating !== null)) {
+      //rating dept level
+      console.log("rating");
+      fetchRatingDeptLevel();
+    }  else if ((selectedDepartment !== null) && (selectedLevel === null) && (selectedProfessor !== null) && (selectedRating !== null)) {
+      //rating dept prof
+      console.log("rating");
+      fetchRatingDeptProf();
+    }  else if ((selectedDepartment === null) && (selectedLevel !== null) && (selectedProfessor !== null) && (selectedRating !== null)) {
+      //rating level prof
+      console.log("rating");
+      fetchRatingLevelProf();
+    } else if ((selectedDepartment !== null) && (selectedLevel !== null) && (selectedProfessor !== null) && (selectedRating !== null)) {
+      //everything
+      console.log("everything");
+      fetchEverything();
     } else {
       //nothing
       //();
@@ -311,10 +384,15 @@ export const Search = (props) => {
   const submit = async () => {
     //check if all the boxes are empty
     //if so then display an error
-    if (selectedLevel === null && selectedProfessor === null && selectedDepartment === null) {
+    if (selectedLevel === null && selectedProfessor === null && selectedDepartment === null && selectedRating === null) {
       alert("Please sort by a category");
     } else {
-      const pl = {level: selectedLevel, subject: selectedDepartment, professor: selectedProfessor};
+      const pl = {
+        level: selectedLevel, 
+        subject: selectedDepartment,
+        professor: selectedProfessor,
+        rating: selectedRating
+      };
       const c = (await api.getSearchCourses(pl)).data;
       console.log(c);
       setCourses(c);
@@ -477,6 +555,36 @@ export const Search = (props) => {
             }}
             options={professorOpt.map((professor) => ({ value: professor, label: professor }))}
           />
+          <p>
+            {'\n'}
+          </p>
+          <label htmlFor="text">Select a minimum rating</label>
+          <p>
+            {'\n'}
+          </p>
+          <Select
+            defaultValue={[]}
+            isClearable={true}
+            isMulti={false}
+            closeMenuOnSelect={true}
+            hideSelectedOptions={false}
+            onChange={(options) => {
+              console.log(options);
+              if (options === null) {
+                setSelectedRating(null);
+              } else {
+                setSelectedRating(options.value);
+              }
+              // console.log(Array.isArray(options));
+              // if (Array.isArray(options)) {
+              //   setSelectedLevel(options.map((opt) => opt.value));
+              // }
+            }}
+            options={ratingOpt}
+          />
+          <p>
+            {'\n'}
+          </p>
 
           {/* <label htmlFor="text">Create review</label> */}
 
