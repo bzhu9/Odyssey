@@ -69,11 +69,11 @@ export const ChangeNote = (props) => {
           </button>
         </Link>
         </div> 
-        <Link to="/cal">
+        {/* <Link to="/courses">
           <button size="45" className="reset-btn" >
-            Weekly View
+           Go back to courses
           </button>
-        </Link>
+        </Link> */}
       </div>
     </div>
     </>

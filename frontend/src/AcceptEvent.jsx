@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import api from "./apis"
 import {FaCheck, FaTimes} from "react-icons/fa"
 import { Link, useNavigate } from "react-router-dom";
+import { FaArrowLeft } from 'react-icons/fa';
 
 export const AcceptEvent = (props) => {
     const navigate = useNavigate();
@@ -110,12 +111,24 @@ export const AcceptEvent = (props) => {
 
         </div>
          
-        <Link to="/cal">
+        {/* <Link to="/cal">
             <button size="45" className="reset-btn" type="submit">Weekly View</button>
-        </Link>
+        </Link> */}
         {/* <Link to="/cal">
             <button size="45" className="reset-btn" type="submit">Add Friend</button>
         </Link> */}
+          <Link to='/cal' >
+			
+      <button  style={{
+                fontSize: "40px",
+                color:"#CEB888",
+                background: "none",
+                position: "absolute",
+                marginLeft: "-600px",
+                marginTop: "-400px",
+    
+                        }}><FaArrowLeft/> </button>
+            </Link>
 
  
     </div>

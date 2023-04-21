@@ -7,6 +7,7 @@ NavMenu,
 NavBtn,
 NavBtnLink,
 } from './NavbarElements';
+import { FaArrowLeft } from 'react-icons/fa';
 
 
 const Navbar = ({courseID}) => {
@@ -22,6 +23,15 @@ const Navbar = ({courseID}) => {
 			<Bars />
 
 			<NavMenu>
+			<NavLink to='/courses' activeStyle>
+			
+  <button  style={{
+					  fontSize: "20px",
+                      color:"black",
+					  background: "none",
+
+                    }}><FaArrowLeft/> </button>
+  			</NavLink>
 			<NavLink to='/coursePage' activeStyle>
 				Course Reviews
 			</NavLink>

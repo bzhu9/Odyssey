@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import api from "./apis"
 import {FaCheck, FaTimes} from "react-icons/fa"
 import { Link, useNavigate } from "react-router-dom";
+import { FaArrowLeft } from 'react-icons/fa';
 
 export const Friends = (props) => {
     const navigate = useNavigate();
@@ -255,8 +256,20 @@ export const Friends = (props) => {
         </div>
          
         <Link to="/cal">
-            <button size="45" className="reset-btn" type="submit">Weekly View</button>
+            <button size="45" className="reset-btn" type="submit">Back to Calendar</button>
         </Link>
+        {/* <Link to='/courses' >
+			
+      <button  style={{
+                fontSize: "40px",
+                          color:"#CEB888",
+                background: "none",
+                position: "absolute",
+                marginLeft: "-500px",
+                marginTop: "-500px",
+    
+                        }}><FaArrowLeft/> </button>
+            </Link> */}
         {/* <Link to="/cal">
             <button size="45" className="reset-btn" type="submit">Add Friend</button>
         </Link> */}

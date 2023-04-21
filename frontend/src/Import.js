@@ -153,11 +153,11 @@ function FileUploadPage(){
 				<p>Select a file to show details</p>
 			)}
 			<div>
-				<button type="submit" onClick={submit} >Import</button>
+				<button type="submit" onClick={submit} >Import Calendar</button>
 			</div>
 			<div>
 				<Link to="/cal">
-					<button size="45" className="reset-btn">Back to Calendar</button>
+					<button size="45">Back to Calendar</button>
 				</Link>
 			</div>
 			

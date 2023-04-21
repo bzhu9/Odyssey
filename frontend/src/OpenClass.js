@@ -1,6 +1,8 @@
 import React, {useState} from "react"
 import { Link } from "react-router-dom";
 import api from "./apis"
+import { FaArrowLeft } from 'react-icons/fa';
+
 
 export const OpenClass = (props) => {
     const [classroom, setClassroom] = useState('');
@@ -91,7 +93,21 @@ export const OpenClass = (props) => {
 
 
     return (
+        <>
+        <Link to='/cal' >
+			
+            <button  style={{
+                      fontSize: "40px",
+                      color:"#CEB888",
+                      background: "none",
+                      position: "absolute",
+                      marginLeft: "-420px",
+                      marginTop: "-270px",
+          
+                              }}><FaArrowLeft/> </button>
+                  </Link>
         <div className="auth-form-container">
+            
             <h2>Classroom Search</h2>
             <form className="login-form" onSubmit={handleSubmit}>
                 <label htmlFor="text">Enter Classroom</label>
@@ -107,10 +123,11 @@ export const OpenClass = (props) => {
             </ul>
 
             {/* <button type="submit" onClick={() => props.onFormSwitch('calender')}>Weekly View</button> */}
-            <Link to="/cal">
+            {/* <Link to="/cal">
                 <button size="45" className="reset-btn" type="submit">Weekly View</button>
-            </Link>
+            </Link> */}
 
         </div>
+        </>
     )
 }

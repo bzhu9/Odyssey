@@ -282,11 +282,11 @@ export const AddNote = (props) => {
           </button>
         </Link>
         </div> 
-        <Link to="/cal">
+        {/* <Link to="/cal">
           <button size="45" className="reset-btn" >
             Weekly View
           </button>
-        </Link>
+        </Link> */}
       </div>
     </div>
   );

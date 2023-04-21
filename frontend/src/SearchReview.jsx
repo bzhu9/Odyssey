@@ -224,7 +224,7 @@ export const SearchReview = (props) => {
         </form>
       
         <div>
-        <Link to="/courses">
+        {/* <Link to="/courses">
           <button size="45" className="reset-btn">
            Go back to courses
           </button>
@@ -235,7 +235,7 @@ export const SearchReview = (props) => {
           <button size="45" className="reset-btn" >
             Weekly View
           </button>
-        </Link>
+        </Link> */}
       </div>
     </div>
   );
