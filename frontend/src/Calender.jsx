@@ -211,14 +211,21 @@ function FullCalendarApp(props) {
   });
 
   async function genClass() {
-    const user = sessionStorage.getItem("user");
-    const payload = { email: user};
+    // get user workday
+    let userEmail = sessionStorage.getItem("user")
+    if (userEmail == null) {
+      alert("User not logged in")
+    }
+    const payload = { email: userEmail};
     const workday = await api.getWorkday(payload);
-    console.log(workday.data)
     if (Object.keys(workday.data).length == 0) {
       alert("Workday is not set!")
       return
     }
+
+    const mealTime = await api.getMealTime(payload)
+
+    // get today's events
     const todayList = []
     let today = new Date()
     for (let i = 0; i < ownEvents.length; i++) {
@@ -230,10 +237,8 @@ function FullCalendarApp(props) {
         todayList.push(ownEvents[i])
       }
     }
-    todayList.sort(function(a,b) {
-      return a.start.localeCompare(b.start)
-    })
 
+    // convert workdays to to epoch
     let workdayStart = today.setHours(workday.data.workdayStart.split(':')[0])
     workdayStart = today.setMinutes(workday.data.workdayStart.split(':')[1])
     workdayStart = today.setSeconds(0)
@@ -242,76 +247,79 @@ function FullCalendarApp(props) {
     workdayEnd = today.setMinutes(workday.data.workdayEnd.split(':')[1])
     workdayEnd = today.setSeconds(0)
     workdayEnd = today.setMilliseconds(0)
+
+    let mealTimeStart = today.setHours(mealTime.data.mealTimeStart.split(':')[0])
+    mealTimeStart = today.setMinutes(mealTime.data.mealTimeStart.split(':')[1])
+    mealTimeStart = today.setSeconds(0)
+    mealTimeStart = today.setMilliseconds(0)
+    let mealTimeEnd = today.setHours(mealTime.data.mealTimeEnd.split(':')[0])
+    mealTimeEnd = today.setMinutes(mealTime.data.mealTimeEnd.split(':')[1])
+    mealTimeEnd = today.setSeconds(0)
+    mealTimeEnd = today.setMilliseconds(0)
+
+    // push workdays and events to epochlist (epoch list contains starttime and endtime)
+    // js uses millisecond epochs so i convert them to seconds
     const epochList = []
-    epochList.push([workdayStart, workdayStart])
+    epochList.push([workdayStart/1000, workdayStart/1000])
+    epochList.push([workdayEnd/1000, workdayEnd/1000])
+    epochList.push([mealTimeStart/1000, mealTimeEnd/1000])
     for (let i = 0; i < todayList.length; i++) {
-      epochList.push([Date.parse(todayList[i].start), Date.parse(todayList[i].end)])
+      epochList.push([Date.parse(todayList[i].start)/1000, Date.parse(todayList[i].end)/1000])
     }
-    epochList.push([workdayEnd, workdayEnd])
-    // console.log(epochList)
-    for (let i = 0; i <epochList.length; i++) {
-      epochList[i] = [epochList[i][0] / 1000, epochList[i][1] / 1000]
-    }
+
+    epochList.sort(function(a,b) {
+      if (a < b) {
+        return -1
+      }
+      else if (a > b) {
+        return 1
+      }
+      return 0
+    })
+
+    // find list of gaps
+    console.log(epochList)
     const openClassList = []
-    // console.log(epochList)
+    let tempBuilding = "WALC"
+    let tempRoom = "1018"
     for (let i = 1; i < epochList.length; i++) {
-      if (i == epochList.length - 1) {
-        if (!todayList[i - 2].title.split('\n')[1].match(/[A-z]+ B*[0-9]+/)) {
-          continue;
-        }
-        const payload = {
-          startTime: epochList[i - 1][1],
-          endTime: epochList[i][0],
-          building: todayList[i - 2].title.split('\n')[1].split(' ')[0],
-          room: todayList[i - 2].title.split('\n')[1].split(' ')[1]
-        }
-        if (payload.startTime >= payload.endTime) {
-          continue;
-        }
-        const openClasses = await api.searchOpenClass(payload);
-        if (openClasses.data.length == 0) {
-          continue;
-        }
-        // console.log(openClasses.data[0])
-        openClasses.data[0].startTime = epochList[i - 1][1]
-        openClasses.data[0].endTime = epochList[i][0]
-        openClassList.push(openClasses.data[0])
+      if (i - 1< todayList.length && todayList[i-1].hasOwnProperty('title') && todayList[i - 1].title.split('\n')[1].match(/[A-z]+ B*[0-9]+/)) {
+        tempBuilding = todayList[i - 1].title.split('\n')[1].split(' ')[0]
+        tempRoom = todayList[i - 1].title.split('\n')[1].split(' ')[1]
       }
-      else {
-        if (!todayList[i - 1].title.split('\n')[1].match(/[A-z]+ B*[0-9]+/)) {
-          continue;
-        }
-        const payload = {
-          startTime: epochList[i - 1][1],
-          endTime: epochList[i][0],
-          building: todayList[i - 1].title.split('\n')[1].split(' ')[0],
-          room: todayList[i - 1].title.split('\n')[1].split(' ')[1]
-        }
-        if (payload.startTime >= payload.endTime) {
-          continue;
-        }
-        const openClasses = await api.searchOpenClass(payload);
-        // console.log(openClasses)
-        if (openClasses.data.length == 0) {
-          continue;
-        }
-        // console.log(openClasses.data[0])
-        openClasses.data[0].startTime = epochList[i - 1][1]
-        openClasses.data[0].endTime = epochList[i][0]
-        openClassList.push(openClasses.data[0])
+      else if (i < todayList.length && todayList[i].hasOwnProperty('title') && todayList[i].title.split('\n')[1].match(/[A-z]+ B*[0-9]+/)) {
+        tempBuilding = todayList[i].title.split('\n')[1].split(' ')[0]
+        tempRoom = todayList[i].title.split('\n')[1].split(' ')[1]
       }
-      // window.location.reload()
+      const payload = {
+        startTime: epochList[i - 1][1],
+        endTime: epochList[i][0],
+        building: tempBuilding,
+        room: tempRoom
+      }
+      if (payload.startTime >= payload.endTime) {
+        continue;
+      }
+      const openClasses = await api.searchOpenClass(payload);
+      if (openClasses.data.length == 0) {
+        const midEpoch = (todayList[i - 1][1] + todayList[i][0])/2
+        if (todayList[i][0] - midEpoch > 1800) {
+          console.log("go back one")
+          epochList.splice(i, 0, [midEpoch, midEpoch])
+          i -= 1
+        }
+        continue;
+      }
+      openClasses.data[0].startTime = epochList[i - 1][1]
+      openClasses.data[0].endTime = epochList[i][0]
+      openClassList.push(openClasses.data[0])
     }
     console.log(openClassList)
-    if (sessionStorage.getItem("user") == null) {
-      alert("User not logged in")
-    }
     const pl = {
-      email: sessionStorage.getItem("user")
+      email: userEmail
     }
     const userData = await api.getUserID(pl);
     const userID = userData.data.id;
-    console.log(userID)
     const userList = [];
     userList.push(userID)
     const payloadList = []
@@ -323,7 +331,8 @@ function FullCalendarApp(props) {
         location: openClassList[i].building + " " + openClassList[i].room,
         users: userList,
         req_users: [],
-        note: ""
+        note: "",
+        alert: 0
       }
       payloadList.push(payload)
     }
@@ -337,9 +346,7 @@ function FullCalendarApp(props) {
 						console.log(err.response.data);
 					}
 				})
-        console.log(i)
     }
-    console.log(workdayEnd)
     // window.location.reload()
   }
 
