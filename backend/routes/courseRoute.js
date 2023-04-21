@@ -392,22 +392,25 @@ router.route("/getReviews").post(async (req, res) => {
     if (course) {
         // console.log("this is the course");
         // console.log(course);
-        let reviewList = [];
-        //console.log("course review length " + course.reviews.length);
-        for (let i = 0; i < course.reviews.length; i++) {
-            let id = course.reviews[i];
-            // have to have _id, or else it will search friends list too
-            let review = await Review.findOne({ _id: id }).lean();
-            if (review) {
-                reviewList.push({
-                    text: review.text,
-                    stars: review.stars,
-                    user: review.user,
-                    course: review.course,
-                    _id: review._id
-                });
-            }
-        }
+        // let reviewList = [];
+        // //console.log("course review length " + course.reviews.length);
+        // for (let i = 0; i < course.reviews.length; i++) {
+        //     let id = course.reviews[i];
+        //     // have to have _id, or else it will search friends list too
+        //     let review = await Review.findOne({ _id: id }).lean();
+        //     if (review) {
+        //         reviewList.push({
+        //             text: review.text,
+        //             stars: review.stars,
+        //             user: review.user,
+        //             course: review.course,
+        //             _id: review._id
+        //         });
+        //     }
+        // }
+
+        let reviewList = await Review.find({ course: id }).sort({ stars: -1 }).lean();
+
         res.status(200).json(reviewList);
     }
     else {
