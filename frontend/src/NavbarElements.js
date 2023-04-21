@@ -5,8 +5,8 @@ import styled from 'styled-components';
 export const Nav = styled.nav`
 background: #CEB888;
 position:absolute;
-margin-top: -450px;
-margin-left: -880px;
+margin-top: -650px;
+margin-left: -980px;
 height: 50px;
 display: flex;
 width:400px;

@@ -117,7 +117,7 @@ export const CoursePage = (props) => {
              
               position: "absolute",
               marginTop: "-230px",
-              marginLeft: "-97px",
+              marginLeft: "-200px",
              
             }}>{courseTitle}</h2>  
     <p>{"\n"}</p>
@@ -125,7 +125,7 @@ export const CoursePage = (props) => {
              
              position: "absolute",
              marginTop: "-180px",
-             marginLeft: "0px",
+             marginLeft: "-100px",
             
            }}>Average rating: {avgRating}/5 </p>
                <p>{"\n"}</p>
@@ -134,7 +134,7 @@ export const CoursePage = (props) => {
              
              position: "absolute",
              marginTop: "-150px",
-             marginLeft: "45px",
+             marginLeft: "-55px",
              borderWidth: "1px",
              
             
@@ -148,7 +148,7 @@ export const CoursePage = (props) => {
               marginTop: "-110px",
               height: "350px",
               borderRadius: "10px",
-              marginLeft: "-305px",
+              marginLeft: "-380px",
               backgroundColor:"#CEB888",
               color:"black",
               

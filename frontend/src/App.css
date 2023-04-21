@@ -557,3 +557,6 @@ position: relative; margin-top: -150%; margin-right: 600%;}
   transition: height 0.3s ease;
 }
 
+.courseLi {
+  display: list-item;
+}

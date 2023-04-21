@@ -290,7 +290,9 @@ export const Courses = (props) => {
               height: "300px",
               borderRadius: "10px",
               marginLeft: "-80px",
+              paddingRight: "40px",
               backgroundColor:"#CEB888",
+              textAlign: "center",
               color:"black",
 
 
@@ -298,7 +300,7 @@ export const Courses = (props) => {
             {courses.map(item => {
             const ref = React.createRef();
             return (
-                <li key={item.id} ref={ref} >
+                <li key={item.id} ref={ref} className="courseLi">
                 {/* <a href="localhost:3500/login">{item.name} {item.status} {item.privacy}</a> */}
                 {/* <button onClick={() => redirectToProfile(item)}> */}
                 {/*have this show add review page if there's no review yet */}
