@@ -391,11 +391,11 @@ export const ChangeEvent = (props) => {
                     } else if (endEvent.getTime() > workdayEnd.getTime()) {
                         window.alert(`The event ends after ${user.name}'s workday ends. Please change the time!`);
                         return;
-                    } else if (startEvent.getTime() > mtStart.getTime() && startEvent.getTime() < mtEnd.getTime()) {
+                    } else if (startEvent.getTime() >= mtStart.getTime() && startEvent.getTime() < mtEnd.getTime()) {
                         window.alert(`The event starts during ${user.name}'s meal time. Please change the time!`);
                         return;
-                    } else if ( (endEvent.getTime() > mtEnd.getTime() && startEvent.getTime() < mtStart.getTime() ) ||
-                                (endEvent.getTime() < mtEnd.getTime() && endEvent.getTime() > mtStart.getTime())) {
+                    } else if ( (endEvent.getTime() >= mtEnd.getTime() && startEvent.getTime() <= mtStart.getTime() ) ||
+                                (endEvent.getTime() <= mtEnd.getTime() && endEvent.getTime() > mtStart.getTime())) {
                         window.alert(`The event goes through ${user.name}'s meal time. Please change the time!`);
                         return;
                     }

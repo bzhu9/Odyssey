@@ -54,21 +54,6 @@ export const ChangeWorkday = (props) => {
     const showSidebar = () => setSidebar(!sidebar);
 
     const navigate = useNavigate();
-
-    //useEffect( async () => {
-      //preload the start and end workday times
-      //get the user object
-      //const pl = {email: sessionStorage.getItem("user")};
-      //const user = (await api.getUserID(pl)).data;
-
-      //get the workday and parse it
-      //let d = new Date(user.workdayStart);
-      //console.log(((d.getHours() < 10) ? "0" : "") + d.getHours() + ":" + ((d.getMinutes() < 10) ? "0" : "") + d.getMinutes());
-      //setStartTime(((d.getHours() < 10) ? "0" : "") + d.getHours() + ":" + ((d.getMinutes() < 10) ? "0" : "") + d.getMinutes());
-      //const endDay = new Date(user.workdayEnd);
-      //setEndTime(((endDay.getHours() < 10) ? "0" : "") + endDay.getHours() + ":" + ((endDay.getMinutes() < 10) ? "0" : "") + endDay.getMinutes());
-      
-    //}, []);
     useEffect(() => {
       async function fetchData() {
         try {
