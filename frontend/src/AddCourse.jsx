@@ -4,6 +4,7 @@ import api from "./apis"
 import { Link, useNavigate } from "react-router-dom";
 import Select, { components } from "react-select";
 
+
 export const AddCourse = (props) => {
  
     
@@ -97,6 +98,7 @@ export const AddCourse = (props) => {
         hideSelectedOptions={false}
         onChange={(options) => setSelectedOptions(options)}
         options={courseList}
+        className="Select"
         /> 
         <button className="reset-btn" type="submit" onClick={() => setMyCourses()}>Set Courses</button>
         <div></div>

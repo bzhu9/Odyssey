@@ -550,3 +550,10 @@ position: relative; margin-top: -150%; margin-right: 600%;}
 /* Change the background color of the dropdown button when the dropdown content is shown */
 /* .dropdown-content .dropbtn {display: block; background: purple} */
 
+.Select {
+  max-width: 800px;
+  /* height: auto; */
+  /* overflow: hidden; */
+  transition: height 0.3s ease;
+}
+
