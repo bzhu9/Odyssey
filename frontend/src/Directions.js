@@ -1,9 +1,10 @@
 import React, { Component, useEffect, useState } from "react";
 import api from "./apis"
 import coordinates from './coordinates.json'
-import { Link } from "react-router-dom"
-import { DirectionsRenderer, DirectionsService, GoogleMap, useJsApiLoader } from '@react-google-maps/api';
+import { Link, useLocation, useNavigate } from "react-router-dom"
+import { DirectionsRenderer, DirectionsService, DistanceMatrixService, GoogleMap, useJsApiLoader } from '@react-google-maps/api';
 import { Button } from "rsuite";
+import axios from 'axios'
 
 // set containerStyle of google maps
 const containerStyle = {
@@ -36,9 +37,12 @@ navigator.geolocation.getCurrentPosition(
 );
 
 export const Directions = (props) => {
-
+  const location = useLocation();
+  const navigate = useNavigate();
   const [mapResponse, setMapResponse] = useState(null)
   const [destPos, setDestPos] = useState({})
+  const [timeString, setTimeString] = useState("Loading...")
+  // const [timeString, setTimeString] = useState("Loading...")
   const { isLoaded, loadError } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: process.env.REACT_APP_API_KEY
@@ -47,9 +51,14 @@ export const Directions = (props) => {
   const setDestPosFunc = async () => {
     try {
       //get event
-      const eventID = localStorage.getItem('eventID');
-      const response = await api.getSingleEvent(eventID);
-      const coords = coordinates[response.data.location.split(" ")[0].toUpperCase()]
+      // const eventID = localStorage.getItem('eventID');
+      // const response = await api.getSingleEvent(eventID);
+      // const coords = coordinates[response.data.location.split(" ")[0].toUpperCase()]
+      const loc = location.state.location;
+      if (!loc) {
+        return;
+      }
+      const coords = coordinates[loc.split(" ")[0].toUpperCase()]
       // destPos = {
       //   lat: Number(coords.lat),
       //   lng: Number(coords.long)
@@ -59,6 +68,31 @@ export const Directions = (props) => {
       console.log(error);
     }
   }
+
+//   const findTime = async () => {
+//     const matrix = new google.maps.DistanceMatrixService();
+
+//     matrix.getDistanceMatrix({
+//     origins: [new google.maps.LatLng(25.7694708, -80.259947)],
+//     destinations: [new google.maps.LatLng(25.768915, -80.254659)],
+//     travelMode: google.maps.TravelMode.DRIVING,
+// }, function(response, status) {
+//     timeString = response.data.rows.elements.duration.text
+//     timeFound = true
+// });
+//   }
+
+//   useEffect(() => {
+//     if (!timeFound) {
+//     if (userPos.lat != undefined && destPos.lat != undefined) {
+//       findTime()
+//       timeFound = true
+//     }
+//     else {
+//       console.log("happened")
+//     }
+//     }
+//   }, [userPos, destPos])
 
   useEffect(() => {
     setDestPosFunc()
@@ -71,6 +105,29 @@ export const Directions = (props) => {
     }
     console.log("callback")
   })
+
+  const timeCallback = React.useCallback(function callback(response) {
+    if (timeString == "Loading...") {
+      setTimeString("Estimated travel duration: " + response.rows[0].elements[0].duration.text)
+      console.log(timeString)
+    }
+  })
+
+  function goBack() {
+    navigate("../changeEvent", {
+      state: {
+        location: location.state.location,
+      }
+    })
+  }
+
+  // useEffect(() => {
+  //   if (timeString != "Loading...") {
+  //     finalTimeString = timeString
+  //   }
+  // }, [timeString])
+
+  
 
   const renderMap = () => {
     // wrapping to a function is useful in case you want to access `window.google`
@@ -104,7 +161,7 @@ export const Directions = (props) => {
             {
               (
                 destPos != {} &&
-                userPos != {}
+                userPos != {lat: 40.426786, lng: -86.925446}
               ) && (
                 <DirectionsService
                   // required
@@ -145,10 +202,30 @@ export const Directions = (props) => {
                 />
               )
             }
+
+            {
+              (destPos != {} && userPos != {lat: 40.426786, lng: -86.925446}) && timeString == "Loading..." && (
+                <DistanceMatrixService
+                  options={{
+                    destinations: [destPos],
+                    origins: [userPos],
+                    travelMode: "WALKING"
+                  }}
+                  callback={timeCallback}
+                  onLoad={distanceMatrixService => {
+                    console.log('DistanceMatrix onLoad: ' + distanceMatrixService)
+                  }}
+                  onUnmount={distanceMatrixService => {
+                    console.log('DistanceMatrix onUnmount: ' + distanceMatrixService)
+                  }}
+                />
+              )
+            }
           </GoogleMap>
-          <Link to="/changeEvent">
-        <button size ="45">Back</button>
-      </Link>
+          <p>{timeString}</p>
+      {/* <Link to="/changeEvent"> */}
+      <button size ="45" onClick={goBack}>Back</button>
+      {/* </Link> */}
       </div>  
   }
 
@@ -159,9 +236,9 @@ export const Directions = (props) => {
   return isLoaded ? renderMap() : (
     <div>
       <p>Loading</p>
-      <Link to="/changeEvent">
-        <button size ="45">Back</button>
-      </Link>
+      {/* <Link to="/changeEvent"> */}
+        <button size ="45" onClick={goBack}>Back</button>
+      {/* </Link> */}
     </div>
   )
 }
