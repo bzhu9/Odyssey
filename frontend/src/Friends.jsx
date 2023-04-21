@@ -267,7 +267,7 @@ export const Friends = (props) => {
                           color:"#CEB888",
                 background: "none",
                 position: "absolute",
-                marginLeft: "-800px",
+                marginLeft: "-680px",
                 marginTop: "-450px",
     
                         }}><FaArrowLeft/> </button>
