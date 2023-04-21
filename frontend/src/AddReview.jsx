@@ -68,6 +68,15 @@ export const AddReview = (props) => {
   const showSidebar = () => setSidebar(!sidebar);
 
   async function getCourses() {
+
+    //making sure the user can only make a review
+    //when u send it to the backend it should send an error
+    //that it cannot be made
+    //and then an alert should be displayed
+
+
+
+
     //get all the courses of the given user
     const pload = { email: sessionStorage.getItem("user") };
     const rawCourseList = await api.getMyCourses(pload);
@@ -91,7 +100,6 @@ export const AddReview = (props) => {
     let ignore = false;
     if (!ignore) {
       getCourses();
-      //console.log(friendList);
     }
     return () => {
       ignore = true;
@@ -132,21 +140,51 @@ export const AddReview = (props) => {
       };
 
       //make the api call
-      await api
-                .addReview(payload)
-                .then((res) => {
+      // const rv = (await api.addReview(payload)).data;
+      // console.log(rv.message);
+      // if (rv.message === "hasReview") {
+      //   window.alert("You have already made a review for this course, you cannot make another one!");
+      // } else {
+      //   window.alert("Review created successfully");
+      //   navigate("../courses");
+
+      // }
+      await api.addReview(payload)
+              .then((rv) => {
+                console.log(rv.data);
+                if (rv.data.message === "hasReview") {
+                  window.alert("You have already made a review for this course, you cannot make another one!");
+                } else {
                   window.alert("Review created successfully");
                   navigate("../courses");
-                })
-                .catch((err) => {
-                  console.log("yo why are you here");
-                  if (err.response) {
-                    console.log(err.response.data);
-                    alert(err.response.data.message);
-                  }
-                });
+                }
+            })
+            .catch((error) => {
+              console.error(error);
+              // Handle error here
+            });
+
+
+
+
+    //   await api
+    //             .addReview(payload)
+    //             .then((res) => {
+    //               console.log("this is the res message")
+    //               console.log(res.message);
+    //               window.alert(res.message);
+    //               //window.alert("Review created successfully");
+    //               navigate("../courses");
+    //             })
+    //             .catch((err) => {
+    //               console.log("yo why are you here");
+    //               if (err.response) {
+    //                 console.log(err.response.data);
+    //                 alert(err.response.data.message);
+    //               }
+    //             });
       
-     }
+    }
 
   }
 
@@ -320,11 +358,11 @@ export const AddReview = (props) => {
           </button>
         </Link>
         </div> 
-        <Link to="/cal">
+        {/* <Link to="/cal">
           <button size="45" className="reset-btn" >
             Weekly View
           </button>
-        </Link>
+        </Link> */}
       </div>
     </div>
   );

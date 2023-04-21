@@ -168,6 +168,22 @@ export const CoursePage = (props) => {
             ))}            
          </ul>
    </div>
+   {/* <Link to="/courses" style={{
+              
+              position: "absolute",
+              marginTop: "310px",
+              marginLeft: "-1105px",
+              width: "200px",
+
+             
+              
+
+
+            }}>
+          <button  >
+           Go back to courses
+          </button>
+        </Link> */}
 
     </>
   );

@@ -44,5 +44,14 @@ export const SidebarData = [
 
 
 },
+{
+	title: "Back to Calendar",
+	path: "/Cal",
+	icon: <FaIcons.FaCalendar />,
+
+	
+
+
+},
 
 ];

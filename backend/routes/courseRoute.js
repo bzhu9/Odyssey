@@ -97,13 +97,12 @@ router.route("/getReviews").post(async (req, res) => {
     .catch(err => res.status(400).json("Error: " + err));
     
     if (course) {
-        console.log("this is the course");
-        console.log(course);
+        // console.log("this is the course");
+        // console.log(course);
         let reviewList = [];
-        console.log("course review length " + course.reviews.length);
+        //console.log("course review length " + course.reviews.length);
         for (let i = 0; i < course.reviews.length; i++) {
             let id = course.reviews[i];
-            console.log("this is the id: " + id);
             // have to have _id, or else it will search friends list too
             let review = await Review.findOne({ _id: id }).lean();
             if (review) {
@@ -116,8 +115,6 @@ router.route("/getReviews").post(async (req, res) => {
                 });
             }
         }
-        console.log("this is the review list: ");
-        console.log(reviewList);
         res.status(200).json(reviewList);
     }
     else {

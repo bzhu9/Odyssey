@@ -30,28 +30,51 @@ router.route('/add').post(async (req, res) => {
     console.log(text);
     console.log(user);
     console.log(course);
+    console.log("this is the course type:")
+    console.log(typeof course);
 
-    //create the new review
-    const newNote = new Note({
-        "text": text,
-        "user": user,
-        "course": course
-    });
-    await newNote.save()
-        .catch(err => res.status(400).json("Error: " + err));
-
-    //add the note id to the user
+    //get the user object
     const userObj = await User.findById(user);
-    if (!userObj) {
-        //user doesn't exist
-        console.log("user doesn't exist????");
+    //loop through the notes and see if one of them already has the same course
+    let hasNote = false;
+    let n;
+    console.log(userObj.personalNotes);
+    const courseID = new ObjectId(course);
+    //console.log(typeof courseID);
+    //console.log(course);
+    //console.log(courseID);
+    for (let i = 0; i < userObj.personalNotes.length; i++) {
+        n = await Note.findById(userObj.personalNotes[i]);
+        //if the note has already been made for the course
+        if (n.course.equals(course)) {
+            hasNote = true;
+            i = userObj.personalNotes.length;
+        }
     }
-    userObj.personalNotes.push(newNote._id);
-    await userObj.save()
-        .catch(err => res.status(400).json({message: 'Error: ' + err}));
-    
-    
-    return res.status(200).json({message: "Note added!"});
+    if (hasNote) {
+        return res.status(200).json({message: "hasNote"});
+    } else {
+            //create the new review
+        const newNote = new Note({
+            "text": text,
+            "user": user,
+            "course": course
+        });
+        await newNote.save()
+            .catch(err => res.status(400).json("Error: " + err));
+
+        //add the note id to the user
+        if (!userObj) {
+            //user doesn't exist
+            console.log("user doesn't exist????");
+        }
+        userObj.personalNotes.push(newNote._id);
+        await userObj.save()
+            .catch(err => res.status(400).json({message: 'Error: ' + err}));
+        
+        return res.status(200).json({message: "Note added!"});
+
+    }
 });
 
 // Delete a personal note --------------------------------

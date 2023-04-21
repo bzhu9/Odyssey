@@ -353,9 +353,9 @@ function FullCalendarApp(props) {
         ref={calRef}
         initialView="dayGridWeek"
         headerToolbar={{
-          right: 'eventReq,classSearch,import,genClass',
-          center: 'timeGridWeek,dayGridMonth,today,prev,next',
-          // center: 'timeGridWeek,dayGridMonth,eventReq,classSearch,import,genClass,courses,friends',
+          // right: 'eventReq,classSearch,import,genClass',
+          // center: 'timeGridWeek,dayGridMonth,today,prev,next',
+          center: 'timeGridWeek,dayGridMonth,eventReq,classSearch,import,genClass',
         }}
         footerToolbar={{
       
@@ -470,14 +470,14 @@ function FullCalendarApp(props) {
                       marginLeft: "10px"
                     }}><FaPlus/></button>
   </Link>
-  <button id = "homepage-icon-button" style={{
+  {/* <button id = "homepage-icon-button" style={{
                       position: "absolute",
                       color: "#8d1919",
                       fontSize: "120px",
                       borderWidth: "2px",
                       marginTop: "-600px",
                       marginLeft: "1150px",
-                      transform: " scaleX(0.8) scaleY(3.5)",
+                      transform: " scaleX(1.1) scaleY(3.5)",
                       // opacity:"0.8",
 
                      
@@ -485,7 +485,7 @@ function FullCalendarApp(props) {
 
 
 
-                    }}><FaSquare/> </button>
+                    }}><FaSquare/> </button> */}
   <Link to="/settings">
   <button id = "homepage-icon-button" style={{
                       position: "absolute",

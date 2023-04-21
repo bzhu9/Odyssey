@@ -86,7 +86,7 @@ export const ChangeReview = (props) => {
 
           setHasDisplayedAlert(true);
           alert("You have not made a review for this course, please make a review first");
-          navigate("../courses");
+          navigate("../addReview");
         }
       }
     };
@@ -282,11 +282,11 @@ export const ChangeReview = (props) => {
           </button>
         </Link>
         </div> 
-        <Link to="/cal">
+        {/* <Link to="/courses">
           <button size="45" className="reset-btn" >
-            Weekly View
+            Go back to courses
           </button>
-        </Link>
+        </Link> */}
       </div>
     </div>
     </>

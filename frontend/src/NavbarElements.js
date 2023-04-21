@@ -6,10 +6,10 @@ export const Nav = styled.nav`
 background: #CEB888;
 position:absolute;
 margin-top: -450px;
-margin-left: -900px;
+margin-left: -880px;
 height: 50px;
 display: flex;
-width:320px;
+width:400px;
 border-radius:20px;
 padding: 1px;
 z-index: 12;
