@@ -72,6 +72,7 @@ export const CreateEvent = (props) => {
   }, []);
 
   useEffect(() => {
+    console.log("this is the friend list:");
     console.log(friendList);
   }, [friendList]);
 
@@ -146,6 +147,16 @@ export const CreateEvent = (props) => {
         const [hourStart2, minuteEnd2] = wkdaye.split(":");
         let workdayEnd = new Date(0, 0, 0, hourStart2, minuteEnd2);
 
+
+        //start of mealtime
+        let mtdays = user.mealTimeStart;
+        const [mtHS, mtME] = mtdays.split(":");
+        let mtStart = new Date(0, 0, 0, mtHS, mtME);
+        //end of mealtime
+        let mtdaye = user.mealTimeEnd;
+        const [mtHS2, mtME2] = mtdaye.split(":");
+        let mtEnd = new Date(0, 0, 0, mtHS2, mtME2);
+
         if (startEvent.getTime() < workdayStart.getTime()) {
           //starts before the workday, return an alert
           if (!window.confirm(`The event starts before your workday starts.`)) {
@@ -157,6 +168,15 @@ export const CreateEvent = (props) => {
           }
         } else if (endEvent.getTime() > workdayEnd.getTime()) {
           if (!window.confirm(`The event ends after your workday ends.`)) {
+            return;
+          }
+        } else if (startEvent.getTime() >= mtStart.getTime() && startEvent.getTime() < mtEnd.getTime()) {
+          if (!window.confirm(`The event starts during your meal time.`)) {
+            return;
+          }
+        } else if ((endEvent.getTime() >= mtEnd.getTime() && startEvent.getTime() <= mtStart.getTime()) ||
+          (endEvent.getTime() <= mtEnd.getTime() && endEvent.getTime() > mtStart.getTime())) {
+          if (!window.confirm(`The event goes through your meal time.`)) {
             return;
           }
         }
@@ -179,6 +199,16 @@ export const CreateEvent = (props) => {
             let wkdaye = user.workdayEnd;
             const [hourStart2, minuteEnd2] = wkdaye.split(":");
             let workdayEnd = new Date(0, 0, 0, hourStart2, minuteEnd2);
+
+            //start of mealtime
+            let mtdays = user.mealTimeStart;
+            const [mtHS, mtME] = mtdays.split(":");
+            let mtStart = new Date(0, 0, 0, mtHS, mtME);
+            //end of mealtime
+            let mtdaye = user.mealTimeEnd;
+            const [mtHS2, mtME2] = mtdaye.split(":");
+            let mtEnd = new Date(0, 0, 0, mtHS2, mtME2);
+
             if (startEvent.getTime() < workdayStart.getTime()) {
               //starts before the workday, return an alert
               window.alert(
@@ -194,6 +224,13 @@ export const CreateEvent = (props) => {
               window.alert(
                 `The event ends after ${user.name}'s workday ends. Please change the time!`
               );
+              return;
+            } else if (startEvent.getTime() > mtStart.getTime() && startEvent.getTime() < mtEnd.getTime()) {
+              window.alert(`The event starts during ${user.name}'s meal time. Please change the time!`);
+              return;
+            } else if ((endEvent.getTime() > mtEnd.getTime() && startEvent.getTime() < mtStart.getTime()) ||
+                      (endEvent.getTime() < mtEnd.getTime() && endEvent.getTime() > mtStart.getTime())) {
+              window.alert(`The event goes through ${user.name}'s meal time. Please change the time!`);
               return;
             }
           }
@@ -317,7 +354,7 @@ export const CreateEvent = (props) => {
             value: friend.id,
             label: friend.email,
           }))}
-          //options={allOptions}
+        //options={allOptions}
         />
         {/* // components={{
         //   Option: InputOption
@@ -331,7 +368,7 @@ export const CreateEvent = (props) => {
           id="colours"
           value={notifTime}
         >
-            <option className="dropdown" value="0">
+          <option className="dropdown" value="0">
             Don't notify me
           </option>
           <option className="dropdown" value="5">
