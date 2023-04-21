@@ -57,6 +57,20 @@ export const getMyCourses = payload => api.post("/user/getCourses", payload);
 export const setCourses = payload => api.post("/user/setCourses", payload);
 export const getSingleCourse = id => api.get(`/course/single/${id}`);
 export const getAllSubjects = () => api.get("/course/getAllSubjects");
+export const getAllProfessors = () => api.get("/course/getAllProfessors");
+export const getLevelRange = id => api.get(`/course/level/${id}`);
+export const getProfsbySubject = id => api.get(`/course/professors/subject/${id}`);
+export const getProfsbyLevel = id => api.get(`/course/professors/level/${id}`);
+export const getSubjectbyLevel = id => api.get(`/course/subject/level/${id}`);
+export const getSubjectbyProf = payload => api.post("/course/subject/professor", payload);
+export const getLevelbyProf = payload => api.post("/course/level/professor", payload);
+export const getProfbySubjectLevel = payload => api.post("/course/professor/subjectLevel", payload);
+export const getLevelbySubjectProf = payload => api.post("/course/level/subjectProf", payload);
+export const getSubjectbyLevelProf = payload => api.post("/course/subject/levelProf", payload);
+export const getSearchCourses = payload => api.post("/course/searchCourse", payload);
+
+
+
 //export const getCourseWithID = payload => api.post("/course/single/${id}", payload);
 
 //message api -----------------------------------------------------------------
@@ -128,6 +142,18 @@ const apis = {
     setCourses,
     getSingleCourse,
     getAllSubjects,
+    getAllProfessors,
+    getLevelRange,
+    getProfsbySubject,
+    getProfsbyLevel,
+    getSubjectbyLevel,
+    getSubjectbyProf,
+    getLevelbyProf,
+    getProfbySubjectLevel,
+    getLevelbySubjectProf,
+    getSubjectbyLevelProf,
+    getSearchCourses,
+
 
     sendMessage,
     createChat,
