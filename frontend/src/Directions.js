@@ -1,10 +1,7 @@
 import React, { Component, useEffect, useState } from "react";
-import api from "./apis"
 import coordinates from './coordinates.json'
 import { Link, useLocation, useNavigate } from "react-router-dom"
 import { DirectionsRenderer, DirectionsService, DistanceMatrixService, GoogleMap, useJsApiLoader } from '@react-google-maps/api';
-import { Button } from "rsuite";
-import axios from 'axios'
 
 // set containerStyle of google maps
 const containerStyle = {

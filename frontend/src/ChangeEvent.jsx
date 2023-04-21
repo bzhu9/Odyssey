@@ -92,6 +92,10 @@ export const ChangeEvent = (props) => {
         else {
             setLocation(eventObj.location);
         }
+        console.log("THIS IS THE ALERT TIME");
+        console.log(eventObj.alertTime);
+        setNotifTime(`${eventObj.alertTime}`);
+        setLocation(eventObj.location);
         setNote(eventObj.note);
         //console.log(eventObj.req_users)
         setEventReqList(eventObj.req_users);        
@@ -374,6 +378,7 @@ export const ChangeEvent = (props) => {
             console.log(values);
             // console.log("after selected");
             // console.log(values);
+            const alertTime = parseInt(notifTime);
 
             const payload = {
                 _id: eventObj._id,
@@ -382,7 +387,8 @@ export const ChangeEvent = (props) => {
                 endTime: endDate.toISOString(),
                 location: location,
                 req_users: values,
-                note: note
+                note: note,
+                alertTime: alertTime
             };
             const response = await api.editEvent(payload);
             console.log(response.data);
@@ -453,6 +459,7 @@ export const ChangeEvent = (props) => {
           className="notif-dropdown"
           onChange={(e) => setNotifTime(e.target.value)}
           id="colours"
+          value={notifTime}
         >
             <option className="dropdown" value="0">
             Don't notify me
@@ -466,7 +473,7 @@ export const ChangeEvent = (props) => {
           <option className="dropdown" value="15">
             15 minutes before event
           </option>
-          <option className="dropdown" selected="selected" value="30">
+          <option className="dropdown" value="30">
             30 minutes before event
           </option>
           <option className="dropdown" value="60">

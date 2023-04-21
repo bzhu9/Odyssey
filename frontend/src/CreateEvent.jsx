@@ -29,7 +29,7 @@ export const CreateEvent = (props) => {
   // const [friend, setFriend] = useState('');
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [friendList, setFriendList] = useState([]);
-  const [notifTime, setNotifTime] = useState("");
+  const [notifTime, setNotifTime] = useState("30");
 
   const navigate = useNavigate();
   const handleSubmit = (e) => {
@@ -329,6 +329,7 @@ export const CreateEvent = (props) => {
           className="notif-dropdown"
           onChange={(e) => setNotifTime(e.target.value)}
           id="colours"
+          value={notifTime}
         >
             <option className="dropdown" value="0">
             Don't notify me
@@ -342,7 +343,7 @@ export const CreateEvent = (props) => {
           <option className="dropdown" value="15">
             15 minutes before event
           </option>
-          <option className="dropdown" selected="selected" value="30">
+          <option className="dropdown" value="30">
             30 minutes before event
           </option>
           <option className="dropdown" value="60">

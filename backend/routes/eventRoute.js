@@ -168,6 +168,7 @@ router.route('/edit').post(async (req, res) => {
   const location = req.body.location;
   //const users = req.body.users;
   const note = req.body.note;
+  const alertTime = req.body.alertTime;
   //const repeating = req.body.repeating;
   //const type = req.body.type;
   //const days = req.body.days;
@@ -232,6 +233,7 @@ router.route('/edit').post(async (req, res) => {
       req_users: req_users_list,
       //users: req.body.users,
       note: req.body.note,
+      alertTime: alertTime,
       //repeating: req.body.repeating,
       //type: req.body.type,
       //days: req.body.days 
