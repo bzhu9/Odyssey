@@ -86,7 +86,7 @@ export const ChangeReview = (props) => {
 
           setHasDisplayedAlert(true);
           alert("You have not made a review for this course, please make a review first");
-          navigate("../courses");
+          navigate("../addReview");
         }
       }
     };
