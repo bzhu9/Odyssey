@@ -38,7 +38,7 @@ export const SidebarData = [
 {
 	title: "Change Workday",
 	path: "/changeWorkday",
-	icon: <FaIcons.FaCalendar/>, 
+	icon: <FaIcons.FaClock/>, 
 	
 
 	
@@ -59,4 +59,15 @@ export const SidebarData = [
 	path: "/changeStatus",
 	icon: <FaIcons.FaBan />,
 },
+{
+	title: "Go back to calendar",
+	path: "/cal",
+	icon: <FaIcons.FaCalendar/>, 
+	
+
+	
+
+
+},
+
 ];

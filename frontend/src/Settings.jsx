@@ -279,7 +279,7 @@ export const Settings = (props) => {
               ) : (
                 <> </>
               )}
-              {courses.length > 0 ? (
+              {/* {courses.length > 0 ? (
                 <>
                   <p>
                     {" "}
@@ -293,7 +293,7 @@ export const Settings = (props) => {
                 </>
               ) : (
                 <></>
-              )}
+              )} */}
             </>
           )}
         </div>
@@ -328,7 +328,7 @@ export const Settings = (props) => {
             Log Out
           </button>
         </Link>
-        <Link to="/cal">
+        {/* <Link to="/cal">
           <button
             style={{
               width: "200px",
@@ -341,7 +341,7 @@ export const Settings = (props) => {
           >
             Weekly View
           </button>
-        </Link>
+        </Link> */}
       </div>
     </div>
     </>
