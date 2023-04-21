@@ -71,7 +71,7 @@ export const ChangeEvent = (props) => {
     useEffect(() => {
         if (loc.state) {
             setLocation(loc.state.location);
-            window.history.replaceState({}, document.title);
+            // window.history.replaceState({}, document.title);
         }
     }, []);
     useEffect(() => {
@@ -95,7 +95,7 @@ export const ChangeEvent = (props) => {
         // console.log("THIS IS THE ALERT TIME");
         // console.log(eventObj.alertTime);
         setNotifTime(`${eventObj.alertTime}`);
-        setLocation(eventObj.location);
+        // setLocation(eventObj.location);
         setNote(eventObj.note);
         //console.log(eventObj.req_users)
         setEventReqList(eventObj.req_users);        
