@@ -195,7 +195,7 @@ export const ChangeNote = (props) => {
         {/* not sure why the buttons are small */}
         <button type="submit" className="reset-btn" onClick={submit}>Submit change to note</button>
         <div>
-        <Link to="/coursePage" onClick={deleteNote}>
+        <Link to="/courses" onClick={deleteNote}>
           <button size="45" className="reset-btn">
            Delete Note
           </button>
