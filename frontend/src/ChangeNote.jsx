@@ -110,7 +110,7 @@ export const ChangeNote = (props) => {
       await api
                 .editNote(payload)
                 .then((res) => {
-                  window.alert("Review Successfully Changed");
+                  window.alert("Note Successfully Changed");
                   navigate("../courses");
                 })
                 .catch((err) => {
@@ -122,6 +122,29 @@ export const ChangeNote = (props) => {
                 });
 
   }
+
+
+  const deleteNote = async () => {
+    //console.log(reviewObj._id)
+    const pl = {"_id": noteObj._id};
+    await api
+          .deleteNote(pl)
+          .then((res) => {
+            window.alert("Note Successfully Deleted");
+            //window.location.reload();
+          })
+          .catch((err) => {
+            console.log("yo why are you here");
+            if (err.response) {
+              console.log(err.response.data);
+              alert(err.response.data.message);
+            }
+          });
+  }
+
+
+
+
 
 
 
@@ -171,6 +194,13 @@ export const ChangeNote = (props) => {
             <button className="reset-btn" onClick={() => props.onFormSwitch('reset')}>Reset Password</button> */}
         {/* not sure why the buttons are small */}
         <button type="submit" className="reset-btn" onClick={submit}>Submit change to note</button>
+        <div>
+        <Link to="/coursePage" onClick={deleteNote}>
+          <button size="45" className="reset-btn">
+           Delete Note
+          </button>
+        </Link>
+        </div> 
         <div>
         <Link to="/courses">
           <button size="45" className="reset-btn">
