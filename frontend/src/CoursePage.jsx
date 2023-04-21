@@ -142,6 +142,7 @@ export const CoursePage = (props) => {
 
    <ul  style={{
               overflow: "auto",
+              textAlign:"left",
               position: "absolute",
               width: "700px",
               marginTop: "-110px",
