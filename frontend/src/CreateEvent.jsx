@@ -96,6 +96,8 @@ export const CreateEvent = (props) => {
       endDate.setHours(endTimeSplit[0]);
       endDate.setMinutes(endTimeSplit[1]);
 
+      const alertTime = parseInt(notifTime);
+
       if (sessionStorage.getItem("user") == null) {
         console.log("wtf? user not in session storage");
       }
@@ -212,6 +214,7 @@ export const CreateEvent = (props) => {
         users: userList,
         req_users: selectedOptions,
         note: note,
+        alertTime: alertTime
       };
       console.log("there");
 

@@ -41,6 +41,7 @@ router.route('/add').post(async (req, res) => {
   const users = req.body.users;
   const req_users = req.body.req_users;
   const note = req.body.note;
+  const alertTime = req.body.alertTime;
   // const repeating = req.body.repeating;
   // const type = req.body.type;
   // const days = req.body.days;
@@ -61,6 +62,7 @@ router.route('/add').post(async (req, res) => {
     "users": users,
     "req_users": req_users,
     "note": note,
+    "alertTime": alertTime
     // "repeating": repeating,
     // "type": type,
     // "days": days

@@ -51,7 +51,10 @@ const eventSchema = new Schema({
     // require: true
 
   },
-  
+  alertTime: {
+    type: Number,
+    default: 30
+  }
 }
   
 );

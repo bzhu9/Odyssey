@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import React, { Component } from 'react'
 import { Link, useNavigate } from "react-router-dom";
 import api from "./apis"
@@ -26,6 +26,7 @@ function FullCalendarApp(props) {
   const [calRef, setCalRef] = useState();
   const [eventAlerts, setEventAlerts] = useState({});
   const navigate = useNavigate();
+  const dataFetchedRef = useRef(false);
 
 
   async function triggerEventNotification(eventId) {
@@ -37,7 +38,9 @@ function FullCalendarApp(props) {
       triggerEventNotification(eventId);
       removeTimeout(timeoutId);
     }, delay);
-    setEventAlerts([...eventAlerts, {eventId: timeoutId}]);
+    const ea = eventAlerts;
+    ea[eventId] = timeoutId;
+    setEventAlerts(ea);
   };
 
   const removeTimeout = (eventId) => {
@@ -75,13 +78,25 @@ function FullCalendarApp(props) {
       })
 
       // check time and add alerts
-      // if (alertTime < now) {
-        // alertTime.setDate(alertTime.getDate() + 1); // if alert time is in the past, add 1 day to set it for tomorrow
-      // }
-  
-      // const timeRemaining = alertTime.getTime() - now.getTime();
-      // addTimeout(e._id, timeRemaining);
+      // console.log (e.startTime);
+      // console.log(new Date(e.startTime));
+      if (e.alertTime !== 0) {
+        let d = new Date(e.startTime)
+        d.setMinutes(d.getMinutes() - e.alertTime);
+        if (d > now && !dataFetchedRef.current) {
+          const timeRemaining = d - now.getTime();
+          // console.log(`${timeRemaining} time remaining`);
+          // addTimeout(e._id, timeRemaining);
+        }
+        // if (alertTime < now) {
+          // alertTime.setDate(alertTime.getDate() + 1); // if alert time is in the past, add 1 day to set it for tomorrow
+        // }
+    
+        // const timeRemaining = alertTime.getTime() - now.getTime();
+        // addTimeout(e._id, timeRemaining);
+      }
     }
+    dataFetchedRef.current = true;
     setOwnEvents(processedEvents);
   }
 
@@ -159,7 +174,7 @@ function FullCalendarApp(props) {
   }, [eventAlerts]);
 
   const handleKeyPress = useCallback((event) => {
-    console.log(`Key pressed: ${event.key}`);
+    // console.log(`Key pressed: ${event.key}`);
     if (event.key == 'c') {
       navigate("../addEvent")
     }
@@ -173,7 +188,7 @@ function FullCalendarApp(props) {
     // }
   }, []);
   const handleNavigatePress = useCallback((event) => {
-    console.log(`Key pressed: ${event.key}`);
+    // console.log(`Key pressed: ${event.key}`);
 
     if (event.key == 'j') {
       let calendarApi = calRef.current.getApi()

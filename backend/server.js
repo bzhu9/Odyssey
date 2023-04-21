@@ -34,16 +34,22 @@ app.use("/note", require("./routes/noteRoute"));
 
 const db = mongoose.connection;
 const sseStream = new sse();
+const eventStream = new sse();
 
 db.once("open", () => {
   console.log("Connected to MongoDB")
   const chatCollection = db.collection("messages");
+  const eventCollection = db.collection("events")
   const changeStream = chatCollection.watch();
+  const eventChangeStream = eventCollection.watch();
   changeStream.on("change", change => {
     sseStream.send(change);
-  }
-  );
+  });
+  eventChangeStream.on("change", change => {
+    eventStream.send(change);
+  });
   app.listen(port, () => console.log(`Server running on port ${port}`))
 })
 
 app.get('/updates', sseStream.init);
+app.get('/eventUpdates', eventStream.init);
