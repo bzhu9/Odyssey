@@ -130,16 +130,16 @@ export const CoursePage = (props) => {
              
              position: "absolute",
              marginTop: "-180px",
-             marginLeft: "-60px",
+             marginLeft: "0px",
             
-           }}>Average rating: {avgRating} </p>
+           }}>Average rating: {avgRating}/5 </p>
                <p>{"\n"}</p>
 
    <h3 style={{
              
              position: "absolute",
              marginTop: "-150px",
-             marginLeft: "10px",
+             marginLeft: "45px",
              borderWidth: "1px",
              
             
@@ -161,9 +161,10 @@ export const CoursePage = (props) => {
             }}>
             {reviews.map(review => (
               <li key={review.id}>
-                <p>Rating: {review.rating}</p>
-                <p>Text: {review.text}</p>
-                <p>User: {review.user}</p>
+                <p>Rating: {review.rating}/5</p>
+                <p>Comments: {review.text}</p>
+                {/* <p>User: {review.user}</p> */}
+                ----------------------------------------
               </li>
             ))}            
          </ul>

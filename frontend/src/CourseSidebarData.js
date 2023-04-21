@@ -17,19 +17,19 @@ export const SidebarData = [
 	path: "/search",
 	icon: <FaIcons.FaSearch /> ,
 },
-{
-	title: "Course Reviews",
-	path: "/searchReview",
-	icon: <FaIcons.FaStar />,
+// {
+// 	title: "Course Reviews",
+// 	path: "/searchReview",
+// 	icon: <FaIcons.FaStar />,
 
 	
 
 
-},
+// },
 {
 	title: "Add Review",
 	path: "/addReview",
-	icon: <FaIcons.FaPlus />,
+	icon: <FaIcons.FaStar />,
 
 	
 
