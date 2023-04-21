@@ -162,7 +162,7 @@ export const CoursePage = (props) => {
             {reviews.map(review => (
               <li key={review.id}>
                 <p>Rating: {review.rating}/5</p>
-                <p>Comments: {review.text}</p>
+                <p>{review.text}</p>
                 {/* <p>User: {review.user}</p> */}
                 ----------------------------------------
               </li>
