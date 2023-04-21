@@ -14,9 +14,8 @@ router.route("/").get((req, res) => {
     .catch(err => res.status(400).json("Error: " + err));
 });
 // Get a signal note --------------------------------
-router.route("/single").post((req, res) => {
-    const noteID = req.body.noteID;
-    Note.findOne({_id: noteID}).lean()
+router.route("/single/:_id").get(async (req, res) => {
+    Note.findOne({_id: req.params._id}).lean()
     .then(notes => res.json(notes))
     .catch(err => res.status(400).json("Error: " + err));
 });
@@ -110,13 +109,15 @@ router.route('/edit').post(async (req, res) => {
     const noteID = req.body.noteID;
     const course = req.body.course;
     //update the reviewObj 
-    const noteObj = Note.findOne({_id: noteID}).exec();
+    console.log(noteID);
+    const note = await Note.findOne({_id: noteID}).exec();
     //update the review
-    reviewObj.text = text;
-    reviewObj.course = course;
+    console.log(note);
+    note.text = text;
+    note.course = course;
 
     //save the review obj
-    reviewObj.save()
+    note.save()
         .catch(err => res.status(400).json({message: 'ReviewObj Edit Review Error: ' + err}));
 
     return res.status(200).json("Note successfully editted!");
