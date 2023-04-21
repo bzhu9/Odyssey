@@ -94,6 +94,7 @@ export const getMyReviews = payload => api.post("/course/getReviews", payload);
 export const getAllNotes = () => api.get("/note/");
 export const addNote = payload => api.post("/note/add", payload);
 export const editNote = payload => api.post("/note/edit", payload);
+export const deleteNote = payload => api.post("/note/delete", payload);
 export const getSingleNote = id => api.get(`/note/single/${id}`);//payload => api.get("/note/single", payload);//
 
 
@@ -174,6 +175,7 @@ const apis = {
     getAllNotes,
     getSingleNote,
     editNote,
+    deleteNote,
     addNote
 
 }
