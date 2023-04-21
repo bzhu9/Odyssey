@@ -126,8 +126,14 @@ export const AddNote = (props) => {
       await api
                 .addNote(payload)
                 .then((res) => {
-                  window.alert("Note created successfully");
-                  navigate("../courses");
+                  console.log(res.data.message);
+                  console.log(res.data.message === "hasNote");
+                  if (res.data.message === "hasNote") {
+                    window.alert("You have already made a note for this course, you cannot make another one!")
+                  } else {
+                    window.alert("Note created successfully");
+                    navigate("../courses");
+                  }
                 })
                 .catch((err) => {
                   console.log("yo why are you here");
