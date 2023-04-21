@@ -215,7 +215,7 @@ export const Courses = (props) => {
             <button size="45" className="reset-btn2" type="submit">Weekly View</button>
         </Link> */}
        
-        <h4 className="recTitle"> My current courses</h4>
+        {/* <h4 className="recTitle"> My current courses</h4> */}
         <IconContext.Provider
         value={{ color: "#fff" }}
         style={{

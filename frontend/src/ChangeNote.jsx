@@ -159,7 +159,11 @@ export const ChangeNote = (props) => {
 </p>
           </div>
           <textarea value={note}
-            onChange={(e) => setNote(e.target.value)} size="9000" className="review">
+            onChange={(e) => setNote(e.target.value)} size="9000" className="review"  style={{
+             
+              fontFamily: "Arial, sans-serif",
+             
+            }}>
           </textarea>
         </form>
         {/* <button type="submit" onClick={() => props.onFormSwitch('calender')}>Weekly View</button>
