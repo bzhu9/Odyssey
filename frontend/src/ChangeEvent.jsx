@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -37,6 +37,7 @@ export const ChangeEvent = (props) => {
 
     const [eventObj, setEventObj] = useState({});
     const navigate = useNavigate();
+    const loc = useLocation();
 
     //get the event object given the object id
     useEffect(() => {
@@ -68,6 +69,12 @@ export const ChangeEvent = (props) => {
 
 
     useEffect(() => {
+        if (loc.state) {
+            setLocation(loc.state.location);
+            window.history.replaceState({}, document.title);
+        }
+    }, []);
+    useEffect(() => {
         //preload the textboxes
         setTitle(eventObj.title);
         let d = new Date(eventObj.startTime);
@@ -77,7 +84,14 @@ export const ChangeEvent = (props) => {
         setStartTime(((d.getHours() < 10) ? "0" : "") + d.getHours() + ":" + ((d.getMinutes() < 10) ? "0" : "") + d.getMinutes());
         const endDay = new Date(eventObj.endTime);
         setEndTime(((endDay.getHours() < 10) ? "0" : "") + endDay.getHours() + ":" + ((endDay.getMinutes() < 10) ? "0" : "") + endDay.getMinutes());
-        setLocation(eventObj.location);
+        if (loc.state) {
+            setLocation(loc.state.location);
+            console.log("RIGHT HEREASDKLFASDLKHFLAKSDHFLKASDHFLKASDHFLKASDHLKFHASD");
+            window.history.replaceState({}, document.title);
+        }
+        else {
+            setLocation(eventObj.location);
+        }
         setNote(eventObj.note);
         //console.log(eventObj.req_users)
         setEventReqList(eventObj.req_users);        
@@ -208,7 +222,14 @@ export const ChangeEvent = (props) => {
             alert("Location must be a valid classroom!")
             return
         }
-        navigate('/directions')
+        
+        navigate('/directions',
+        {
+            state: {
+                location: location
+            }
+        }
+        )
     }
 
     //check if the time is valid
