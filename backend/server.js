@@ -38,7 +38,7 @@ const eventStream = new sse();
 
 db.once("open", () => {
   console.log("Connected to MongoDB")
-  const chatCollection = db.collection("messages");
+  const chatCollection = db.collection("chats");
   const eventCollection = db.collection("events")
   const changeStream = chatCollection.watch();
   const eventChangeStream = eventCollection.watch();

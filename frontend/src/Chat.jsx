@@ -89,6 +89,8 @@ export const Chat = (props) => {
     //   sender: "Joe",
     //   direction: 'incoming'
     // }]);
+    console.log(currentChat);
+    console.log(msgInput);
     if (!sessionStorage.getItem("user") || !currentChat) {
       return;
     }
@@ -102,11 +104,14 @@ export const Chat = (props) => {
   }
 
   async function getMessages(id, name) {
+    console.log(id);
+    console.log(name);
     setCurrentChat(id);
     setHeaderName(name);
     setCurrentIsGroup(name.includes(","));
     getAddableUsers(id);
     const rawMessages = (await api.loadMessages({ chatId: id})).data.messages;
+    console.log(rawMessages);
     let proccessedMessages = [];
     for (let i = 0; i < rawMessages.length; i++) {
       var d = new Date(rawMessages[i].createdAt);
@@ -117,6 +122,7 @@ export const Chat = (props) => {
         direction: rawMessages[i].sender.email === sessionStorage.getItem("user") ? "outgoing" : "incoming"
       });
     }
+    console.log(proccessedMessages);
     setMessages(proccessedMessages);
     return;
   }
@@ -253,6 +259,7 @@ export const Chat = (props) => {
       if (currentChat.length !== 0 && headerName !== 0) {
         getMessages(currentChat, headerName);
       }
+      getChats();
     };
     return () => {
       events.close();

@@ -46,14 +46,16 @@ router.route("/create").post(async (req, res) => {
 router.route("/addUser").post(async (req, res) => {
     const userEmail = req.body.userEmail;
     const chatId = req.body.chatId;
-    const user = await User.findOne({ email: userEmail}).lean();
+    const user = await User.findOne({ email: userEmail});
     const chat = await Chat.findById(chatId);
 
     if (chat.users.includes(user._id)) {
         return res.status(400).json("This user is already in the chat!");
     }
+    user.chats.push(chat._id);
 
     chat.users.push(user._id);
+    user.save();
     chat.save()
     .then(() => res.status(201).json("User added!"))
     .catch(err => res.status(400).json("Error: " + err));
@@ -78,6 +80,7 @@ router.route("/loadMessages").post(async (req, res) => {
             createdAt: m.createdAt
         });
     }
+    console.log(processedMessages);
     return res.status(200).json({messages: processedMessages });
 })
 
