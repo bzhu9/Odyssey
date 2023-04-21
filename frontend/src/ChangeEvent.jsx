@@ -523,9 +523,7 @@ export const ChangeEvent = (props) => {
           name="text"
         />
      
-        <label htmlFor="text">Event Notes</label>
-        
-        <input size="65" value={note} onChange={(e) => setNote(e.target.value)} type="text" placeholder="Notes" id="text" name="text" />
+    
         <button type="submit" onClick={update}>Submit Changes</button>
         <button onClick={() => {
             if (window.confirm('Are you sure you want to delete this event?')) {
