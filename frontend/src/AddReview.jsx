@@ -119,7 +119,10 @@ export const AddReview = (props) => {
 
      //check a course was selected selectedOptions > 0
      //check if both rating and text are empty [you should be able to set one and not the other
-
+     if (!review || review.length === 0) {
+      alert("Please fill out the review!");
+      return;
+     }
      if (selectedOptions.length < 0) {
         alert("Please select a course");
      } else {

@@ -54,6 +54,8 @@ export const Settings = (props) => {
   const [privacy, setPrivacy] = useState("");
   const [workdayStart, setWorkdayStart] = useState("");
   const [workdayEnd, setWorkdayEnd] = useState("");
+  const [mealStart, setMealStart] = useState("");
+  const [mealEnd, setMealEnd] = useState("");
   const [courses, setCourses] = useState([]);
   const navigate = useNavigate();
   const [sidebar, setSidebar] = useState(true);
@@ -73,6 +75,8 @@ export const Settings = (props) => {
     setPrivacy(user.data.user.privacy);
     setWorkdayStart(user.data.user.workdayStart);
     setWorkdayEnd(user.data.user.workdayEnd);
+    setMealStart(user.data.user.mealTimeStart);
+    setMealEnd(user.data.user.mealTimeEnd);
     let c = [];
     let rawCourses = (await api.getMyCourses({ email: email })).data;
     for (let i = 0; i < rawCourses.length; i++) {
@@ -274,6 +278,20 @@ export const Settings = (props) => {
                   <p>
                     {" "}
                     <b>Workday End:</b> {workdayEnd}
+                  </p>
+                </>
+              ) : (
+                <> </>
+              )}
+              {mealStart && mealStart.length > 0 ? (
+                <>
+                  <p>
+                    {" "}
+                    <b>Meal Time Start:</b> {mealStart}
+                  </p>
+                  <p>
+                    {" "}
+                    <b>Meal Time End:</b> {mealEnd}
                   </p>
                 </>
               ) : (
