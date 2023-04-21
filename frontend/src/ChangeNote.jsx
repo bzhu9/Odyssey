@@ -85,7 +85,7 @@ export const ChangeNote = (props) => {
         console.log(note);
         if (!hasDisplayedAlert) {
           setHasDisplayedAlert(true);
-          alert("You have not made a review for this course, please make a review first");
+          alert("You have not made a note for this course, please make a note first");
           navigate("../coursePage");
         }
       }
