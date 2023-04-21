@@ -15,7 +15,7 @@ const center = {
   lng: -86.918
 };
 
-let userPos = {lat: 40.426786, lng: -86.925446}
+let userPos = {lat: 40.428695, lng: -86.919401}
 console.log("user pos search started")
 navigator.geolocation.getCurrentPosition(
   function(position) {
